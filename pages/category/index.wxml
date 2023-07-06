@@ -1,0 +1,37 @@
+<l-tab-bar
+        text-color="#707070"
+        text-selected-color="#50b089"
+        list="{{list}}"
+/>
+<t-pull-down-refresh
+        value="{{isRefresh}}"
+        loadingProps="{{loadingProps}}"
+        loadingTexts="{{['下拉刷新', '松手刷新', '正在刷新', '刷新完成']}}"
+        bind:refresh="onPullDownRefresh"
+        bind:scroll="onScroll"
+>
+    <view class="wrapper container">
+        <view class="category" style="display:flex">
+            <view style="{{'display:inline-grid;grid-template-columns: repeat(' + everyRowNumber + ',' + multipleSize + 'rpx);grid-row-gap:' + gapRow + 'rpx;grid-column-gap:' + gapColumn + 'rpx;'}}">
+                <block wx:for="{{classify}}" wx:for-index="index" wx:key="i" wx:for-item="item">
+                    <view class="imageContainer"
+                          bind:tap="onClassifyDetail"
+                          data-id="{{item.id}}"
+                          style="{{'height:' + itemHeight + 'rpx;width:' + multipleSize + 'rpx;'}}">
+                        <view class="geo" wx:if="{{item.count > 0}}">
+                            {{item.count}}张
+                        </view>
+                        <image class="l-multi-image-class"
+                               id="{{1}}"
+                               style="{{'height:' + multipleSize + 'rpx;width:' + multipleSize + 'rpx;'}}"
+                               src="{{item.path}}"
+                               mode="{{multipleMode}}"/>
+                        <view class="username">
+                            {{item.name}}
+                        </view>
+                    </view>
+                </block>
+            </view>
+        </view>
+    </view>
+</t-pull-down-refresh>

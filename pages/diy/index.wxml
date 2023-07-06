@@ -1,0 +1,11 @@
+<l-tab-bar
+        text-color="#707070"
+        text-selected-color="#50b089"
+        list="{{list}}"
+/>
+
+<imageEditor id='imageEditor' class="imageEditor"
+             imagePath="https://tft-images.qizue.com/bqb/emotions/5734/e23390aabc5f0b46f43cbc8b8228a9d9.png"
+             options="{{options}}"
+             bind:success="success"
+             bind:cancel="cancel"/>

@@ -1,0 +1,27 @@
+page {
+    --td-spacer-2: 300rpx;
+}
+
+.container {
+    height: 100%;
+}
+
+.search {
+    background-color: #fff;
+    padding: 16rpx 32rpx;
+}
+
+.search:not(:last-child) {
+    margin-bottom: 10rpx;
+}
+
+.hot-recommend {
+    display: inline-block;
+    padding: 0rpx 20rpx 20rpx 20rpx;
+}
+
+.hot-recommend .link {
+    max-width: 250rpx;
+    float: left;
+    padding: 8rpx;
+}

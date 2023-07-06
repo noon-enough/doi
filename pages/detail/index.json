@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "t-image-viewer": "/miniprogram_npm/tdesign-miniprogram/image-viewer/image-viewer"
+  }
+}

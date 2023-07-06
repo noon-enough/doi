@@ -1,0 +1,73 @@
+<view class="container">
+  <view class='layout'>
+    <image id='image' class='image' src='{{imagePath}}' mode="aspectFit"
+      style="width:{{canvasWidth}}px;height:{{canvasHeight}}px;"></image>
+
+    <view class='stage' wx:if="{{stage=='crop'}}"
+      style='width:{{stageWidth}}px;height:{{stageHeight}}px;left:{{stageLeft}}px;top:{{stageTop}}px;'
+      bindtouchstart='cropTouchStart' bindtouchmove='cropTouchMove' bindtouchend='cropTouchEnd'
+      bindtouchcancel='cropTouchCancel'>
+
+
+      <view id='box' class='box'
+        style='width:{{boxWidth}}px;height:{{boxHeight}}px;left:{{boxLeft}}px;top:{{boxTop}}px;'>
+        <view id='lt' class='lt'></view>
+        <view id='lb' class='lb'></view>
+        <view id='rt' class='rt'></view>
+        <view id='rb' class='rb'></view>
+
+        <view class='line-v' style='left:33.3%;'></view>
+        <view class='line-v' style='left:66.6%;'></view>
+        <view class='line-h' style='top:33.3%;'></view>
+        <view class='line-h' style='top:66.6%;'></view>
+      </view>
+
+    </view>
+    <!-- <canvas class="myCanvas" id="myCanvas" type="2d"
+      style="width:{{canvasWidth}}px;height:{{canvasHeight}}px;background:rgba(255,0,0,0.2);"
+      bindtouchstart="drawStart" bindtouchmove="drawMove" bindtouchend="drawEnd"></canvas> -->
+
+    <canvas class="myCanvas" id="myCanvas" type="2d"
+      style="width:{{canvasWidth}}px;height:{{canvasHeight}}px;background:rgba(255,0,0,0.2);position: {{stage!='tuya'?'fixed':''}};left:{{stage!='tuya'?'100vw':''}};top:{{stage!='tuya'?'100vh':''}}"
+      bindtouchstart="drawStart" bindtouchmove="drawMove" bindtouchend="drawEnd"></canvas>
+  </view>
+
+  <!-- 操作区 -->
+  <view class="toolbar">
+    <view class="sub-bar" wx:if="{{stage=='tuya'}}">
+      <view class="btn-color {{selectedColor==item?'active':''}}" data-color="{{item}}" wx:for="{{options.colors}}"
+        wx:key="index" style="--bg:{{item}}" bindtap='toggleColor'></view>
+      <view class="btn-size {{selectedSize==item?'active':''}}" data-size="{{item}}" wx:for="{{options.sizes}}"
+        wx:key="index" style="--width:{{item}}px" bindtap='toggleSize'></view>
+    </view>
+    <!-- <view  class="sub-bar" wx:if="{{stage=='tuya'&&selectedColor!='#fff'}}" >
+      <slider bindchanging="changeColor" activeColor="transparent" backgroundColor="transparent" class="slider"
+         block-color="{{selectedColor}}" max="360" />
+    </view> -->
+    <view class="bar" wx:if="{{stage=='crop'}}">
+      <view class="btn" bindtap='togglestage' data-stage=""><i class="iconfont icon-chahao"></i></view>
+      <view class="btn" bindtap="doRotate" data-direction="left"><i class="iconfont icon-xuanzhuan-left"></i></view>
+      <!-- <view class="btn" bindtap="doMirror" data-direction="left"><i class="iconfont icon-jingxiang"></i></view> -->
+      <view class="btn" bindtap="doRotate" data-direction="right"><i class="iconfont icon-xuanzhuan-right"></i></view>
+      <view class="btn" bindtap='doCrop'><i class="iconfont icon-dagou"></i></view>
+    </view>
+    <view class="bar" wx:if="{{stage=='tuya'}}">
+      <view class="btn" bindtap='togglestage' data-stage=""><i class="iconfont icon-chahao"></i></view>
+      <view class="btn {{drawtype=='rect'?'active':''}}" bindtap="toggleDrawType" data-type="rect"><i
+          class="iconfont icon-juxing"></i></view>
+      <view class="btn {{drawtype=='line'?'active':''}}" bindtap="toggleDrawType" data-type="line"><i
+          class="iconfont icon-tumo"></i></view>
+      <view class="btn" bindtap='doDraw'><i class="iconfont icon-dagou"></i></view>
+
+    </view>
+
+    <view class='bar' wx:if="{{stage==''}}">
+      <view class="btn" bindtap='editCancel'>取消</view>
+      <view class="btn  {{stage=='crop'?'active':''}}" bindtap="togglestage" data-stage="crop"><i
+          class="iconfont icon-caijianxuanzhuan"></i></view>
+      <view class="btn {{stage=='tuya'?'active':''}}" bindtap='togglestage' data-stage="tuya"><i
+          class="iconfont icon-makebi"></i></view>
+      <view class="btn btn-submit" bindtap='editSave'>保存</view>
+    </view>
+  </view>
+</view>

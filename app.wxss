@@ -1,0 +1,74 @@
+page {
+  background: white;
+
+  --blue: #007bff;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+
+  --primary: #12977a;
+  --default-primary-color: #12977a;
+  --disable: #2aa78b9c;
+}
+
+.wrapper {
+  background-color: white;
+  margin-bottom: 200rpx;
+}
+
+.category {
+  padding: 20rpx;
+}
+
+.imageContainer {
+  position: relative
+}
+
+.imageContainer .username {
+  position: absolute;
+  color: black;
+  font-size: 30rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.imageContainer .geo {
+  position: absolute;
+  right: 0rpx;
+  top: 0rpx;
+  color: white;
+  font-size: 28rpx;
+  background-color: black;
+  padding: 4rpx;
+  opacity: 0.7;
+}
+.l-multi-image-class {
+  border-radius: 10rpx;
+}
+
+.mb40 {
+  margin-bottom: 40rpx;
+}
+
+.mr20 {
+  margin-right: 20rpx;
+}
