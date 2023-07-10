@@ -3,7 +3,8 @@
         "pages/index/index",
         "pages/category/index",
         "pages/detail/index",
-        "pages/diy/index"
+        "pages/diy/index",
+      "components/fabric-photo/fabric"
     ],
     "window": {
         "backgroundTextStyle": "light",

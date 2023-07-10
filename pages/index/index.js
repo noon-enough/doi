@@ -196,7 +196,4 @@ Page({
             path: `/pages/index/index`,
         }
     },
-    onLongTap(e) {
-        previewImage(e)
-    },
 })

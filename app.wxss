@@ -31,6 +31,7 @@ page {
 .wrapper {
   background-color: white;
   margin-bottom: 200rpx;
+  padding-bottom: 200rpx;
 }
 
 .category {

@@ -10,5 +10,11 @@ export default [
         text:"分类",
         iconPath:"https://ak48.qizue.com/assets/emotions/icons/tabbar/category-management.svg",
         selectedIconPath:"https://ak48.qizue.com/assets/emotions/icons/tabbar/category-management-active.svg"
+    },
+    {
+        pagePath:"/pages/diy/index",
+        text:"DIY表情包",
+        iconPath:"https://ak48.qizue.com/assets/emotions/icons/tabbar/kitchen-knife.png",
+        selectedIconPath:"https://ak48.qizue.com/assets/emotions/icons/tabbar/kitchen-knife-active.png"
     }
 ]

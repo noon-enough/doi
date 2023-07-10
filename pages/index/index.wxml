@@ -34,10 +34,11 @@
         <view class="imageContainer"
               data-url="{{emotion.url}}"
               bind:tap="onShowPicture"
-              bind:longpress="onLongTap"
               data-id="{{emotion.id}}"
               style="{{'height:' + itemHeight + 'rpx;width:' + multipleSize + 'rpx;'}}">
-          <image class="l-multi-image-class"
+          <image webp="{{ true }}"
+                 show-menu-by-longpress="{{ true }}"
+                 lazy-load="{{ true }}" class="l-multi-image-class"
                  style="{{'height:' + multipleSize + 'rpx;width:' + multipleSize + 'rpx;'}}"
                  src="{{emotion.url}}"
                  mode="{{multipleMode}}"/>
