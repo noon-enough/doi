@@ -33,5 +33,6 @@
                 </block>
             </view>
         </view>
+        <t-divider class="mb40" content="数据全部加载完毕" />
     </view>
 </t-pull-down-refresh>

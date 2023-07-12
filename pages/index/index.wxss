@@ -25,3 +25,14 @@ page {
     float: left;
     padding: 8rpx;
 }
+
+/*@media (prefers-color-scheme: dark) {*/
+/*    .hot-recommend .link {*/
+/*    }*/
+/*    .wrapper {*/
+/*        background-color: black;*/
+/*    }*/
+/*    .search {*/
+/*        background-color: rgb(17, 17, 17);*/
+/*    }*/
+/*}*/

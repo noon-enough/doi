@@ -7,8 +7,8 @@ Page({
         info: {},
         emotions: [],
         everyRowNumber: 4,
-        multipleSize: 160,
-        itemHeight: 160,
+        multipleSize: 164,
+        itemHeight: 164,
         gapRow: 20,
         gapColumn: 20,
         multipleMode: "aspectFill",
@@ -23,6 +23,8 @@ Page({
     onLoad: function (options) {
         let that = this,
             id = options.id  ?? 0
+
+        console.log('id', id, 'opt', options)
         if (id === 0) {
             historyBack()
             return
@@ -92,7 +94,7 @@ Page({
             info = that.data.info
         return {
             title: `【${info.name}】最全最热表情包，上班聊天都用她`,
-            path: `/pages/ detail/index?id=${info.id}`,
+            path: `/pages/detail/index?id=${info.id}`,
         }
     }
 });

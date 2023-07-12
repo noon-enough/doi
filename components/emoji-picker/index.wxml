@@ -1,0 +1,66 @@
+<view class="root flex flex-column">
+    <view class="nav padding top" data-positio="top" dir="ltr">
+        <view class="flex relative">
+            <view aria-selected="true" class="flex flex-grow flex-center selected">
+                <t-image height="24" width="24" src="https://ak48.qizue.com/assets/icons/emoji/history.png"></t-image>
+            </view>
+            <view aria-selected="true" class="flex flex-grow flex-center selected">
+                <t-image height="24" width="24" src="https://ak48.qizue.com/assets/icons/emoji/face.png"></t-image>
+            </view>
+            <view aria-selected="true" class="flex flex-grow flex-center selected">
+                <t-image height="24" width="24" src="https://ak48.qizue.com/assets/icons/emoji/cat.png"></t-image>
+            </view>
+            <view aria-selected="true" class="flex flex-grow flex-center selected">
+                <t-image height="24" width="24" src="https://ak48.qizue.com/assets/icons/emoji/apple.png"></t-image>
+            </view>
+            <view aria-selected="true" class="flex flex-grow flex-center selected">
+                <t-image height="24" width="24" src="https://ak48.qizue.com/assets/icons/emoji/soccer.png"></t-image>
+            </view>
+            <view aria-selected="true" class="flex flex-grow flex-center selected">
+                <t-image height="24" width="24" src="https://ak48.qizue.com/assets/icons/emoji/car.png"></t-image>
+            </view>
+            <view aria-selected="true" class="flex flex-grow flex-center selected">
+                <t-image height="24" width="24" src="https://ak48.qizue.com/assets/icons/emoji/tips.png"></t-image>
+            </view>
+            <view aria-selected="true" class="flex flex-grow flex-center selected">
+                <t-image height="24" width="24" src="https://ak48.qizue.com/assets/icons/emoji/tv.png"></t-image>
+            </view>
+            <view aria-selected="true" class="flex flex-grow flex-center selected">
+                <t-image height="24" width="24" src="https://ak48.qizue.com/assets/icons/emoji/flag.png"></t-image>
+            </view>
+            <view class="bar" style="width: 11.1111%; opacity: 1; transform: translateX(0%);"></view>
+        </view>
+        <view class="scroll flex-grow padding-lr">
+            <scroll-view scroll-y style="height: 180px">
+                <block wx:for="{{Data.originalCategories}}" wx:key="i" wx:for-index="i" wx:for-item="category">
+                    <view wx:if="{{category.newEmojis}}" class="category" data-id="{{category.id}}">
+                        <view class="relative" style="height: {{36 * category.newEmojis.length}}px;">
+                            <view
+                                    wx:for="{{category.newEmojis}}"
+                                    wx:for-item="emojis"
+                                    wx:for-index="j"
+                                    wx:key="j"
+                                    data-index="{{i}}" class="flex row" style="top: {{j * 36}}px;">
+                                <view
+                                        wx:for="{{emojis}}"
+                                        wx:for-item="emoji"
+                                        wx:for-index="e"
+                                        wx:key="e"
+                                        aria-label="{{emoji}}" type="button" class="flex flex-center flex-middle"  style="width: 36px; height: 36px; font-size: 24px; line-height: 0;">
+                                    <view aria-hidden="true" class="background" style="border-radius: 6px; background-color: rgba(155, 223, 88, 0.7);"></view>
+                                    <view class="emoji-mart-emoji"
+                                          data-emoji="{{Data.emojis[emoji].skins[0].native}}"
+                                          bind:tap="onEmoji">
+                                        <view style="font-size: 24px; font-family: EmojiMart, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Segoe UI&quot;, &quot;Apple Color Emoji&quot;, &quot;Twemoji Mozilla&quot;, &quot;Noto Color Emoji&quot;, &quot;Android Emoji&quot;;">
+                                            {{Data.emojis[emoji].skins[0].native}}
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </block>
+            </scroll-view>
+        </view>
+    </view>
+</view>

@@ -3,9 +3,65 @@
         text-selected-color="#50b089"
         list="{{list}}"
 />
-
-<imageEditor id='imageEditor' class="imageEditor"
-             imagePath="https://tft-images.qizue.com/bqb/emotions/5734/e23390aabc5f0b46f43cbc8b8228a9d9.png"
-             options="{{options}}"
-             bind:success="success"
-             bind:cancel="cancel"/>
+<view class="container">
+    <view class="canvas-tools">
+        <t-button theme="default"
+                  icon="https://ak48.qizue.com/assets/emotions/icons/upload-picture.svg"
+                  bind:tap="onAddImage"
+                  shape="square" size="medium" class="btn" aria-label="添加图片"></t-button>
+        <t-button theme="default"
+                  icon="https://ak48.qizue.com/assets/emotions/icons/text.svg"
+                  bind:tap="onAddText"
+                  shape="square" size="medium" class="btn" aria-label="添加文字"></t-button>
+        <t-button theme="default"
+                  icon="https://ak48.qizue.com/assets/emotions/icons/platte.svg"
+                  bind:tap="onChangeColor"
+                  shape="square" size="medium" class="btn" aria-label="调整字体颜色"></t-button>
+        <t-button theme="default"
+                  icon="https://ak48.qizue.com/assets/emotions/icons/clear.svg"
+                  bind:tap="onClearCanvas"
+                  shape="square" size="medium" class="btn" aria-label="清空画布"></t-button>
+        <t-button theme="default"
+                  icon="https://ak48.qizue.com/assets/emotions/icons/undo.svg"
+                  bind:tap="onUndo"
+                  shape="square" size="medium" class="btn" aria-label="后退"></t-button>
+        <t-button theme="default"
+                  icon="https://ak48.qizue.com/assets/emotions/icons/export.svg"
+                  bind:tap="onExport"
+                  shape="square" size="medium" class="btn" aria-label="后退"></t-button>
+    </view>
+    <view class="canvas-container">
+        <canvas-drag id="canvas-drag" enableUndo="{{true}}" graph="{{graph}}" height="{{canvas_height}}"></canvas-drag>
+    </view>
+    <emojiPicker bind:mantap="onEmoji" emoji="{{emojiData}}"></emojiPicker>
+    <t-dialog
+            visible="{{show_add_text_input}}"
+            title="添加文字"
+            confirm-btn="确定"
+            cancel-btn="取消"
+            bind:confirm="submitDialog"
+            bind:cancel="closeDialog"
+    >
+        <t-input
+                bind:blur="onInputBlur"
+                borderless
+                class="dialog-input"
+                clearable
+                slot="content"
+                placeholder="添加文案"
+                placeholder-class="placeholder"
+        />
+    </t-dialog>
+    <t-popup visible="{{show_color_picker}}" bind:visible-change="onVisibleChange" placement="bottom">
+        <view class="block">
+            <view class="header">
+                <view class="btn btn--cancel" aria-role="button">取消</view>
+                <view class="title">选择颜色</view>
+                <view class="btn btn--confirm" aria-role="button">确定</view>
+            </view>
+            <view class="content">
+                <color-picker class="color-picker" colorData="{{colorData}}" rpxRatio="{{rpxRatio}}" bindchangecolor="onChangeColor"></color-picker>
+            </view>
+        </view>
+    </t-popup>
+</view>
