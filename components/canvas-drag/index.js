@@ -2,7 +2,7 @@ const DELETE_ICON = './icon/close.png', // 删除按钮
     DRAG_ICON = './icon/scale.png', // 缩放按钮
     STROKE_COLOR = 'red',
     ROTATE_ENABLED = true, // 开启旋转
-    DEBUG_MODE = true // 打开调试后会渲染操作区域边框（无背景时有效）
+    DEBUG_MODE = false // 打开调试后会渲染操作区域边框（无背景时有效）
 
 let isMove = false; // 标识触摸后是否有移动，用来判断是否需要增加操作历史
 

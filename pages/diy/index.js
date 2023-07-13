@@ -6,8 +6,10 @@ const app = getApp()
 // index.js
 Page({
     data: {
+        fontColor: "black",
         rgb: 'red',
         canvas_height: 500,
+        canvas_width: 500,
         graph: {},
         emojiData: emojiData,
         list: app.globalData.tabbar,
@@ -57,12 +59,6 @@ Page({
         that.setData({
             show_add_text_input: true,
         })
-        // this.setData({
-        //     graph: {
-        //         type: 'text',
-        //         text: '🎅🏼',
-        //     }
-        // });
     },
     /**
      * 改变文字颜色
@@ -104,19 +100,6 @@ Page({
                 console.error(e);
             })
     },
-    /**
-     * 改变背景颜色
-     */
-    onChangeBgColor() {
-        CanvasDrag.changeBgColor('yellow');
-    },
-
-    /**
-     * 改变背景照片
-     */
-    onChangeBgImage() {
-        CanvasDrag.changeBgImage('../../assets/images/test.jpg');
-    },
     onClearCanvas:function(event){
         let that = this;
         that.setData({canvasBg:null});
@@ -142,6 +125,7 @@ Page({
             graph: {
                 type: 'text',
                 text: text,
+                color: that.data.fontColor,
             },
             show_add_text_input: false,
         })
@@ -155,5 +139,46 @@ Page({
             })
         }
     },
-    pickColor(e) {},
+    onShareAppMessage(options) {
+        let that = this
+        return {
+            title: `手动制造emoji表情包，最全最热表情包，上班聊天都用她`,
+            path: `/pages/diy/index`,
+        }
+    },
+    onPickerColor(e) {
+        let that = this,
+            color = e.currentTarget.dataset.color ?? "black"
+
+        switch (color) {
+            case "black":
+                color = "black"
+                break
+            case "white":
+                color = "white"
+                break
+            case "gray":
+                color = "gray"
+                break
+            case "red":
+                color = "red"
+                break
+            case "green":
+                color = "forestgreen"
+                break
+            case "orange":
+                color = "orange"
+                break
+            case "blue":
+                color = "deepskyblue"
+                break
+            case "purple":
+                color = "mediumpurple"
+                break
+        }
+
+        that.setData({
+            fontColor: color,
+        })
+    }
 });

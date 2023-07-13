@@ -1,5 +1,5 @@
 <view class="root flex flex-column">
-    <view class="nav padding top" data-positio="top" dir="ltr">
+    <view class="nav top" data-positio="top" dir="ltr">
         <view class="flex relative">
             <view aria-selected="true" class="flex flex-grow flex-center selected">
                 <t-image height="24" width="24" src="https://ak48.qizue.com/assets/icons/emoji/history.png"></t-image>
@@ -31,7 +31,7 @@
             <view class="bar" style="width: 11.1111%; opacity: 1; transform: translateX(0%);"></view>
         </view>
         <view class="scroll flex-grow padding-lr">
-            <scroll-view scroll-y style="height: 180px">
+            <scroll-view scroll-y style="height: 400px">
                 <block wx:for="{{Data.originalCategories}}" wx:key="i" wx:for-index="i" wx:for-item="category">
                     <view wx:if="{{category.newEmojis}}" class="category" data-id="{{category.id}}">
                         <view class="relative" style="height: {{36 * category.newEmojis.length}}px;">

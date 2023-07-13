@@ -12,11 +12,7 @@
         <t-button theme="default"
                   icon="https://ak48.qizue.com/assets/emotions/icons/text.svg"
                   bind:tap="onAddText"
-                  shape="square" size="medium" class="btn" aria-label="添加文字"></t-button>
-        <t-button theme="default"
-                  icon="https://ak48.qizue.com/assets/emotions/icons/platte.svg"
-                  bind:tap="onChangeColor"
-                  shape="square" size="medium" class="btn" aria-label="调整字体颜色"></t-button>
+                  shape="square" size="medium" class="btn" aria-label="添加文本"></t-button>
         <t-button theme="default"
                   icon="https://ak48.qizue.com/assets/emotions/icons/clear.svg"
                   bind:tap="onClearCanvas"
@@ -28,10 +24,11 @@
         <t-button theme="default"
                   icon="https://ak48.qizue.com/assets/emotions/icons/export.svg"
                   bind:tap="onExport"
-                  shape="square" size="medium" class="btn" aria-label="后退"></t-button>
+                  shape="square" size="medium" class="btn" aria-label="导出"></t-button>
     </view>
     <view class="canvas-container">
-        <canvas-drag id="canvas-drag" enableUndo="{{true}}" graph="{{graph}}" height="{{canvas_height}}"></canvas-drag>
+        <canvas-drag id="canvas-drag" enableUndo="{{true}}"
+                     graph="{{graph}}" width="{{canvas_width}}" height="{{canvas_height}}"></canvas-drag>
     </view>
     <emojiPicker bind:mantap="onEmoji" emoji="{{emojiData}}"></emojiPicker>
     <t-dialog
@@ -42,26 +39,25 @@
             bind:confirm="submitDialog"
             bind:cancel="closeDialog"
     >
-        <t-input
-                bind:blur="onInputBlur"
-                borderless
-                class="dialog-input"
-                clearable
-                slot="content"
-                placeholder="添加文案"
-                placeholder-class="placeholder"
-        />
-    </t-dialog>
-    <t-popup visible="{{show_color_picker}}" bind:visible-change="onVisibleChange" placement="bottom">
-        <view class="block">
-            <view class="header">
-                <view class="btn btn--cancel" aria-role="button">取消</view>
-                <view class="title">选择颜色</view>
-                <view class="btn btn--confirm" aria-role="button">确定</view>
-            </view>
-            <view class="content">
-                <color-picker class="color-picker" colorData="{{colorData}}" rpxRatio="{{rpxRatio}}" bindchangecolor="onChangeColor"></color-picker>
+        <view class="dialog-content" style="--td-input-default-text-color: {{fontColor}};" slot="content">
+            <t-input
+                    bind:blur="onInputBlur"
+                    borderless
+                    class="dialog-input"
+                    clearable
+                    placeholder="添加文案"
+                    placeholder-class="placeholder"
+            />
+            <view class="color-picker">
+                <view bind:tap="onPickerColor" data-color="black" class="basic black {{fontColor === 'black' ? 'active' : ''}}"></view>
+                <view bind:tap="onPickerColor" data-color="white"  class="basic white {{fontColor === 'white' ? 'active' : ''}}"></view>
+                <view bind:tap="onPickerColor" data-color="gray"  class="basic gray {{fontColor === 'gray' ? 'active' : ''}}"></view>
+                <view bind:tap="onPickerColor" data-color="red"  class="basic red {{fontColor === 'red' ? 'active' : ''}}"></view>
+                <view bind:tap="onPickerColor" data-color="green"  class="basic green {{fontColor === 'green' ? 'active' : ''}}"></view>
+                <view bind:tap="onPickerColor" data-color="orange"  class="basic orange {{fontColor === 'orange' ? 'active' : ''}}"></view>
+                <view bind:tap="onPickerColor" data-color="blue"  class="basic blue {{fontColor === 'blue' ? 'active' : ''}}"></view>
+                <view bind:tap="onPickerColor" data-color="purple"  class="basic purple {{fontColor === 'purple' ? 'active' : ''}}"></view>
             </view>
         </view>
-    </t-popup>
+    </t-dialog>
 </view>

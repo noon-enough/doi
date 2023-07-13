@@ -26,12 +26,41 @@ page {
     margin-bottom: 10rpx;
 }
 
+.canvas-tools .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    white-space: nowrap;
+    text-align: center;
+    background-image: none;
+    transition: all 0.3s;
+    touch-action: manipulation;
+    border-radius: 12rpx;
+    outline: none;
+    font-family: PingFang SC, Microsoft YaHei, Arial Regular, serif;
+    font-weight: 600;
+    vertical-align: top;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+    appearance: none;
+    color: currentColor;
+    background-color: #0000;
+    border: 0;
+    font-size: 32rpx;
+    padding-left: 32rpx;
+    padding-right: 32rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+}
+
 .container .btn{
     padding: 10rpx 20rpx;
     float:left;
     margin:10rpx;
-    /*border:solid 1px #dfdfdf;*/
-    /*border-radius: 10rpx;*/
 }
 
 .picker {
@@ -77,4 +106,57 @@ page {
 
 .btn--confirm {
     color: #0052d9;
+}
+
+.dialog-content .color-picker {
+    display: flex;
+    margin-top: 20rpx;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+
+.dialog-content .color-picker .basic {
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 50%;
+    margin-right: 20rpx;
+}
+
+.dialog-content .color-picker .basic.black {
+    background-color: black;
+}
+
+.dialog-content .color-picker .basic.white {
+    background-color: white;
+    border: gray 1px solid;
+}
+
+.dialog-content .color-picker .basic.gray {
+    background-color: gray;
+}
+
+.dialog-content .color-picker .basic.red {
+    background-color: red;
+}
+
+.dialog-content .color-picker .basic.green {
+    background-color: forestgreen;
+}
+
+.dialog-content .color-picker .basic.orange {
+    background-color: orange;
+}
+
+.dialog-content .color-picker .basic.blue {
+    background-color: deepskyblue;
+}
+
+.dialog-content .color-picker .basic.purple {
+    background-color: mediumpurple;
+}
+
+.dialog-content .color-picker .active {
+    border: cornflowerblue 6rpx solid;
 }

@@ -3,7 +3,6 @@
   "usingComponents": {
     "emojiPicker": "/components/emoji-picker/index",
     "canvas-drag": "/components/canvas-drag/index",
-    "color-picker":"/components/color-picker/color-picker",
     "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",
     "t-dialog": "/miniprogram_npm/tdesign-miniprogram/dialog/dialog",
     "t-input": "/miniprogram_npm/tdesign-miniprogram/input/input",
