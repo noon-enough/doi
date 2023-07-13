@@ -45,6 +45,7 @@
         "t-pull-down-refresh": "/miniprogram_npm/tdesign-miniprogram/pull-down-refresh/pull-down-refresh",
         "l-tab-bar": "/miniprogram_npm/lin-ui/tab-bar/index",
         "t-divider": "/miniprogram_npm/tdesign-miniprogram/divider/divider",
-        "t-image": "/miniprogram_npm/tdesign-miniprogram/image/image"
+        "t-image": "/miniprogram_npm/tdesign-miniprogram/image/image",
+        "t-back-top": "/miniprogram_npm/tdesign-miniprogram/back-top/back-top"
     }
 }

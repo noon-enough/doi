@@ -3,7 +3,16 @@
         text-selected-color="#50b089"
         list="{{list}}"
 />
-<view class="wrapper container">
+<t-pull-down-refresh
+        value="{{isRefresh}}"
+        loadingProps="{{loadingProps}}"
+        loadingTexts="{{['下拉刷新', '松手刷新', '正在刷新', '刷新完成']}}"
+        bind:refresh="onPullDownRefresh"
+        bind:scroll="onScroll"
+        bind:scrolltolower="onScrollToBottom"
+        using-custom-navbar="{{true}}"
+>
+<view class="wrapper container" id="container">
   <t-notice-bar visible="{{true}}" content="点击：可展示大图；长按：可分享、发送、保存"></t-notice-bar>
   <view class="search">
     <t-search
@@ -28,7 +37,7 @@
       </t-link>
     </block>
   </view>
-  <view class="category" style="display:flex; padding-top: 0rpx">
+  <view class="category" id="category" style="display:flex; padding-top: 0rpx">
     <view style="{{'display:inline-grid;grid-template-columns: repeat(' + everyRowNumber + ',' + multipleSize + 'rpx);grid-row-gap:' + gapRow + 'rpx;grid-column-gap:' + gapColumn + 'rpx;'}}">
       <block wx:for="{{hot}}" wx:for-index="index" wx:key="i" wx:for-item="emotion">
         <view class="imageContainer"
@@ -37,6 +46,7 @@
               data-id="{{emotion.id}}"
               style="{{'height:' + itemHeight + 'rpx;width:' + multipleSize + 'rpx;'}}">
           <image webp="{{ true }}"
+                 bindload="onImageLoad"
                  show-menu-by-longpress="{{ true }}"
                  lazy-load="{{ true }}" class="l-multi-image-class"
                  style="{{'height:' + multipleSize + 'rpx;width:' + multipleSize + 'rpx;'}}"
@@ -47,5 +57,5 @@
     </view>
   </view>
 </view>
-<t-back-top wx:if="{{show_backtop}}" theme="round" text="顶部" bind:to-top="onToTop"></t-back-top>
-
+  <t-back-top wx:if="{{show_backtop}}" theme="round" text="顶部"></t-back-top>
+</t-pull-down-refresh>

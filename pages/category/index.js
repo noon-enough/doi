@@ -16,6 +16,7 @@ Page({
         loadingProps: {
             size: '50rpx',
         },
+        show_backtop: false,
     },
     onLoad: function (options) {
         let that = this
@@ -54,11 +55,14 @@ Page({
         that.getClassify()
     },
     onScroll(e) {
-        const { scrollTop } = e.detail;
+        const { scrollTop } = e.detail,
+            that = this
 
-        this.setData({
-            backTopVisible: scrollTop > 100,
-        });
+        if (scrollTop >= 400) {
+            that.setData({
+                show_backtop: true,
+            })
+        }
     },
     onClassifyDetail(e) {
         let that = this,

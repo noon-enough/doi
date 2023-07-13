@@ -1,10 +1,7 @@
 {
-  "enablePullDownRefresh": true,
-  "onReachBottomDistance": 50,
   "navigationBarTitleText": "热门推荐",
   "usingComponents": {
     "t-search": "/miniprogram_npm/tdesign-miniprogram/search/search",
-    "t-back-top": "/miniprogram_npm/tdesign-miniprogram/back-top/back-top",
     "t-notice-bar" : "/miniprogram_npm/tdesign-miniprogram/notice-bar/notice-bar",
     "t-link": "/miniprogram_npm/tdesign-miniprogram/link/link"
   }

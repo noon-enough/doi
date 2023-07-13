@@ -69,10 +69,8 @@ Page({
         })
     },
     onShowPicture(e) {
-        previewImage(e)
-    },
-    onLongTap(e) {
-        previewImage(e)
+        let that = this
+        previewImage(e, that.data.urls)
     },
     onPullDownRefresh() {
         let that = this

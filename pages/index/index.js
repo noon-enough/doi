@@ -24,9 +24,13 @@ Page({
         isDone: false,
         show_backtop: false,
         recommend: [],
+        loadedCount: 0,
+        totalImages: 0,
+        contentHeight: 0,
     },
-    onLoad(query) {
+    onLoad(options) {
         let that = this
+        wx.showNavigationBarLoading()
         that.getHot()
         that.getRecommend()
     },
@@ -71,8 +75,6 @@ Page({
         that.setData({
             query: value,
         })
-        console.log('submitHandle', value)
-
         that.getHot()
     },
     getRecommend() {
@@ -118,30 +120,35 @@ Page({
             console.log('hot', res)
             let code = res.code ?? 200,
                 message = res.message ?? "",
-                data = res.data ?? []
+                data = res.data ?? [],
+                loadedCount = that.data.loadedCount
 
             if (code !== 200) {
                 showToast(message, {icon: "error"})
                 return
             }
-
+            // 图片加载进度
             if (page > 1) {
                 data = that.data.hot.concat(data)
+            } else {
+                loadedCount = 0
             }
 
             that.setData({
+                loadedCount: loadedCount,
+                totalImages: data.length,
                 isRefresh: false,
                 hot: data,
                 totalPage: res.extra.totalPage ?? 1,
             })
         }).catch(res => {
             showToast("数据拉取失败", {icon: "error"})
+        }).finally(() => {
+            wx.hideLoading()
         })
-        wx.hideLoading()
     },
     onPullDownRefresh() {
         let that = this
-        wx.startPullDownRefresh()
         that.setData({
             page: 1,
             isDone: false,
@@ -149,7 +156,17 @@ Page({
         })
         that.getRecommend()
         that.getHot()
-        wx.stopPullDownRefresh()
+    },
+    onScroll(e) {
+        let that = this,
+            { scrollTop } = e.detail,
+            windowHeight = app.globalData.system.height
+
+        if (scrollTop >= 400) {
+            that.setData({
+                show_backtop: true,
+            })
+        }
     },
     onReachBottom() {
         const
@@ -174,21 +191,6 @@ Page({
     onShowPicture(e) {
         previewImage(e)
     },
-    onToTop(e) {
-        console.log('backToTop', e)
-        wx.pageScrollTo({
-            scrollTop: 0
-        })
-    },
-    onPageScroll(e) {
-        let that = this,
-            scrollTop = e.scrollTop
-        if (scrollTop >= 100) {
-            that.setData({
-                show_backtop: true,
-            })
-        }
-    },
     onShareAppMessage(options) {
         let that = this
         return {
@@ -196,4 +198,20 @@ Page({
             path: `/pages/index/index`,
         }
     },
+    onScrollToBottom(e) {
+        let that = this
+        that.onReachBottom()
+    },
+    onImageLoad() {
+        const that = this,
+            loadedCount = that.data.loadedCount + 1;
+        that.setData({
+            loadedCount: loadedCount,
+        });
+
+        // 当所有图片加载完成时，隐藏加载框
+        if (loadedCount >= this.data.totalImages) {
+            wx.hideNavigationBarLoading()
+        }
+    }
 })

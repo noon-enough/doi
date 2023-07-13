@@ -35,4 +35,5 @@
         </view>
         <t-divider class="mb40" content="数据全部加载完毕" />
     </view>
+    <t-back-top wx:if="{{show_backtop}}" theme="round" text="顶部" />
 </t-pull-down-refresh>

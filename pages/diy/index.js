@@ -37,8 +37,7 @@ Page({
         },
         rpxRatio: 1
     },
-    onLoad() {
-    },
+    onLoad() {},
     onEmoji(e) {
         let that = this,
             text = e.detail.emoji ?? ""

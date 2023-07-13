@@ -55,16 +55,17 @@ function showToast(msg, {icon = 'success'}) {
     })
 }
 
-function previewImage(e = {}) {
+function previewImage(e = {}, views = []) {
     console.log('previewImage', e)
     let that = this,
         url = e.currentTarget.dataset.url ?? "",
-        id = e.currentTarget.dataset.id ?? 0
+        id = e.currentTarget.dataset.id ?? 0,
+        urls = views.length <= 0 ? [url] : views
     updateEmotion(id).then(res => {
         wx.previewImage({
             referrerPolicy: true,
             current: url, // 当前显示图片的http链接
-            urls: [url], // 需要预览的图片http链接列表
+            urls: urls, // 需要预览的图片http链接列表
             success: function(res ){
                 console.log('previewImage success', res)
             },

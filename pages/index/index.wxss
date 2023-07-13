@@ -3,7 +3,10 @@ page {
 }
 
 .container {
-    height: 100%;
+}
+
+.container .tabbar {
+    background-color: white;
 }
 
 .search {
