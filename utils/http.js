@@ -1,5 +1,5 @@
 import {REQUEST} from "miniprogram-request";
-import {API_DOMAIN} from "./config";
+import {API_DOMAIN, TOKEN} from "./config";
 
 
 REQUEST.Defaults.headers = {
@@ -9,14 +9,22 @@ REQUEST.Defaults.headers = {
 REQUEST.Defaults.baseURL = API_DOMAIN
 REQUEST.Listeners.onSend.push(console.log)
 
+function headers(h = {}) {
+    let token = wx.getStorageSync(TOKEN)
+    h['Authorization'] = `Basic ${token}`
+    return h
+}
+
 /**
  * Get 取数据
  * @returns {Promise<SuccessParam<wx.RequestOption>>}
  */
 function get(uri, params = {}) {
-    console.log(log("Request"), log("GET"), uri, log(JSON.stringify(params)))
+    console.log(log("Request"), log("GET"), uri, log(params))
 
-    return REQUEST.get(uri, {}, undefined).then(res => {
+    return REQUEST.get(uri, {}, {
+        headers: headers()
+    }).then(res => {
         if (res.statusCode === 200) {
             return Promise.resolve(res.data)
         } else {
@@ -32,13 +40,13 @@ function get(uri, params = {}) {
  * @returns {Promise<SuccessParam<wx.RequestOption>>}
  */
 function post(uri, params = {}) {
-    console.log(log("Request"), log("POST"), uri, log(JSON.stringify(params)))
+    console.log(log("Request"), log("POST"), uri, log(params))
 
-    return REQUEST.post(uri, JSON.parse(params), {
-        headers: {
+    return REQUEST.post(uri, params, {
+        headers: headers({
             'X-HTTP-Method-Override': 'POST',
             'Content-Type': 'application/json'
-        }
+        })
     }).then(res => {
         if (res.statusCode === 200) {
             return Promise.resolve(res.data)
@@ -55,13 +63,13 @@ function post(uri, params = {}) {
  * @returns {Promise<SuccessParam<wx.RequestOption>>}
  */
 function put(uri, params = {}) {
-    console.log(log("Request"), log("PUT"), uri, log(JSON.stringify(params)))
+    console.log(log("Request"), log("PUT"), uri, log(params))
 
-    return REQUEST.post(uri, JSON.parse(params), {
-        headers: {
+    return REQUEST.post(uri, params, {
+        headers: headers({
             'X-HTTP-Method-Override': 'PUT',
             'Content-Type': 'application/json'
-        }
+        })
     }).then(res => {
         if (res.statusCode === 200) {
             return Promise.resolve(res.data)
@@ -78,13 +86,13 @@ function put(uri, params = {}) {
  * @returns {Promise<SuccessParam<wx.RequestOption>>}
  */
 function d(uri, params = {}) {
-    console.log(log("Request"), log("DELETE"), uri, log(JSON.stringify(params)))
+    console.log(log("Request"), log("DELETE"), uri, log(params))
 
-    return REQUEST.post(uri, JSON.parse(params), {
-        headers: {
+    return REQUEST.post(uri, params, {
+        headers: headers({
             'X-HTTP-Method-Override': 'DELETE',
             'Content-Type': 'application/json'
-        }
+        })
     }).then(res => {
         if (res.statusCode === 200) {
             return Promise.resolve(res.data)

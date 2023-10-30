@@ -1,5 +1,6 @@
-import {FEEDBACK_APPID} from "./config";
+import {FEEDBACK_APPID, OPEN_ID, TOKEN} from "./config";
 import {updateEmotion} from "./api";
+
 
 /**
  * 跳转
@@ -73,8 +74,21 @@ function previewImage(e = {}, views = []) {
     }).catch(res => {})
 }
 
+function getOpenID() {
+    return wx.getStorageSync(OPEN_ID) ?? ""
+}
+
+function setToken(token = "") {
+    wx.setStorageSync(TOKEN, token)
+}
+
+function getToken() {
+    return wx.getStorageSync(TOKEN) ?? ""
+}
+
 /**
  *
  * @type {{goto: goto, heroDetail: heroDetail, getSessionName: (function(string=): string), showToast: showToast, getSession: (function(*): string), gotoFeedback: gotoFeedback, getSessionFromStorage: (function(): *), lineupDetail: lineupDetail}}
  */
-module.exports = {goto, gotoFeedback, showToast, gotoDetail, historyBack, previewImage}
+module.exports = {goto, gotoFeedback, showToast, gotoDetail, historyBack, previewImage,
+    getOpenID, setToken, getToken}

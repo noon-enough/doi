@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "男生私密记",
+  "usingComponents": {
+    "t-search": "/miniprogram_npm/tdesign-miniprogram/search/search",
+    "t-notice-bar" : "/miniprogram_npm/tdesign-miniprogram/notice-bar/notice-bar",
+    "t-link": "/miniprogram_npm/tdesign-miniprogram/link/link",
+    "calendar": "/components/calendar/calendar"
+  }
+}

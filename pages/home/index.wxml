@@ -1,0 +1,8 @@
+<l-tab-bar
+        text-color="#707070"
+        text-selected-color="#50b089"
+        list="{{list}}"
+/>
+<view class="wrapper">
+    <calendar spot="{{spot}}" bind:dateChange="onDateChange"></calendar>
+</view>

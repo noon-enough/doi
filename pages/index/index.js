@@ -34,6 +34,7 @@ Page({
         that.getHot()
         that.getRecommend()
     },
+    onReady(){},
     clearHandle(e) {
         const that = this
         that.setData({
@@ -192,10 +193,13 @@ Page({
         previewImage(e)
     },
     onShareAppMessage(options) {
-        let that = this
+        let that = this,
+            query = that.data.query,
+            title = `全网热门表情包公社，上班聊天都用她`,
+            url = `/pages/index/index`
         return {
-            title: `全网热门表情包公社，上班聊天都用她`,
-            path: `/pages/index/index`,
+            title: title,
+            path: url,
         }
     },
     onScrollToBottom(e) {

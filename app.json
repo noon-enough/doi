@@ -1,9 +1,13 @@
 {
     "pages": [
+        "pages/home/index",
         "pages/index/index",
         "pages/category/index",
         "pages/detail/index",
-        "pages/diy/index"
+        "pages/diy/index",
+        "pages/trend/index",
+        "pages/record/index",
+        "pages/mine/index"
     ],
     "lazyCodeLoading": "requiredComponents",
     "window": {
@@ -20,20 +24,26 @@
         "custom": true,
         "list": [
             {
-                "pagePath":"pages/index/index",
-                "text":"热门",
+                "pagePath":"pages/home/index",
+                "text":"首页",
                 "iconPath":"/assets/icons/tabbar/fire.png",
                 "selectedIconPath":"/assets/icons/tabbar/fire.png"
             },
             {
-                "pagePath":"pages/category/index",
-                "text":"分类",
+                "pagePath":"pages/trend/index",
+                "text":"趋势",
                 "iconPath":"/assets/icons/tabbar/category-management.png",
                 "selectedIconPath":"/assets/icons/tabbar/category-management.png"
             },
             {
-                "pagePath":"pages/diy/index",
-                "text":"DIY表情包",
+                "pagePath":"pages/record/index",
+                "text":"记录",
+                "iconPath":"/assets/icons/tabbar/category-management.png",
+                "selectedIconPath":"/assets/icons/tabbar/category-management.png"
+            },
+            {
+                "pagePath":"pages/mine/index",
+                "text":"我的",
                 "iconPath":"/assets/icons/tabbar/category-management.png",
                 "selectedIconPath":"/assets/icons/tabbar/category-management.png"
             }

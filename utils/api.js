@@ -20,4 +20,22 @@ function recommend(size = 10) {
     return get(`/emotions/recommend?size=${size}`);
 }
 
-module.exports = {classify, classifyDetail, updateEmotion, hot, recommend}
+/**
+ *
+ * @param data
+ * @returns {Promise<SuccessParam<wx.RequestOption>>}
+ */
+function login(data) {
+    return post(`/passport/login`, data)
+}
+
+function recodeList() {}
+
+function recode() {}
+
+function me() {
+    return get('/recode/me')
+}
+
+module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login,
+    recode, recodeList, me}

@@ -1,20 +1,32 @@
 export default [
     {
+        pagePath:"/pages/home/index",
+        text:"首页",
+        iconPath:"https://ak48.qizue.com/doi/icons/tabbar/home.svg",
+        selectedIconPath:"https://ak48.qizue.com/doi/icons/tabbar/home-active.svg"
+    },
+    {
+        pagePath:"/pages/trend/index",
+        text:"趋势",
+        iconPath:"https://ak48.qizue.com/doi/icons/tabbar/trend.svg",
+        selectedIconPath:"https://ak48.qizue.com/doi/icons/tabbar/trend-active.svg"
+    },
+    {
+        pagePath:"/pages/record/index",
+        text:"记录",
+        iconPath:"https://ak48.qizue.com/doi/icons/tabbar/record.svg",
+        selectedIconPath:"https://ak48.qizue.com/doi/icons/tabbar/record-active.svg"
+    },
+    {
         pagePath:"/pages/index/index",
-        text:"推荐",
+        text:"表情包",
         iconPath:"https://ak48.qizue.com/assets/emotions/icons/tabbar/fire.svg",
         selectedIconPath:"https://ak48.qizue.com/assets/emotions/icons/tabbar/fire-active.svg"
     },
     {
-        pagePath:"/pages/category/index",
-        text:"分类",
-        iconPath:"https://ak48.qizue.com/assets/emotions/icons/tabbar/category-management.svg",
-        selectedIconPath:"https://ak48.qizue.com/assets/emotions/icons/tabbar/category-management-active.svg"
-    },
-    {
-        pagePath:"/pages/diy/index",
-        text:"DIY表情包",
-        iconPath:"https://ak48.qizue.com/assets/emotions/icons/tabbar/kitchen-knife.png",
-        selectedIconPath:"https://ak48.qizue.com/assets/emotions/icons/tabbar/kitchen-knife-active.png"
+        pagePath:"/pages/mine/index",
+        text:"我的",
+        iconPath:"https://ak48.qizue.com/doi/icons/tabbar/mine.svg",
+        selectedIconPath:"https://ak48.qizue.com/doi/icons/tabbar/mine-active.svg"
     }
 ]
