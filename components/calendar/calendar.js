@@ -135,6 +135,7 @@ Component({
   lifetimes: {
     attached() {
       let now = this.data.defaultDate ? dayjs(this.data.defaultDate) : dayjs()
+      console.log('now', now)
       this.setDate(now.year(), now.month(), now.date())
     }
   },

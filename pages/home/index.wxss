@@ -1,0 +1,44 @@
+.title {
+    font-size: 30rpx;
+    font-weight: bold;
+    padding: 20rpx 32rpx;
+}
+
+.labelBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    padding: 20rpx 32rpx;
+    border-bottom: 1px solid #f1f1f1;
+    --td-input-vertical-padding: 0;
+}
+
+.labelBox text{
+    width: 140rpx;
+    height: 48rpx;
+    color: #646566;
+    font-size: 28rpx;
+}
+
+.box {
+    padding-left: 40rpx;
+    display: flex;
+    background-color: #fff;
+    justify-content: start;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    height: auto;
+    flex-flow:row wrap;
+}
+
+.checkbox {
+    height: auto;
+    width: 100%;
+}
+
+.margin {
+    margin-top: 40rpx;
+    margin-left: 32rpx;
+}

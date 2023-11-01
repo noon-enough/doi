@@ -1,8 +1,42 @@
-import {tabbar} from "./tabbar";
+import tabbar from "./tabbar";
 import {getToken, setToken, showToast} from "./utils/util";
-import {login} from "./utils/api";
+import {getPosture, getStatus, login} from "./utils/api";
+import CustomHook from "spa-custom-hooks";
+
+let globalData =  {
+    token: "",
+    openid: "",
+    users: {},
+    tabbar: tabbar,
+    system_info: {},
+    system: {
+        sdk_version: '',
+        width: 0,
+        height: 0
+    },
+    statusData: [],
+    postureData: [],
+}
+
+CustomHook.install({
+    'Status': {
+        name: 'statusData',
+        watchKey: 'statusData',
+        onUpdate(statusData) {
+            return statusData.length >= 1
+        }
+    },
+    'Posture': {
+        name: 'postureData',
+        watchKey: 'postureData',
+        onUpdate(postureData) {
+            return postureData.length >= 1
+        }
+    },
+}, globalData)
 
 App({
+    globalData,
     onLaunch(options) {
         let system = wx.getSystemInfoSync(),
             width = system.windowWidth,
@@ -66,22 +100,27 @@ App({
             sdk_version: sdk_version,
             system_info: systemInfo,
         }
+
+        if (token) {
+            getStatus().then(res => {
+                let data = res.data,
+                    code = res.code ?? 200
+
+                console.log('app.js', 'getStatus', data)
+                that.globalData.statusData = data
+            })
+            getPosture().then(res => {
+                let data = res.data,
+                    code = res.code ?? 200
+
+                console.log('app.js', 'getPosture', data)
+                that.globalData.postureData = data
+            })
+        }
     },
     onError(error) {
         console.error('got Error', error)
     },
     onPageNotFound(options) {
-    },
-    globalData: {
-        token: "",
-        openid: "",
-        users: {},
-        tabbar: tabbar,
-        system_info: {},
-        system: {
-            sdk_version: '',
-            width: 0,
-            height: 0
-        }
     }
 })

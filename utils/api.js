@@ -31,11 +31,21 @@ function login(data) {
 
 function recodeList() {}
 
-function recode() {}
+function recode(payload = {}) {
+    return post('/recode', payload)
+}
 
 function me() {
     return get('/recode/me')
 }
 
+function getStatus() {
+    return get("/status")
+}
+
+function getPosture() {
+    return get("/posture")
+}
+
 module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login,
-    recode, recodeList, me}
+    recode, recodeList, me, getStatus, getPosture}

@@ -86,9 +86,22 @@ function getToken() {
     return wx.getStorageSync(TOKEN) ?? ""
 }
 
+function getTimeDate() {
+    // 获取当前时间
+    let now = new Date();
+
+// 格式化当前时间为 "年/月/日 时:分:秒"
+    return now.getFullYear() + '/' +
+        ('0' + (now.getMonth() + 1)).slice(-2) + '/' +
+        ('0' + now.getDate()).slice(-2) + ' ' +
+        ('0' + now.getHours()).slice(-2) + ':' +
+        ('0' + now.getMinutes()).slice(-2) + ':' +
+        ('0' + now.getSeconds()).slice(-2)
+}
+
 /**
  *
  * @type {{goto: goto, heroDetail: heroDetail, getSessionName: (function(string=): string), showToast: showToast, getSession: (function(*): string), gotoFeedback: gotoFeedback, getSessionFromStorage: (function(): *), lineupDetail: lineupDetail}}
  */
 module.exports = {goto, gotoFeedback, showToast, gotoDetail, historyBack, previewImage,
-    getOpenID, setToken, getToken}
+    getOpenID, setToken, getToken, getTimeDate}

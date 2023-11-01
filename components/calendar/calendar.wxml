@@ -2,7 +2,11 @@
 <view class="calendar">
   <view class="title flex">
     <view class="flex">
-      <picker value="{{selectDay.year+'-'+(selectDay.month+1)}}" bindchange="editMonth" mode="date" fields="month" class="year-month">{{selectDay.year}}.{{selectDay.month>8?selectDay.month+1:"0"+(selectDay.month+1)}}</picker>
+      <picker value="{{selectDay.year+'-'+(selectDay.month+1)}}"
+              bindchange="editMonth"
+              mode="date"
+              fields="month"
+              class="year-month">{{selectDay.year}}.{{selectDay.month>8?selectDay.month+1:"0"+(selectDay.month+1)}}</picker>
       <view class="last-icon" bindtap="lastMonth"> </view>
       <view class="next-icon" bindtap="nextMonth"> </view>
     </view>
@@ -27,7 +31,12 @@
     <view class="date-group" style="height:{{open? dateList.length/7*72 : 72}}rpx;">
       <view class="flex-start flex-wrap date-transform" style="transform: translateY({{open?0:-72*transform}}rpx);">
         <view wx:for="{{dateList}}" wx:key="dateList" class="day">
-          <view class="bg {{(item.year === selectDay.year && item.month === selectDay.month) ?'': 'other-month'}} {{item.dateString === selectDay.dateString?'select':''}}" catchtap="selectChange" data-date="{{item.date}}" data-year="{{item.year}}" data-month="{{item.month}}" data-date-string="{{item.dateString}}">
+          <view class="bg {{(item.year === selectDay.year && item.month === selectDay.month) ?'': 'other-month'}} {{item.dateString === selectDay.dateString?'select':''}}"
+                catchtap="selectChange"
+                data-date="{{item.date}}"
+                data-year="{{item.year}}"
+                data-month="{{item.month}}"
+                data-date-string="{{item.dateString}}">
             {{item.date}}
           </view>
           <view class="spot" wx:if="{{item.spot}}"></view>

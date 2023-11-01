@@ -4,6 +4,15 @@
     "t-search": "/miniprogram_npm/tdesign-miniprogram/search/search",
     "t-notice-bar" : "/miniprogram_npm/tdesign-miniprogram/notice-bar/notice-bar",
     "t-link": "/miniprogram_npm/tdesign-miniprogram/link/link",
-    "calendar": "/components/calendar/calendar"
+    "calendar": "/components/calendar/calendar",
+    "t-slider": "/miniprogram_npm/tdesign-miniprogram/slider/slider",
+    "t-switch": "/miniprogram_npm/tdesign-miniprogram/switch/switch",
+    "t-rate": "/miniprogram_npm/tdesign-miniprogram/rate/rate",
+    "t-radio": "/miniprogram_npm/tdesign-miniprogram/radio/radio",
+    "t-radio-group": "/miniprogram_npm/tdesign-miniprogram/radio-group/radio-group",
+    "t-textarea": "/miniprogram_npm/tdesign-miniprogram/textarea/textarea",
+    "t-input": "/miniprogram_npm/tdesign-miniprogram/input/input",
+    "t-checkbox": "/miniprogram_npm/tdesign-miniprogram/checkbox/checkbox",
+    "t-checkbox-group": "/miniprogram_npm/tdesign-miniprogram/checkbox-group/checkbox-group"
   }
 }
