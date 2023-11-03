@@ -1,4 +1,11 @@
 {
+  "navigationBarTitleText": "趋势与统计",
   "usingComponents": {
+    "t-row": "/miniprogram_npm/tdesign-miniprogram/row/row",
+    "t-col": "/miniprogram_npm/tdesign-miniprogram/col/col",
+    "t-tag": "/miniprogram_npm/tdesign-miniprogram/tag/tag",
+    "t-check-tag": "/miniprogram_npm/tdesign-miniprogram/check-tag/check-tag",
+    "t-progress": "/miniprogram_npm/tdesign-miniprogram/progress/progress",
+    "qiun-wx-ucharts": "/miniprogram_npm/@qiun/wx-ucharts"
   }
 }

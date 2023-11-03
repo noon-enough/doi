@@ -1,5 +1,5 @@
 page {
-  background: white;
+  background: var(--white);
 
   --blue: #007bff;
   --indigo: #6610f2;
@@ -29,7 +29,7 @@ page {
 }
 
 .wrapper {
-  background-color: white;
+  background-color: var(--white);
   margin-bottom: 200rpx;
   padding-bottom: 200rpx;
 }
@@ -44,7 +44,7 @@ page {
 
 .imageContainer .username {
   position: absolute;
-  color: black;
+  color: var(--dark);
   font-size: 30rpx;
   overflow: hidden;
   text-overflow:ellipsis;
@@ -54,11 +54,11 @@ page {
 
 .imageContainer .geo {
   position: absolute;
-  right: 0rpx;
-  top: 0rpx;
-  color: white;
+  right: 0;
+  top: 0;
+  color: var(--white);
   font-size: 28rpx;
-  background-color: black;
+  background-color: var(--dark);
   padding: 4rpx;
   opacity: 0.7;
 }
@@ -72,4 +72,18 @@ page {
 
 .mr20 {
   margin-right: 20rpx;
+}
+
+
+view, swiper {
+  box-sizing: unset;
+}
+
+.wrapper .title {
+  font-size: 30rpx;
+  padding: 20rpx 32rpx;
+}
+
+.text-center {
+  text-align: center;
 }

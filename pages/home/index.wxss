@@ -1,8 +1,4 @@
-.title {
-    font-size: 30rpx;
-    font-weight: bold;
-    padding: 20rpx 32rpx;
-}
+
 
 .labelBox{
     display: flex;
@@ -10,7 +6,7 @@
     justify-content: start;
     align-items: center;
     padding: 20rpx 32rpx;
-    border-bottom: 1px solid #f1f1f1;
+    border-bottom: 2rpx solid #f1f1f1;
     --td-input-vertical-padding: 0;
 }
 
@@ -41,4 +37,113 @@
 .margin {
     margin-top: 40rpx;
     margin-left: 32rpx;
+}
+
+.today-list {
+    padding: 20rpx 32rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.today-list .list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.today-list .list .item {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20rpx;
+    width: calc(100% / 3)
+}
+
+.today-list .list .item .badge {
+    height: auto;
+    width: 10rpx;
+    margin-right: 10rpx;
+    border-radius: 8rpx;
+}
+
+.today-list .list .item .right {
+    flex: 1;
+}
+
+
+.today-list .list .item .right .comment {
+    font-size: 30rpx;
+}
+
+.today-list .list .item .right .tips {
+    font-size: 26rpx;
+    color: var(--secondary);
+    margin-top: 8rpx;
+}
+
+.today-list .status {
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: space-between;
+    align-items: center;
+    /* justify-items: center; */
+    /* align-content: center; */
+    margin-top: 20rpx;
+}
+
+.today-list .status .item {
+    display: flex;
+    font-size: 26rpx;
+    color: grey;
+    padding-left: 24rpx;
+    justify-content: center;
+    align-items: center;
+}
+
+.today-list .status .item .badge {
+    width: 20rpx;
+    height: 20rpx;
+    background: rgba(255, 255, 255, 0.68);
+    border-radius: 20rpx;
+    margin-right: 8rpx;
+}
+
+.today-list .status .item .badge.badge-0, .today-list .list .item .badge.badge-0 {
+    background: var(--blue);
+}
+
+.today-list .status .item .badge.badge-1, .today-list .list .item .badge.badge-1 {
+    background: var(--red);
+}
+
+.today-list .status .item .badge.badge-2, .today-list .list .item .badge.badge-2 {
+    background:  var(--pink);
+}
+
+.today-list .status .item .badge.badge-3, .today-list .list .item .badge.badge-3 {
+    background: var(--yellow);
+}
+
+.today-list .status .item .badge.badge-4, .today-list .list .item .badge.badge-4 {
+    background: var(--cyan);
+}
+
+.wrapper .progress {
+    padding: 20rpx 32rpx;
+}
+
+.wrapper .progress .item {
+    margin-bottom: 20rpx;
+}
+
+.wrapper .progress .description {
+    font-size: 26rpx;
+    color: var(--secondary);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10rpx;
+}
+
+.wrapper .progress .item .percentage {
+    font-size: 26rpx;
+    color: var(--secondary);
 }

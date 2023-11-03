@@ -1,0 +1,43 @@
+.wrapper .area-op-content .timer {
+    margin-top: 40rpx;
+    font-size: 70rpx;
+    font-weight: bold;
+}
+
+.wrapper .area-op-content .options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40rpx;
+}
+
+.wrapper .area-op-content .options .left {
+    display: flex;
+    flex-direction: column;
+    margin-right: 40rpx;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper .area-op-content .options .right {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40rpx;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*https://ashe-1251170538.cos.ap-beijing.myqcloud.com/doi/icons/pause.svg*/
+.wrapper .area-op-content .options .play,
+.wrapper .area-op-content .options .replay,
+.wrapper .area-op-content .options .pause {
+    width: 80rpx;
+    height: 80rpx;
+}
+
+.wrapper .area-op-content .options .name {
+    font-size: 30rpx;
+    margin-top: 20rpx;
+    color: var(--secondary);
+}

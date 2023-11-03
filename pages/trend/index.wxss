@@ -1,0 +1,117 @@
+.wrapper .describe {
+    font-size: 26rpx;
+    padding: 20rpx 32rpx;
+    color: var(--secondary);
+}
+
+.wrapper .content, .wrapper .status {
+    padding: 20rpx 32rpx;
+}
+
+
+.dark, .light {
+    background-clip: content-box;
+    font-size: 28rpx;
+    line-height: 80rpx;
+    margin-bottom: 20rpx;
+    text-align: center;
+}
+
+.wrapper .content .name {
+    font-size: 26rpx;
+}
+
+.wrapper .content .info {
+    font-size: 28rpx;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+}
+
+.wrapper .content .info .strong {
+    font-size: 30rpx;
+    font-weight: bold;
+    margin-right: 8rpx;
+}
+
+.wrapper .times {
+    padding: 28rpx;
+}
+
+.wrapper .times .margin-16:not(:last-child) {
+    margin-right: 32rpx;
+}
+
+.wrapper .times .map {
+    width: 100%;
+    margin-top: 40rpx;
+}
+
+.wrapper .times .map .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+}
+
+.wrapper .times .map  .progress {
+    background-color: red;
+}
+
+.wrapper .times .map .info {
+    font-size: 26rpx;
+    color: var(--secondary);
+}
+
+.t-progress__canvas--circle {
+    position: relative;
+    width: 140rpx;
+    height: 140rpx;
+    border-radius: var(--td-radius-circle, 50%);
+}
+
+.t-progress__canvas--circle .t-progress__canvas--inner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 8rpx * 2);
+    height: calc(100% - 8rpx * 2);
+    border-radius: var(--td-radius-circle, 50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--td-progress-circle-inner-bg-color, var(--td-font-white-1, #ffffff));
+}
+
+.t-progress__info {
+    margin-left: var(--td-spacer, 16rpx);
+    color: var(--td-progress-info-dark-color, var(--td-text-color-primary, var(--td-font-gray-1, rgba(0, 0, 0, 0.9))));
+    white-space: nowrap;
+    display: inline-flex;
+}
+
+.t-progress__canvas--circle .t-progress__info {
+    margin: 0;
+    font-size: 30rpx;
+    line-height: 56rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.wrapper .status {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper .status .times {
+    display: flex;
+    flex-direction: row;
+}

@@ -4,75 +4,58 @@
         list="{{list}}"
 />
 <view class="wrapper">
-    <calendar spot="{{spot}}" bind:dateChange="onDateChange"></calendar>
-    <view class="title">最近30天做爱日历</view>
-    <view class="title">最近10次时长统计</view>
-
+    <calendar id="calendar"
+              marks="{{marks}}"
+              darkmode="{{false}}" vibrate="{{false}}"
+              bindchange="onCalendarChange"
+              bindload="onCalendarLoad" />
+    <block wx:if="{{today.length}}">
+        <view class="today-list">
+            <view class="list">
+                <view class="item" wx:for="{{today}}" wx:for-item="item" wx:for-index="i" wx:key="id">
+                    <view class="badge badge-{{item.status}}"></view>
+                    <view class="right">
+                        <view class="comment">{{item.comment === '' ? '(无备注)': item.comment}}</view>
+                        <view class="tips">
+                            时长：{{item.duration}}''
+                        </view>
+                        <view class="tips">
+                            体验：{{item.star}} 星
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="status">
+                <view class="item" wx:for="{{status}}" wx:key="key" wx:for-index="key" wx:for-item="item">
+                    <view class="badge badge-{{key}}"></view>
+                    <view class="name">{{item}}</view>
+                </view>
+            </view>
+        </view>
+    </block>
+    <t-divider />
+    <block wx:if="{{last_ten_records.length}}">
+        <view class="title">最近10次时长统计</view>
+        <view class="progress">
+            <view class="item"
+                  wx:key="id"
+                  wx:for-index="key"
+                  wx:for-item="item"
+                  wx:for="{{last_ten_records}}">
+                <view class="description">
+                    <view class="comment">{{item.comment === "" ? '(无备注)' : item.comment}}</view>
+                    <view class="comment">
+                        <text class="mr20">时长：{{item.duration}}''</text>
+                        <text>体验：{{item.star}}星</text>
+                    </view>
+                </view>
+                <t-progress percentage="{{item.percentage}}"
+                            t-class-label="percentage"
+                            label="" />
+            </view>
+        </view>
+    </block>
+    <t-divider />
     <view class="title">添加做爱事件</view>
-    <view class="labelBox">
-        <text>时间：</text>
-        <view>{{recode.create_time}}</view>
-    </view>
-    <view class="labelBox">
-        <text>时长：</text>
-        <t-slider defaultValue="{{recode.duration}}"
-                  label="${value}''" style="width: 100%"
-                  max="180"
-                  step="{{1}}" min="1"
-                  bind:change="onDurationChange" />
-    </view>
-    <view class="labelBox">
-        <text>关注：</text>
-        <t-switch defaultValue="{{!!recode.watcher}}" bind:change="onWatcherChange"/>
-    </view>
-    <view class="labelBox">
-        <text>刺激度：</text>
-        <t-rate value="{{recode.star}}" bind:change="onStarChange" />
-    </view>
-    <view class="labelBox">
-        <text>状态：</text>
-        <t-radio-group value="{{recode.status}}" borderless t-class="checkbox" bind:change="onStatusChange">
-            <block wx:if="{{status.length}}">
-                <t-radio wx:for="{{status}}"
-                         wx:for-index="key"
-                         wx:for-item="item"
-                         block="{{false}}"
-                         wx:key="key"
-                         checked="{{recode.status === key}}"
-                         style="padding: 8rpx 8rpx 8rpx 0"
-                         label="{{item}}" value="{{key}}" />
-            </block>
-        </t-radio-group>
-    </view>
-    <view class="labelBox">
-        <text>姿势：</text>
-        <t-checkbox-group t-class="checkbox" borderless
-                          bind:change="onPostureChange"
-                          defaultValue="{{recode.posture}}">
-            <block wx:if="{{posture.length}}">
-                <t-checkbox wx:for="{{posture}}"
-                            wx:for-item="item"
-                            wx:key="id"
-                            wx:for-index="key"
-                            icon="rectangle"
-                            style="padding: 8rpx 8rpx 8rpx 0"
-                            block="{{false}}" value="{{item.id}}" label="{{item.name}}" />
-            </block>
-        </t-checkbox-group>
-    </view>
-    <view class="labelBox">
-        <text>备注：</text>
-        <t-input placeholder="输入备注" type="text" value="{{recode.comment}}" borderless="{{true}}" bind:change="onCommentChange" tips="可以对此次事件做个备忘录" />
-    </view>
-<!--    <view class="labelBox">-->
-<!--        <text>对象：</text>-->
-<!--        <t-input placeholder="输入对象名字" type="text" borderless="{{true}}" tips="你记录此次事件的对象"/>-->
-<!--    </view>-->
-    <view class="submitButton">
-        <t-button theme="primary" block icon="{{submit_loading ? '' : 'send'}}" type="submit"
-                  bind:tap="onSubmit"
-                  loading="{{submit_loading}}"
-                  disabled="{{submit_loading}}"
-                  content="确认保存" size="medium" class="margin"></t-button>
-    </view>
+    <record recode="{{recode}}" status="{{status}}" posture="{{posture}}"></record>
 </view>

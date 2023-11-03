@@ -1,5 +1,5 @@
 import tabbar from "./tabbar";
-import {getToken, setToken, showToast} from "./utils/util";
+import {getLocalInfo, getToken, setLocalInfo, setToken, showToast} from "./utils/util";
 import {getPosture, getStatus, login} from "./utils/api";
 import CustomHook from "spa-custom-hooks";
 
@@ -89,9 +89,15 @@ App({
                         that.globalData.users = users
 
                         setToken(token)
+                        setLocalInfo(users)
                     })
                 },
             });
+        } else {
+            let users = getLocalInfo()
+
+            that.globalData.token = token
+            that.globalData.users = users
         }
 
         that.globalData.system = {

@@ -1,6 +1,5 @@
-import {FEEDBACK_APPID, OPEN_ID, TOKEN} from "./config";
+import {FEEDBACK_APPID, OPEN_ID, TOKEN, USERS} from "./config";
 import {updateEmotion} from "./api";
-
 
 /**
  * 跳转
@@ -13,6 +12,10 @@ function goto(url) {
     })
 }
 
+/**
+ *
+ * @param id
+ */
 function gotoDetail(id = 0) {
     goto(`/pages/detail/index?id=${id}`)
 }
@@ -86,11 +89,37 @@ function getToken() {
     return wx.getStorageSync(TOKEN) ?? ""
 }
 
+
+function setLocalInfo(users = {}) {
+    wx.setStorageSync(USERS, users)
+}
+
+function getLocalInfo() {
+    return wx.getStorageSync(USERS) ?? {}
+}
+
+function getLocalUid() {
+    let users = getLocalInfo(),
+        uid = users.uid ?? 0
+
+    console.log('getLocalUid users', users)
+    uid = parseInt(uid)
+    return uid
+}
+
+function getDayDate() {
+    // 获取当前时间
+    let now = new Date();
+
+    // 格式化当前时间为 "xx日 时:分"
+    return  ('0' + now.getDate()).slice(-2)  + '日' + ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2)
+}
+
 function getTimeDate() {
     // 获取当前时间
     let now = new Date();
 
-// 格式化当前时间为 "年/月/日 时:分:秒"
+    // 格式化当前时间为 "年/月/日 时:分:秒"
     return now.getFullYear() + '/' +
         ('0' + (now.getMonth() + 1)).slice(-2) + '/' +
         ('0' + now.getDate()).slice(-2) + ' ' +
@@ -99,9 +128,14 @@ function getTimeDate() {
         ('0' + now.getSeconds()).slice(-2)
 }
 
-/**
- *
- * @type {{goto: goto, heroDetail: heroDetail, getSessionName: (function(string=): string), showToast: showToast, getSession: (function(*): string), gotoFeedback: gotoFeedback, getSessionFromStorage: (function(): *), lineupDetail: lineupDetail}}
- */
+function formatDateToYYYYMMDD(inputDate) {
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 增加零填充
+    const day = date.getDate().toString().padStart(2, '0'); // 增加零填充
+    return `${year}-${month}-${day}`;
+}
+
 module.exports = {goto, gotoFeedback, showToast, gotoDetail, historyBack, previewImage,
-    getOpenID, setToken, getToken, getTimeDate}
+    getOpenID, setToken, getToken, getTimeDate, setLocalInfo, getLocalInfo, getLocalUid,
+    formatDateToYYYYMMDD, getDayDate}

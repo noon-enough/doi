@@ -42,6 +42,12 @@
                 "selectedIconPath":"/assets/icons/tabbar/category-management.png"
             },
             {
+                "pagePath":"pages/index/index",
+                "text":"表情包",
+                "iconPath":"/assets/icons/tabbar/category-management.png",
+                "selectedIconPath":"/assets/icons/tabbar/category-management.png"
+            },
+            {
                 "pagePath":"pages/mine/index",
                 "text":"我的",
                 "iconPath":"/assets/icons/tabbar/category-management.png",
