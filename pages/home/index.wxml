@@ -57,5 +57,7 @@
     </block>
     <t-divider />
     <view class="title">添加做爱事件</view>
-    <record recode="{{recode}}" status="{{status}}" posture="{{posture}}"></record>
+    <record
+            bind:submit="onSubmit"
+            recode="{{recode}}" status="{{status}}" posture="{{posture}}"></record>
 </view>

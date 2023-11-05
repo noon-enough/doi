@@ -1,8 +1,10 @@
+import {getTimeDate, showToast} from "../../utils/util";
+import {recode} from "../../utils/api";
 
 const app = getApp()
 Page({
     data: {
-        is_show_record: false,
+        is_show_submit: false,
         action: 'play',
         h:'00',
         m:'00',
@@ -11,6 +13,33 @@ Page({
         list: app.globalData.tabbar,
         num: 1,
         duration: 1,
+        status: [],
+        posture: [],
+        recode: {
+            create_time: getTimeDate(),
+            watcher: false,
+            duration: 10,
+            comment: "",
+            star: 3,
+            status: 4,
+            posture: [],
+        },
+    },
+    onLoadStatus() {
+        let that = this,
+            status = app.globalData.statusData ?? []
+
+        that.setData({
+            status: status,
+        })
+    },
+    onLoadPosture() {
+        let that = this,
+            posture = app.globalData.postureData ?? []
+
+        that.setData({
+            posture: posture,
+        })
     },
     onLoad: function (options) {
         let that = this
@@ -69,6 +98,11 @@ Page({
             duration += 1
         }
         console.log('h', h, 'm', m, 's', s, 'duration', duration)
+        that.setData({
+            is_show_submit: true,
+            ['recode.duration']: duration,
+            ['recode.create_time']: getTimeDate(),
+        })
     },
     queryTime(){
         let that = this,
@@ -101,5 +135,44 @@ Page({
             let numVal = that.data.num + 1;
             that.setData({ num: numVal })
         },1000)
+    },
+    onSubmit: function(e) {
+        let that = this,
+            data = e.detail
+
+        wx.showLoading()
+        that.setData({
+            submit_loading: true,
+        })
+        data.create_time = (new Date(data.create_time)).getTime() / 1000;
+
+        console.log('data', data)
+        recode(data).then(res => {
+            console.log('recode', res)
+            let code = res.code,
+                data = res.data
+            if (code !== 200) {
+                showToast(res.message ?? "非法操作", {icon: "error"})
+                return false
+            }
+            showToast("记录成功，保持哦～～", {icon: "success"})
+            // 还原
+            that.setData({
+                recode: {
+                    create_time: getTimeDate(),
+                    watcher: false,
+                    duration: 10,
+                    comment: "",
+                    star: 3,
+                    status: 4,
+                    posture: [],
+                },
+            })
+        }).finally(() => {
+            wx.hideLoading()
+            that.setData({
+                submit_loading: false,
+            })
+        })
     },
 });

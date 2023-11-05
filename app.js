@@ -6,7 +6,10 @@ import CustomHook from "spa-custom-hooks";
 let globalData =  {
     token: "",
     openid: "",
-    users: {},
+    users: {
+        uid: 0,
+    },
+    uid: 0,
     tabbar: tabbar,
     system_info: {},
     system: {
@@ -19,6 +22,22 @@ let globalData =  {
 }
 
 CustomHook.install({
+    'Login':{
+        name:'Login',
+        watchKey: 'token',
+        onUpdate(val){
+            //有token则触发此钩子
+            return !!val;
+        }
+    },
+    'Users':{
+        name:'Users',
+        watchKey: 'users.uid',
+        onUpdate(val){
+            //获取到userinfo里的userId则触发此钩子
+            return !!val;
+        }
+    },
     'Status': {
         name: 'statusData',
         watchKey: 'statusData',
@@ -62,7 +81,7 @@ App({
                 'envVersion': accountInfo.envVersion,
             }
 
-        console.log('wx.getAccountInfoSync()', wx.getAccountInfoSync())
+        console.log('wx.getAccountInfoSync()', wx.getAccountInfoSync(), 'systemInfo', systemInfo)
         let token = getToken()
         if (token === "") {
             wx.login({
@@ -87,6 +106,7 @@ App({
 
                         that.globalData.token = token
                         that.globalData.users = users
+                        that.globalData.uid = users.uid ?? 0
 
                         setToken(token)
                         setLocalInfo(users)
@@ -105,6 +125,7 @@ App({
             height: height,
             sdk_version: sdk_version,
             system_info: systemInfo,
+            is_login: !!token,
         }
 
         if (token) {
@@ -128,5 +149,11 @@ App({
         console.error('got Error', error)
     },
     onPageNotFound(options) {
-    }
+    },
+    onShowLogin(){
+        console.log('app.js页onShowLogin');
+    },
+    onLaunchLogin(){
+        console.log('app.js页onLaunchLogin');
+    },
 })

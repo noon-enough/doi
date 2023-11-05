@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "热门推荐",
+  "navigationBarTitleText": "热门表情包推荐",
   "usingComponents": {
     "t-search": "/miniprogram_npm/tdesign-miniprogram/search/search",
     "t-notice-bar" : "/miniprogram_npm/tdesign-miniprogram/notice-bar/notice-bar",

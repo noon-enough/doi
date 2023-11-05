@@ -18,5 +18,12 @@
                 <view class="name">重置</view>
             </view>
         </view>
+        <block wx:if="{{is_show_submit}}">
+            <t-divider />
+            <record
+                    class="mt20"
+                    bind:submit="onSubmit"
+                    recode="{{recode}}" status="{{status}}" posture="{{posture}}"></record>
+        </block>
     </view>
 </view>

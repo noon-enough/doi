@@ -23,6 +23,29 @@ Page({
         },
         submit_loading: false,
     },
+    onLoadLogin(options){
+        // 已经登录，可以走依赖token的逻辑了
+        console.log('首页的onLoadLogin',options,`{"token":"${app.globalData.token}"}`);
+    },
+    onShowLogin(options){
+        // 每次显示页面时都会执行的逻辑在这里
+        console.log('首页的onShowLogin',options,`{"token":"${app.globalData.token}"}`);
+    },
+    onLoadUsers(options){
+        const userinfo = JSON.stringify(app.globalData.users)
+        // 拿到用户信息了，可以走依赖用户信息的逻辑了
+        console.log('首页的onLoadUsers',options,userinfo);
+    },
+    onReadyUsers(options){
+        const userinfo = JSON.stringify(app.globalData.users)
+        // 渲染完毕，并且拿到了用户信息，可以去走类似在canvas上渲染用户头像的逻辑了
+        console.log('首页的onReadyUser',options,userinfo);
+    },
+    onReadyShowUsers(options){
+        const userinfo = JSON.stringify(app.globalData.users)
+        // 渲染完完毕 && 每次显示页面 && 拿到用户信息
+        console.log('首页的onReadyShowUser',options,userinfo);
+    },
     onLoadStatus() {
         let that = this,
             status = app.globalData.statusData ?? []
@@ -42,10 +65,14 @@ Page({
     onLoad: function (options) {
         let that = this,
             timestamp = getTimeDate(),
-            uid = app.globalData.users.uid ?? 0,
-            status = app.globalData.statusData
+            uid = app.globalData.users.uid ?? 0
         console.log('app.globalData.users', app.globalData.users)
-        // 今天的日期
+        uid = parseInt(uid)
+        that.onLoadData(uid, timestamp)
+    },
+    onLoadData(uid, timestamp) {
+        let that = this,
+            status = app.globalData.statusData
         wx.showLoading()
         recodeList(uid, timestamp).then(res => {
             console.log('recodeList', res)
@@ -119,59 +146,37 @@ Page({
     onDateChange: function(e) {
         console.log('onDateChange', e)
     },
-    onDurationChange: function(e) {
-        let that = this,
-            duration = e.detail.value ?? 10
-        duration = parseInt(duration)
-        that.setData({
-            ['recode.duration']: duration
-        })
+    onCalendarLoad: function(e) {
+        const calendar = this.selectComponent('#calendar');
+        console.log('calendar-load', calendar);
     },
-    onWatcherChange: function(e) {
+    onCalendarChange: function(e) {
+        console.log('onCalendarChange', e)
         let that = this,
-            watcher = !!e.detail.value
-        that.setData({
-            ['recode.watcher']: watcher
+            last_30_records = that.data.last_30_records,
+            today = !!e.detail.checked.today,
+            year = e.detail.checked.year,
+            month = e.detail.checked.month,
+            day = e.detail.checked.day,
+            date = `${year}-${month}-${day}`,
+            todayData = []
+
+        // date = formatDateToYYYYMMDD(date)
+
+        last_30_records.forEach((item) => {
+            console.log('date', date, 'item.date', item.date)
+            if (date === item.date) {
+                todayData.push(item)
+            }
         })
-    },
-    onStarChange: function(e) {
-        let that = this,
-            star = e.detail.value ?? 3
-        star = parseInt(star)
 
         that.setData({
-            ['recode.star']: star,
-        })
-    },
-    onStatusChange: function(e) {
-        let that = this,
-            status = e.detail.value ?? 3
-        status = parseInt(status)
-
-        that.setData({
-            ['recode.status']: status,
-        })
-    },
-    onPostureChange: function(e) {
-        let that = this,
-            posture = e.detail.value ?? 3
-
-        that.setData({
-            ['recode.posture']: posture,
-        })
-    },
-    onCommentChange: function(e) {
-        let that = this,
-            comment = e.detail.value ?? ""
-        comment = comment.trim()
-
-        that.setData({
-            ['recode.comment']: comment,
+            today: todayData,
         })
     },
     onSubmit: function(e) {
         let that = this,
-            data = that.data.recode
+            data = e.detail
 
         wx.showLoading()
         that.setData({
@@ -206,34 +211,6 @@ Page({
             that.setData({
                 submit_loading: false,
             })
-        })
-    },
-    onCalendarLoad: function(e) {
-        const calendar = this.selectComponent('#calendar');
-        console.log('calendar-load', calendar);
-    },
-    onCalendarChange: function(e) {
-        console.log('onCalendarChange', e)
-        let that = this,
-            last_30_records = that.data.last_30_records,
-            today = !!e.detail.checked.today,
-            year = e.detail.checked.year,
-            month = e.detail.checked.month,
-            day = e.detail.checked.day,
-            date = `${year}-${month}-${day}`,
-            todayData = []
-
-        // date = formatDateToYYYYMMDD(date)
-
-        last_30_records.forEach((item) => {
-            console.log('date', date, 'item.date', item.date)
-            if (date === item.date) {
-                todayData.push(item)
-            }
-        })
-
-        that.setData({
-            today: todayData,
         })
     },
 });

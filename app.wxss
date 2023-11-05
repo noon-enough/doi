@@ -74,6 +74,9 @@ page {
   margin-right: 20rpx;
 }
 
+.mt20 {
+  margin-top: 20rpx;
+}
 
 view, swiper {
   box-sizing: unset;
