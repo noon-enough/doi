@@ -4,9 +4,10 @@
   "setting": {
     "compileHotReLoad": true,
     "urlCheck": false,
-    "bigPackageSizeSupport": true
+    "bigPackageSizeSupport": true,
+    "autoAudits": true
   },
-  "libVersion": "3.1.4",
+  "libVersion": "3.1.5",
   "condition": {
     "miniprogram": {
       "list": [

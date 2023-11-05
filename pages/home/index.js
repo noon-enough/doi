@@ -34,7 +34,12 @@ Page({
     onLoadUsers(options){
         const userinfo = JSON.stringify(app.globalData.users)
         // 拿到用户信息了，可以走依赖用户信息的逻辑了
-        console.log('首页的onLoadUsers',options,userinfo);
+        console.log('首页的onLoadUsers', options, userinfo)
+        // let that = this,
+        //     timestamp = getTimeDate(),
+        //     uid = app.globalData.users.uid ?? 0
+        // uid = parseInt(uid)
+        // that.onLoadData(uid, timestamp)
     },
     onReadyUsers(options){
         const userinfo = JSON.stringify(app.globalData.users)
@@ -66,9 +71,8 @@ Page({
         let that = this,
             timestamp = getTimeDate(),
             uid = app.globalData.users.uid ?? 0
-        console.log('app.globalData.users', app.globalData.users)
         uid = parseInt(uid)
-        that.onLoadData(uid, timestamp)
+        // that.onLoadData(uid, timestamp)
     },
     onLoadData(uid, timestamp) {
         let that = this,

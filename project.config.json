@@ -22,7 +22,8 @@
     "condition": false,
     "ignoreDevUnusedFiles": false,
     "ignoreUploadUnusedFiles": true,
-    "uglifyFileName": true
+    "uglifyFileName": true,
+    "compileWorklet": true
   },
   "condition": {},
   "editorSetting": {

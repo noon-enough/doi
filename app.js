@@ -6,9 +6,7 @@ import CustomHook from "spa-custom-hooks";
 let globalData =  {
     token: "",
     openid: "",
-    users: {
-        uid: 0,
-    },
+    users: {},
     uid: 0,
     tabbar: tabbar,
     system_info: {},
@@ -32,9 +30,10 @@ CustomHook.install({
     },
     'Users':{
         name:'Users',
-        watchKey: 'users.uid',
+        watchKey: 'users',
         onUpdate(val){
             //获取到userinfo里的userId则触发此钩子
+            console.log('Users onUpdate', val)
             return !!val;
         }
     },
@@ -102,11 +101,13 @@ App({
                             return false
                         }
                         let users = data.users ?? {},
-                            token = data.token ?? ""
+                            token = data.token ?? "",
+                            uid = users.uid ?? 0
+                        
+                        uid = parseInt(uid)
 
                         that.globalData.token = token
                         that.globalData.users = users
-                        that.globalData.uid = users.uid ?? 0
 
                         setToken(token)
                         setLocalInfo(users)
