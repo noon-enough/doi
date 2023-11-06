@@ -1,4 +1,13 @@
-import {FEEDBACK_APPID, OPEN_ID, TOKEN, USERS} from "./config";
+import {
+    DELISTING_ARRAY, EDUCATION_ARRAY,
+    FEEDBACK_APPID,
+    JOB_ARRAY,
+    MARITAL_ARRAY,
+    OPEN_ID, ROLE_ARRAY,
+    TOKEN,
+    USERS,
+    YEARLY_SALARY
+} from "./config";
 import {updateEmotion} from "./api";
 
 /**
@@ -120,12 +129,30 @@ function getTimeDate() {
         ('0' + now.getSeconds()).slice(-2)
 }
 
+function getConfigLabel(value, type = "delisting") {
+    switch (type) {
+        case "delisting":
+            return DELISTING_ARRAY[value].label ?? ""
+        case "marital":
+            return MARITAL_ARRAY[value].label ?? ""
+        case "job":
+            return JOB_ARRAY[value].label ?? ""
+        case "salary":
+            return YEARLY_SALARY[value].label ?? ""
+        case "education":
+            return EDUCATION_ARRAY[value].label ?? ""
+        case "role":
+            return ROLE_ARRAY[value].label ?? ""
+    }
+}
+
 /**
  *
  * @param inputDate
  * @returns {string}
  */
 function formatDateToYYYYMMDD(inputDate) {
+    console.log('inputDate', inputDate)
     const date = new Date(inputDate);
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 增加零填充
@@ -135,4 +162,4 @@ function formatDateToYYYYMMDD(inputDate) {
 
 module.exports = {goto, gotoFeedback, showToast, historyBack, previewImage,
     getOpenID, setToken, getToken, getTimeDate, setLocalInfo, getLocalInfo, getLocalUid,
-    formatDateToYYYYMMDD, getDayDate}
+    formatDateToYYYYMMDD, getDayDate, getConfigLabel}

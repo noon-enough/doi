@@ -1,0 +1,77 @@
+<view class="profile">
+    <view class="title m-20">
+        基础资料
+    </view>
+    <view class="content">
+        <cells title="头像" bordered>
+            <view slot="note">
+                <t-image class="avatar" src="{{users.avatar ? users.avatar : 'https://ak48.qizue.com/doi/avatar.svg'}}"></t-image>
+            </view>
+        </cells>
+        <cells title="昵称" bordered>
+            <view slot="note">
+                <view wx:if="{{users.username && show_modify_username_input === false}}">
+                    <view class="username" bind:tap="modifyUsername">{{users.username}}</view>
+                </view>
+                <view wx:if="{{show_modify_username_input}}">
+                    <t-input value="{{users.username}}" align="right" size="small"
+                             confirm-type="done"
+                             focus
+                             borderless></t-input>
+                </view>
+            </view>
+        </cells>
+        <cells title="性别" bordered note="{{users.roleString ? users.roleString: '请选择你的角色（取向）'}}" data-role="{{users.role}}" bind:click="onRole" description="性别仅可修改一次"/>
+        <cells title="生日" bordered note="{{users.birthday}}" data-birthday="{{users.birthday}}" bind:click="onBirthday" description="选择后生日不可变更"/>
+        <cells title="身高" bordered bind:click="onHeight" data-height="{{users.height}}" note="{{users.height}}cm"/>
+        <cells title="体重" bordered bind:click="onWeight" data-weight="{{users.weight}}" note="{{users.weight}}kg"/>
+        <cells title="居住城市" bordered data-type="city-selected" note="请选择你的居住地" bind:click="onCitiesPicker"/>
+<!--        <cells title="家乡" bordered data-type="hometown" note="请选择家乡" bind:click="onHometownPicker"/>-->
+<!--        <cells title="婚姻状况" bordered note="{{users.maritalString ? users.maritalString : '选择你的婚姻状况'}}" description="请如实填写婚姻状况，已婚或虚假填写将直接封禁～" data-marital="{{users.marital}}" bind:click="onMarital"/>-->
+<!--        <cells title="脱单目标" bordered note="{{users.delistingString ? users.delistingString: '精准匹配，仅自己可见'}}"-->
+<!--                   description="填写脱单目标，提高精准匹配度，改信息其他人不会看到"-->
+<!--                   data-delisting-target="{{users.delisting}}" bind:click="onDelistingTarget"/>-->
+<!--        <cells title="感情状态" bordered note="选择你的感情状态" bind:clock="onEmotionalState"/>-->
+    </view>
+<!--    <view class="title m-20">-->
+<!--        个人信息-->
+<!--    </view>-->
+<!--    <view class="content" style="margin-bottom: 200rpx">-->
+<!--        <cells title="最高学历" bordered data-education="{{users.education}}" note="{{users.educationString ? users.educationString : '请选择你的最高学历'}}" bind:click="onEducation"/>-->
+<!--        <cells title="行业/职业" bordered data-job="{{users.job}}" note="{{users.jobString ? users.jobString : '请选择你当前从事的职业'}}" bind:click="onJob"/>-->
+<!--        <cells title="年薪" bordered data-yearly-salary="{{users.salary}}" note="{{users.salaryString ? users.salaryString : '请选择年薪'}}" bind:click="onYearlySalary"/>-->
+<!--    </view>-->
+</view>
+
+<t-picker
+        visible="{{commonVisible}}"
+        value="{{[commonDefault]}}"
+        cancelBtn="取消"
+        title="{{commonTitle}}"
+        confirmBtn="确认"
+        data-type="{{commonType}}"
+        bindchange="onPickerChange"
+        bindpick="onColumnChange"
+        bindcancel="onPickerCancel"
+>
+    <block wx:if="{{commonType === 'city_selected' || commonType === 'hometown'}}">
+        <t-picker-item options="{{provinces}}"></t-picker-item>
+        <t-picker-item options="{{cities}}"></t-picker-item>
+    </block>
+    <block wx:else>
+        <t-picker-item options="{{commonData}}"></t-picker-item>
+    </block>
+</t-picker>
+
+<!-- 年月日 -->
+<t-date-time-picker
+        title="选择你的生日"
+        visible="{{dateVisible}}"
+        mode="date"
+        data-type="birthday"
+        value="{{users.birthday}}"
+        format="YYYY-MM-DD"
+        bindchange="onPickerChange"
+        start="1980-01-01"
+        end="2023-01-01"
+/>

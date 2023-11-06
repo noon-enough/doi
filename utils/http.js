@@ -66,7 +66,7 @@ function post(uri, params = {}) {
 function put(uri, params = {}) {
     console.log(log("Request"), log("PUT"), uri, log(params))
 
-    return REQUEST.post(uri, params, {
+    return REQUEST.put(uri, params, {
         headers: headers({
             'X-HTTP-Method-Override': 'PUT',
             'Content-Type': 'application/json'

@@ -59,5 +59,14 @@ function getRecordDetail(action = 'count') {
     return get(`/record/detail?active=${action}`)
 }
 
+function getProfiles(uid = 0) {
+    return get(`/users/${uid}`)
+}
+
+function setProfiles(uid = 0, payload = {}) {
+    return put(`/users/${uid}`, payload)
+}
+
 module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login,
-    record, recordList, getStatus, getPosture, getStatistics, getRecord, getRecordDetail}
+    record, recordList, getStatus, getPosture, getStatistics, getRecord, getRecordDetail,
+    getProfiles, setProfiles}

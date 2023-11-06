@@ -1,0 +1,69 @@
+.wrapper .records {
+    padding: 20rpx 32rpx;
+}
+
+.wrapper .records .item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper .records .item .title {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: space-between;
+    align-items: center;
+    padding:unset;
+}
+
+.wrapper .records .item .title .comment {
+    font-size: 28rpx;
+    margin-bottom: 10rpx;
+    font-weight: 700;
+}
+
+.wrapper .records .item .status,  .wrapper .records .item .duration {
+    font-size: 26rpx;
+    color: var(--dark);
+    margin-bottom: 10rpx;
+}
+
+.wrapper .records .item .star {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 10rpx;
+}
+
+.wrapper .records .item .star .name {
+    font-size: 26rpx;
+    color: var(--dark);
+}
+
+
+.wrapper .records .item .action {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: space-between;
+}
+
+
+.wrapper .records .item .action .date {
+    font-size: 24rpx;
+    color: var(--secondary);
+}
+
+.wrapper .records .item .action .button {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: space-between;
+}
+
+.wrapper .records .item .action .button>view:first-child {
+    margin-right: 20rpx;
+}

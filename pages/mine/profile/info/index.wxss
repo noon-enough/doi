@@ -1,0 +1,13 @@
+page {
+    background-image: linear-gradient(to top, rgba(189,252,201,0), rgba(240,255,240,1));
+    --td-radio-icon-checked-color: var(--primary)
+}
+
+.description {
+    margin: 40rpx;
+    font-size: 30rpx;
+}
+
+.content {
+    margin: 40rpx;
+}

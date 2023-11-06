@@ -1,8 +1,69 @@
+<t-pull-down-refresh
+        value="{{isRefresh}}"
+        loadingProps="{{loadingProps}}"
+        loadingTexts="{{['下拉刷新', '松手刷新', '正在刷新', '刷新完成']}}"
+        bind:refresh="onPullDownRefresh"
+        bind:scroll="onScroll"
+        bind:scrolltolower="onScrollToBottom"
+        using-custom-navbar="{{true}}"
+>
 <view class="wrapper">
     <t-tabs defaultValue="{{active}}"
             bind:change="onTabsChange">
-        <t-tab-panel label="我的记录" value="count" />
-        <t-tab-panel label="我关注的" value="watcher" />
+        <t-tab-panel label="我的记录" value="count">
+            <view class="records" wx:if="{{record.count.length > 0}}">
+                <block wx:for="{{record.count}}" wx:for-item="item" wx:for-index="key" wx:key="key">
+                    <view class="item">
+                        <view class="title">
+                            <view class="comment">{{item.comment ? item.comment : '(无备注)'}}</view>
+                            <t-icon wx:if="{{item.watcher}}" name="star-filled" color="#fd7e14" class="watcher" />
+                        </view>
+                        <view class="status">状态：{{item.status_name}}</view>
+                        <view class="duration">时长：{{item.duration}}分钟</view>
+                        <view class="star">
+                            <view class="name">刺激度：</view>
+                            <t-rate value="{{item.star}}" disable size="16px"/>
+                        </view>
+                        <view class="action">
+                            <view class="date">{{item.datetime}}</view>
+                            <view class="button">
+                                <t-icon name="edit" color="#6c757d"/>
+                                <t-icon name="delete-time" color="#6c757d"/>
+                            </view>
+                        </view>
+                    </view>
+                    <t-divider />
+                </block>
+            </view>
+        </t-tab-panel>
+        <t-tab-panel label="我关注的" value="watcher">
+            <view class="records" wx:if="{{record.watcher.length > 0}}">
+                <block wx:for="{{record.watcher}}" wx:for-item="item" wx:for-index="key" wx:key="key">
+                    <view class="item">
+                        <view class="title">
+                            <view class="comment">{{item.comment ? item.comment : '(无备注)'}}</view>
+                            <t-icon wx:if="{{item.watcher}}" name="star-filled" color="#fd7e14" class="watcher" />
+                        </view>
+                        <view class="status">状态：{{item.status_name}}</view>
+                        <view class="duration">时长：{{item.duration}}分钟</view>
+                        <view class="star">
+                            <view class="name">刺激度：</view>
+                            <t-rate value="{{item.star}}" disable size="16px"/>
+                        </view>
+                        <view class="action">
+                            <view class="date">{{item.datetime}}</view>
+                            <view class="button">
+                                <t-icon name="edit" color="#6c757d"/>
+                                <t-icon name="delete-time" color="#6c757d"/>
+                            </view>
+                        </view>
+                    </view>
+                    <t-divider />
+                </block>
+            </view>
+        </t-tab-panel>
         <t-tab-panel label="分享过的" value="share" />
     </t-tabs>
 </view>
+    <t-back-top wx:if="{{show_backtop}}" theme="round" text="顶部"></t-back-top>
+</t-pull-down-refresh>

@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "t-textarea": "/miniprogram_npm/tdesign-miniprogram/textarea/textarea"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "编辑基本信息",
+  "usingComponents": {
+    "t-date-time-picker": "/miniprogram_npm/tdesign-miniprogram/date-time-picker/date-time-picker",
+    "cells" : "/components/cells/index",
+    "t-input": "/miniprogram_npm/tdesign-miniprogram/input/input",
+    "t-picker": "/miniprogram_npm/tdesign-miniprogram/picker/picker",
+    "t-picker-item": "/miniprogram_npm/tdesign-miniprogram/picker-item/picker-item"
+  }
+}

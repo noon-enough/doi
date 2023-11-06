@@ -41,7 +41,7 @@
                 </view>
             </view>
             <view class="edit">
-                <t-tag icon="edit" variant="light" shape="round">编辑</t-tag>
+                <t-tag icon="edit" variant="light" bind:click="onEditClick" shape="round">编辑</t-tag>
             </view>
         </view>
         <view class="relationship">

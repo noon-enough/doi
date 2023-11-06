@@ -1,0 +1,28 @@
+page {
+    width: 100%;
+    --td-cell-note-font-size: 26rpx;
+    --td-cell-vertical-padding: 20rpx;
+    --td-cell-title-font-size: 28rpx;
+    --td-picker-confirm-color: #12977a;
+}
+
+.profile .title {
+    font-size: 30rpx;
+}
+
+.profile .content {
+    background: white;
+}
+
+.profile .content:last-child {
+    margin-bottom: 200rpx;
+}
+
+
+.profile .content .username {
+}
+
+.profile .content .avatar {
+    width: 80rpx;
+    height: 80rpx;
+}

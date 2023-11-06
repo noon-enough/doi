@@ -58,12 +58,15 @@ Page({
     },
     gotoModify() {
     },
-    gotoMyProfile() {
-    },
     onGotoChange(e) {
         let that = this,
             type = e.currentTarget.dataset.type ?? 'my-count'
 
         goto(`/pages/mine/record/index?active=${type}`)
+    },
+    onEditClick(e) {
+        console.log('onEditClick', e)
+        let that = this
+        goto(`/pages/mine/profile/index`)
     },
 });

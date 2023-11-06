@@ -1,0 +1,25 @@
+<capsule-bar
+        capsule-color="white" bg-color="transparent"
+        capsule-left-icon-width="30"
+        capsule-left-icon-height="30"
+        disable-home="{{true}}"
+        bind:linlefttap="history"
+        title="{{title}}"
+        capsule-left-icon-path="https://ak48.qizue.com/assets/icons/left.png">
+    <view class="">
+        <view class="description">
+            {{description}}
+        </view>
+        <view class="content">
+            <t-textarea t-class="external-class"
+                        placeholder="{{description}}"
+                        hold-keyboard="{{true}}"
+                        indicator
+                        value="{{value}}"
+                        maxlength="500"
+                        bind:enter="onSubmit"
+                        bind:change="onContentChange"
+                        disableDefaultPadding="{{true}}"></t-textarea>
+        </view>
+    </view>
+</capsule-bar>

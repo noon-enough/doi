@@ -90,3 +90,81 @@ view, swiper {
 .text-center {
   text-align: center;
 }
+
+
+.m-10 {
+  margin: 10rpx;
+}
+
+.m-20 {
+  margin: 20rpx;
+}
+
+.m-30 {
+  margin: 30rpx;
+}
+
+.m-40 {
+  margin: 40rpx;
+}
+
+.ml-10 {
+  margin-left: 10rpx;
+}
+
+.ml-20 {
+  margin-left: 20rpx;
+}
+
+.ml-30 {
+  margin-left: 30rpx;
+}
+
+.ml-40 {
+  margin-left: 40rpx;
+}
+
+.mr-10 {
+  margin-right: 10rpx;
+}
+.mr-20 {
+  margin-right: 20rpx;
+}
+.mr-30 {
+  margin-right: 30rpx;
+}
+.mr-40 {
+  margin-right: 40rpx;
+}
+
+.mr-50 {
+  margin-right: 50rpx;
+}
+
+.mt-10 {
+  margin-top: 10rpx;
+}
+
+.mt-20 {
+  margin-top: 20rpx;
+}
+.mt-30 {
+  margin-top: 30rpx;
+}
+.mt-40 {
+  margin-top: 40rpx;
+}
+
+.mb-10 {
+  margin-bottom: 10rpx;
+}
+
+.mb-20 {
+  margin-bottom: 20rpx;
+}
+.mb-30 {
+  margin-bottom: 30rpx;
+}
+.mb-40 {
+  margin-bottom: 40rpx;
+}
