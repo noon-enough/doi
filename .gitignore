@@ -81,3 +81,4 @@ fabric.properties
 /pnpm-lock.yaml
 /node_modules/
 /miniprogram_npm/
+/project.private.config.json
