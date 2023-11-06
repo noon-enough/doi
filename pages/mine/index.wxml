@@ -4,4 +4,66 @@
         list="{{list}}"
 />
 
-<view class="wrapper"></view>
+<view class="main">
+    <view class="header">
+        <view class="profile">
+            <view class="avatar-left">
+                <image class="img-avatar"
+                       data-uid="{{uid}}"
+                       bind:tap="gotoMyProfile"
+                       src="{{users.avatar ? users.avatar : 'https://ak48.qizue.com/doi/avatar.svg'}}"
+                       mode="scaleToFill" lazy-load />
+                <view class="card-avatar">
+                    <view class="card-avatar-name">
+                        <text class="card-title card-title-avatar mr-10">{{users.username ? users.username : '(纯爱战士)'}}</text>
+                    </view>
+                    <view class="card-avatar-description">
+                        <view class="describe" wx:if="{{is_profile_full}}">
+                            <block wx:if="{{age}}">
+                                <view>{{age}}岁</view>
+                            </block>
+                            <block wx:if="{{address}}">
+                                <view>•</view>
+                                <view>{{address}}</view>
+                            </block>
+                            <block wx:if="{{constellation}}">
+                                <view>•</view>
+                                <view>{{constellation}}</view>
+                            </block>
+                        </view>
+                        <view wx:else class="describe-error">
+                            <t-image src="https://ak48.qizue.com/assets/icons/error.png" class="icon"/>
+                            <view class="ml-10">
+                                未完善资料
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="edit">
+                <t-tag icon="edit" variant="light" shape="round">编辑</t-tag>
+            </view>
+        </view>
+        <view class="relationship">
+            <view class="" bind:tap="onGotoChange" data-type="count">
+                <view class="count">{{count}}</view>
+                <view class="title">我的记录</view>
+            </view>
+            <view class="" bind:tap="onGotoChange" data-type="watcher">
+                <view class="count">{{watcher_count}}</view>
+                <view class="title">我关注的</view>
+            </view>
+            <view class="" bind:tap="onGotoChange" data-type="share">
+                <view class="count">{{share_count}}</view>
+                <view class="title">分享过的</view>
+            </view>
+        </view>
+    </view>
+    <view class="footer mt-20">
+        <t-cell-group theme="card">
+            <t-cell title="导出记录" leftIcon="beer" hover arrow />
+            <t-cell title="账号注销" leftIcon="delete-time" hover arrow />
+            <t-cell title="推荐给好友" leftIcon="share" hover arrow />
+        </t-cell-group>
+    </view>
+</view>

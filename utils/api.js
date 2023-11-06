@@ -29,13 +29,17 @@ function login(data) {
     return post(`/passport/login`, data)
 }
 
-function recodeList(uid, date = "") {
+function recordList(uid, date = "") {
     date = encodeURIComponent(date)
-    return get(`/recode/users/${uid}?date=${date}`)
+    return get(`/record/users/${uid}?date=${date}`)
 }
 
-function recode(payload = {}) {
-    return post('/recode', payload)
+function getRecord() {
+    return get(`/record`)
+}
+
+function record(payload = {}) {
+    return post('/record', payload)
 }
 
 function getStatus() {
@@ -50,5 +54,10 @@ function getStatistics(period_time = '3months', status_time = '3months', duratio
     return get(`/statistics?period_time=${period_time}&status_time=${status_time}&duration_time=${duration_time}`)
 }
 
+
+function getRecordDetail(action = 'count') {
+    return get(`/record/detail?active=${action}`)
+}
+
 module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login,
-    recode, recodeList, getStatus, getPosture, getStatistics}
+    record, recordList, getStatus, getPosture, getStatistics, getRecord, getRecordDetail}

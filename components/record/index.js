@@ -81,5 +81,10 @@ Component({
             console.log('components onsubmit', e)
             this.triggerEvent('submit',  data);
         },
-    }
+    },
+    observers: {
+        "posture": function(posture) {
+            let that = this
+        },
+    },
 });

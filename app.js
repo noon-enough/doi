@@ -31,10 +31,8 @@ CustomHook.install({
     'Users':{
         name:'Users',
         watchKey: 'users',
-        onUpdate(val){
-            //获取到userinfo里的userId则触发此钩子
-            console.log('Users onUpdate', val)
-            return !!val;
+        onUpdate(users){
+            return !!(users.uid ?? 0);
         }
     },
     'Status': {
@@ -51,7 +49,7 @@ CustomHook.install({
             return postureData.length >= 1
         }
     },
-}, globalData)
+}, globalData || 'globalData')
 
 App({
     globalData,
@@ -103,14 +101,15 @@ App({
                         let users = data.users ?? {},
                             token = data.token ?? "",
                             uid = users.uid ?? 0
-                        
-                        uid = parseInt(uid)
+
+                        setToken(token)
+                        setLocalInfo(users)
 
                         that.globalData.token = token
                         that.globalData.users = users
 
-                        setToken(token)
-                        setLocalInfo(users)
+                        that.onStatusData()
+                        that.onPostureData()
                     })
                 },
             });
@@ -119,6 +118,9 @@ App({
 
             that.globalData.token = token
             that.globalData.users = users
+
+            that.onStatusData()
+            that.onPostureData()
         }
 
         that.globalData.system = {
@@ -127,23 +129,6 @@ App({
             sdk_version: sdk_version,
             system_info: systemInfo,
             is_login: !!token,
-        }
-
-        if (token) {
-            getStatus().then(res => {
-                let data = res.data,
-                    code = res.code ?? 200
-
-                console.log('app.js', 'getStatus', data)
-                that.globalData.statusData = data
-            })
-            getPosture().then(res => {
-                let data = res.data,
-                    code = res.code ?? 200
-
-                console.log('app.js', 'getPosture', data)
-                that.globalData.postureData = data
-            })
         }
     },
     onError(error) {
@@ -154,7 +139,24 @@ App({
     onShowLogin(){
         console.log('app.js页onShowLogin');
     },
-    onLaunchLogin(){
-        console.log('app.js页onLaunchLogin');
+    onStatusData() {
+        let that = this
+        getStatus().then(res => {
+            let data = res.data,
+                code = res.code ?? 200
+
+            console.log('app.js', 'getStatus', data)
+            that.globalData.statusData = data
+        })
+    },
+    onPostureData() {
+        let that = this
+        getPosture().then(res => {
+            let data = res.data,
+                code = res.code ?? 200
+
+            console.log('app.js', 'getPosture', data)
+            that.globalData.postureData = data
+        })
     },
 })

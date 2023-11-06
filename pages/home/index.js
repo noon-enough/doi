@@ -1,5 +1,5 @@
-import {formatDateToYYYYMMDD, getTimeDate, showToast} from "../../utils/util";
-import {recode, recodeList} from "../../utils/api"
+import {getTimeDate, showToast} from "../../utils/util";
+import {record, recordList} from "../../utils/api"
 import {STATUS_COLORS} from "../../utils/config";
 
 const app = getApp()
@@ -23,33 +23,19 @@ Page({
         },
         submit_loading: false,
     },
-    onLoadLogin(options){
-        // 已经登录，可以走依赖token的逻辑了
-        console.log('首页的onLoadLogin',options,`{"token":"${app.globalData.token}"}`);
+    onLoadLogin(){
     },
-    onShowLogin(options){
-        // 每次显示页面时都会执行的逻辑在这里
-        console.log('首页的onShowLogin',options,`{"token":"${app.globalData.token}"}`);
-    },
-    onLoadUsers(options){
-        const userinfo = JSON.stringify(app.globalData.users)
+    onLoadUsers(){
         // 拿到用户信息了，可以走依赖用户信息的逻辑了
-        console.log('首页的onLoadUsers', options, userinfo)
-        // let that = this,
-        //     timestamp = getTimeDate(),
-        //     uid = app.globalData.users.uid ?? 0
-        // uid = parseInt(uid)
-        // that.onLoadData(uid, timestamp)
-    },
-    onReadyUsers(options){
-        const userinfo = JSON.stringify(app.globalData.users)
-        // 渲染完毕，并且拿到了用户信息，可以去走类似在canvas上渲染用户头像的逻辑了
-        console.log('首页的onReadyUser',options,userinfo);
-    },
-    onReadyShowUsers(options){
-        const userinfo = JSON.stringify(app.globalData.users)
-        // 渲染完完毕 && 每次显示页面 && 拿到用户信息
-        console.log('首页的onReadyShowUser',options,userinfo);
+        let that = this,
+            timestamp = getTimeDate(),
+            users =  app.globalData.users,
+            uid = app.globalData.users.uid ?? 0
+
+        uid = parseInt(uid)
+        that.onLoadData(uid, timestamp)
+
+        console.log('users', users, 'uid', uid)
     },
     onLoadStatus() {
         let that = this,
@@ -68,17 +54,13 @@ Page({
         })
     },
     onLoad: function (options) {
-        let that = this,
-            timestamp = getTimeDate(),
-            uid = app.globalData.users.uid ?? 0
-        uid = parseInt(uid)
-        // that.onLoadData(uid, timestamp)
+        let that = this
     },
     onLoadData(uid, timestamp) {
         let that = this,
             status = app.globalData.statusData
         wx.showLoading()
-        recodeList(uid, timestamp).then(res => {
+        recordList(uid, timestamp).then(res => {
             console.log('recodeList', res)
             let code = res.code,
                 data = res.data,
@@ -189,7 +171,7 @@ Page({
         data.create_time = (new Date(data.create_time)).getTime() / 1000;
 
         console.log('data', data)
-        recode(data).then(res => {
+        record(data).then(res => {
             console.log('recode', res)
             let code = res.code,
                 data = res.data

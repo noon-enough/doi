@@ -1,0 +1,137 @@
+page {
+    /*background-image: linear-gradient(to top, rgba(189,252,201,0), rgba(240,255,240,1));*/
+    --td-cell-title-font-size: 30rpx;
+    --td-cell-vertical-padding: 20rpx;
+    --td-cell-horizontal-padding: 20rpx;
+    --td-cell-left-icon-color: rgb(80, 121, 80);
+}
+
+page .main {
+    margin: 30rpx;
+}
+
+.main .header {
+    margin-top: 200rpx;
+}
+
+.header .profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: space-between;
+}
+
+.header .profile .edit {}
+
+.header .profile .avatar-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center
+}
+
+.header .profile .avatar-left .img-avatar {
+    height: 120rpx;
+    width: 120rpx;
+    border-radius: 50%;
+    margin-right: 20rpx
+}
+
+.card-avatar {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    align-content: start;
+}
+
+.card-avatar .card-avatar-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.card-title-avatar {
+    font-size: 30rpx;
+    font-weight: bold;
+}
+
+
+.card-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333
+}
+
+.describe {
+    margin-top: 20rpx;
+    display: flex;
+    color: #666;
+    font-size: 26rpx;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.describe-error {
+    margin-top: 20rpx;
+    display: flex;
+    color: #666;
+    font-size: 26rpx;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.describe-error .icon {
+    width: 30rpx;
+    height: 30rpx;
+    margin-right: 8rpx;
+    background: unset;
+}
+
+.relationship {
+    margin-top: 40rpx;
+    margin-bottom: 40rpx;
+    padding: 20rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.relationship view {
+    width: calc(100% / 3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+}
+
+.relationship view .bg {
+    width: 80rpx;
+    height: 80rpx;
+    /*background-color: red;*/
+    border-radius: 50%;
+    -moz-background-size:100% 100%;
+    background-size: cover;
+    background: url('https://wx3.sinaimg.cn/mw690/005NJAAtly1hbty0w2m0vj30j60nywhv.jpg') no-repeat;
+    backdrop-filter: blur(30rpx);
+}
+
+.relationship view .count, .relationship view .bg .count {
+    font-size: 40rpx;
+    font-weight: bold;
+}
+
+.relationship view .bg .count {
+    color: white;
+}
+
+.relationship view .title {
+    margin-top: 10rpx;
+    font-size: 24rpx;
+    color: #6e6e6e;
+    width: 100%;
+}

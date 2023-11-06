@@ -1,0 +1,8 @@
+<view class="wrapper">
+    <t-tabs defaultValue="{{active}}"
+            bind:change="onTabsChange">
+        <t-tab-panel label="我的记录" value="count" />
+        <t-tab-panel label="我关注的" value="watcher" />
+        <t-tab-panel label="分享过的" value="share" />
+    </t-tabs>
+</view>

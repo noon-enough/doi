@@ -7,7 +7,8 @@
         "pages/diy/index",
         "pages/trend/index",
         "pages/record/index",
-        "pages/mine/index"
+        "pages/mine/index",
+        "pages/mine/record/index"
     ],
     "lazyCodeLoading": "requiredComponents",
     "window": {

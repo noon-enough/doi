@@ -13,14 +13,6 @@ function goto(url) {
 }
 
 /**
- *
- * @param id
- */
-function gotoDetail(id = 0) {
-    goto(`/pages/detail/index?id=${id}`)
-}
-
-/**
  * 打开意见反馈
  */
 function gotoFeedback() {
@@ -128,6 +120,11 @@ function getTimeDate() {
         ('0' + now.getSeconds()).slice(-2)
 }
 
+/**
+ *
+ * @param inputDate
+ * @returns {string}
+ */
 function formatDateToYYYYMMDD(inputDate) {
     const date = new Date(inputDate);
     const year = date.getFullYear();
@@ -136,6 +133,6 @@ function formatDateToYYYYMMDD(inputDate) {
     return `${year}-${month}-${day}`;
 }
 
-module.exports = {goto, gotoFeedback, showToast, gotoDetail, historyBack, previewImage,
+module.exports = {goto, gotoFeedback, showToast, historyBack, previewImage,
     getOpenID, setToken, getToken, getTimeDate, setLocalInfo, getLocalInfo, getLocalUid,
     formatDateToYYYYMMDD, getDayDate}

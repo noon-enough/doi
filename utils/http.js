@@ -8,6 +8,7 @@ REQUEST.Defaults.headers = {
 // 除了method,url，data 和 cancelToken不能设置其他均可设置
 REQUEST.Defaults.baseURL = API_DOMAIN
 REQUEST.Listeners.onSend.push(console.log)
+REQUEST.Listeners.onResponse.push(console.log)
 
 function headers(h = {}) {
     let token = wx.getStorageSync(TOKEN)

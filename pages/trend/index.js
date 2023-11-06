@@ -12,6 +12,11 @@ Page({
             color: [],
             padding: [5,5,5,5],
             enableScroll: false,
+            legend: {
+                show: true,
+                position: "bottom",
+                lineHeight: 30,
+            },
             extra: {
                 pie: {
                     activeOpacity: 0.5,
@@ -31,7 +36,7 @@ Page({
             legend: {
                 show: true,
                 position: "left",
-                lineHeight: 25
+                lineHeight: 30,
             },
             extra: {
                 rose: {
