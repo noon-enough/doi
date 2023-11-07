@@ -1,6 +1,4 @@
 page {
-  background: var(--white);
-
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -26,6 +24,8 @@ page {
   --primary: #12977a;
   --default-primary-color: #12977a;
   --disable: #2aa78b9c;
+
+  background: var(--white);
 }
 
 .wrapper {
@@ -167,4 +167,22 @@ view, swiper {
 }
 .mb-40 {
   margin-bottom: 40rpx;
+}
+
+.lu-tab-bar {
+  box-sizing: unset !important;
+  z-index: 999999;
+}
+
+.lu-tab-bar view {
+  box-sizing: unset !important;
+}
+
+.strong {
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.red {
+  color: var(--red);
 }

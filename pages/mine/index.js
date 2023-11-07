@@ -1,4 +1,4 @@
-import {getTimeDate, goto, showToast} from "../../utils/util";
+import {getLocalInfo, getTimeDate, goto, showToast} from "../../utils/util";
 import {getRecord} from "../../utils/api";
 
 const app = getApp()
@@ -18,11 +18,12 @@ Page({
     },
     onShow() {
         let that = this
+        console.log('mine onshow')
         that.onLoadUsers()
     },
     onLoadUsers(options){
         // 拿到用户信息了，可以走依赖用户信息的逻辑了
-        let users = app.globalData.users ?? {},
+        let users = getLocalInfo(),
             uid = users.uid ?? 0,
             that = this
 
@@ -32,7 +33,6 @@ Page({
             users: users,
             uid: parseInt(uid)
         })
-
         console.log('users', users)
     },
     onLoad: function (options) {
@@ -73,4 +73,15 @@ Page({
         let that = this
         goto(`/pages/mine/profile/index`)
     },
+    onCommentPlugin() {
+        const plugin = requirePlugin("wxacommentplugin")
+        plugin.openComment({
+            success: (res)=>{
+                console.log('plugin.openComment success', res)
+            },
+            fail: (res) =>{
+                console.log('plugin.openComment fail', res)
+            }
+        })
+    }
 });

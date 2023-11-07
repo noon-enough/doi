@@ -8,11 +8,24 @@
     --td-input-vertical-padding: 0;
 }
 
+.tips {
+    color: var(--secondary);
+    padding: 20rpx 32rpx 0;
+}
+
+.tips .strong {
+    font-weight: 700;
+}
+
 .labelBox text{
     width: 140rpx;
     height: 48rpx;
     color: #646566;
     font-size: 28rpx;
+}
+
+.labelBox .star {
+    justify-content: center;
 }
 
 .box {

@@ -20,10 +20,12 @@ Component({
                 star: 3,
                 status: 4,
                 posture: [],
-            }
+            },
         }
     },
-    data: {},
+    data: {
+        rateTexts: ["不爽", "失望", "一般", "爽", "刺激"],
+    },
     methods: {
         onDurationChange: function(e) {
             let that = this,
@@ -86,5 +88,13 @@ Component({
         "posture": function(posture) {
             let that = this
         },
+        "recode": function(recode) {
+            console.log('observers recode', recode)
+        }
+    },
+    lifetimes: {
+        attached() {
+            console.log('attached', this.properties.recode)
+        }
     },
 });

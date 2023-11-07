@@ -4,6 +4,7 @@ const IMAGE_CACHE = "__IMAGES__"
 const OPEN_ID = "__OPEN__ID__"
 const TOKEN = "__TOKEN__"
 const USERS = "__USERS__"
+const UPLOAD_COS_METHOD = 'putObject'
 const STATUS_COLORS  = [
     "#007bff",
     "#dc3545",
@@ -52,7 +53,13 @@ const JOB_ARRAY = [{"value":0,"label":"学生"},{"value":1,"label":"IT\/互联�
 const EDUCATION_ARRAY = [{"value":0,"label":"小学"},{"value":1,"label":"初中"},{"value":2,"label":"高中"},{"value":3,"label":"专科"},{"value":4,"label":"本科"},{"value":5,"label":"硕士"},{"value":6,"label":"博士"}]
 const MARITAL_ARRAY = [{"value":0,"label":"未婚"},{"value":1,"label":"离异"},{"value":2,"label":"丧偶"}]
 const DELISTING_ARRAY = [{"value":0,"label":"计划1年内结婚"},{"value":1,"label":"计划2年内结婚"},{"value":2,"label":"时机成熟就结婚"},{"value":3,"label":"我就想要谈恋爱"}]
+const COS_REGION = "ap-beijing"
+const COS_BUCKET = "ashe-1251170538"
+const ASSETS_DOMAIN = "https://ak48.qizue.com"
+const DEFAULT_AVATAR = "https://ak48.qizue.com/assets/images/user_large.jpg"
+const DEFAULT_ASSETS_DOMAIN = "ashe-1251170538.cos.ap-beijing.myqcloud.com"
 
 module.exports = { FEEDBACK_APPID, API_DOMAIN , IMAGE_CACHE, OPEN_ID,
     TOKEN, USERS, STATUS_COLORS,
-    DELISTING_ARRAY, MARITAL_ARRAY, HEIGHT_ARRAY, WEIGHT_ARRAY, YEARLY_SALARY, JOB_ARRAY, EDUCATION_ARRAY, ROLE_ARRAY}
+    DELISTING_ARRAY, MARITAL_ARRAY, HEIGHT_ARRAY, WEIGHT_ARRAY, YEARLY_SALARY, JOB_ARRAY, EDUCATION_ARRAY, ROLE_ARRAY,
+    UPLOAD_COS_METHOD, COS_REGION, COS_BUCKET, ASSETS_DOMAIN, DEFAULT_AVATAR, DEFAULT_ASSETS_DOMAIN}

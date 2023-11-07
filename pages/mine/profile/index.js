@@ -1,16 +1,20 @@
 import region from "../../../utils/region";
 import {
+    ASSETS_DOMAIN,
+    COS_BUCKET, COS_REGION, DEFAULT_ASSETS_DOMAIN,
     DELISTING_ARRAY,
     EDUCATION_ARRAY,
     HEIGHT_ARRAY,
     JOB_ARRAY,
-    MARITAL_ARRAY, ROLE_ARRAY,
+    MARITAL_ARRAY, ROLE_ARRAY, UPLOAD_COS_METHOD,
     WEIGHT_ARRAY,
     YEARLY_SALARY
 } from "../../../utils/config";
-import {getProfiles, setProfiles} from "../../../utils/api";
-import {getConfigLabel, getLocalUid, setLocalInfo, showToast} from "../../../utils/util.js";
+import {getCOSAuthorization, getProfiles, setProfiles} from "../../../utils/api";
+import {getConfigLabel, getLocalUid, getUploadFileKey, setLocalInfo, showToast} from "../../../utils/util";
+import COS from "../../../miniprogram_npm/cos-wx-sdk-v5/index"
 
+const app = getApp()
 Page({
     data: {
         dateVisible: false,
@@ -54,6 +58,9 @@ Page({
             that.setData({
                 users: data,
             })
+            // 同步更新一下
+            setLocalInfo(data)
+            app.globalData.users = data
         }).finally(() => {
             wx.hideLoading()
         })
@@ -182,6 +189,7 @@ Page({
             })
             showToast("更新成功", {icon: "success"})
             setLocalInfo(data)
+            app.globalData.users = data
             wx.hideLoading()
         }).catch(res => {
             showToast(res.message ?? "数据更新失败", {icon: "error"})
@@ -310,8 +318,11 @@ Page({
     },
     onRole(e) {
         let that = this,
-            role = e.currentTarget.dataset.role ?? 0
+            role = e.currentTarget.dataset.role ?? -1
 
+        if (role !== -1) {
+            return false
+        }
         that.setData({
             commonType: "role",
             commonData: ROLE_ARRAY,
@@ -349,12 +360,81 @@ Page({
 
             // 这里需要更新用户数据
             setLocalInfo(data)
+            app.globalData.users = data
             wx.hideLoading()
         }).catch(res => {
             showToast(res.message ?? "数据更新失败", {icon: "error"})
             wx.hideLoading()
             return false
         }).finally(() => {
+        })
+    },
+    onAvatarChoose(e) {
+        let that = this,
+            avatarUrl = e.detail.avatarUrl ?? '',
+            uid = that.data.uid
+        if (avatarUrl === '') {
+            showToast('头像选择/上传失败', {icon: "error"})
+            return false
+        }
+
+        wx.showLoading({
+            title: '头像上传中'
+        })
+
+        let client = new COS({
+            SimpleUploadMethod: UPLOAD_COS_METHOD,
+            getAuthorization: getCOSAuthorization
+        })
+
+        let updateKey = getUploadFileKey("avatar")
+        client.uploadFile({
+            Bucket: COS_BUCKET, /* 填写自己的 bucket，必须字段 */
+            Region: COS_REGION, /* 存储桶所在地域，必须字段 */
+            Key: updateKey,    /* 存储在桶里的对象键（例如:1.jpg，a/b/test.txt，图片.jpg）支持中文，必须字段 */
+            FilePath: avatarUrl, /* 上传文件路径，必须字段 */
+            SliceSize: 1024 * 1024 * 5,     /* 触发分块上传的阈值，超过5MB使用分块上传，小于5MB使用简单上传。可自行设置，非必须 */
+            onProgress: function(progressData) {
+                console.log(JSON.stringify(progressData));
+            }
+        }, function(err, data) {
+            if (err) {
+                console.log('error', err)
+                showToast("上传失败", {icon: "error"})
+                wx.hideLoading()
+                return false
+            }
+            let url = data.Location,
+                code = data.statusCode ?? 200
+            if (code !== 200) {
+                showToast("头像选择/上传失败", {icon: "error"})
+                wx.hideLoading()
+                return
+            }
+            url = url.replace(DEFAULT_ASSETS_DOMAIN, ASSETS_DOMAIN)
+
+            setProfiles(uid, {
+                avatar: url,
+            }).then(res => {
+                let code = res.code,
+                    data = res.data
+                if (code !== 200) {
+                    showToast("头像选择/上传失败", {icon: "error"})
+                    wx.hideLoading()
+                    return false
+                }
+
+                showToast('头像选择/上传成功', {icon: "success"})
+                setLocalInfo(data)
+                app.globalData.users = data
+                that.setData({
+                    users: data,
+                    show_modify_username_input: false,
+                })
+
+                wx.hideLoading()
+            })
+            console.log('data', data, 'url', url)
         })
     }
 });

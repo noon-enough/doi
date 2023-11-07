@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "t-image": "/miniprogram_npm/tdesign-miniprogram/image/image",
+    "t-empty": "/miniprogram_npm/tdesign-miniprogram/empty/empty"
+  }
+}

@@ -1,4 +1,5 @@
 import {d, get, post, put} from './http'
+import {showToast} from "./util";
 
 function classify() {
     return get("https://tft.qizue.com/emotions/classify")
@@ -71,6 +72,44 @@ function recordDelete(id) {
     return d(`/record/${id}`)
 }
 
+function getRecordItem(id) {
+    return get(`/record/${id}`)
+}
+
+function putRecordItem(id, payload = {}) {
+    return put(`/record/${id}`, payload)
+}
+
+function getCOSToken(key, action = "avatar") {
+    return get(`/tencent/cos?action=${action}&key=` + encodeURI(key))
+}
+
+function getCOSAuthorization(options, callback) {
+    // 初始化时不会调用，只有调用 cos 方法（例如 cos.putObject）时才会进入
+    getCOSToken(options.Key, "avatar").then(res => {
+        let data = res.data,
+            code = res.code ?? 200,
+            credentials = data.credentials;
+        console.log('data', data)
+        if (code !== 200) {
+            showToast("图片上传失败", {icon: "error"})
+            return
+        }
+        let func = {
+            TmpSecretId: credentials.tmpSecretId,
+            TmpSecretKey: credentials.tmpSecretKey,
+            SecurityToken: credentials.sessionToken,
+            // 建议返回服务器时间作为签名的开始时间，避免用户浏览器本地时间偏差过大导致签名错误
+            StartTime: data.startTime, // 时间戳，单位秒，如：1580000000
+            ExpiredTime: data.expiredTime, // 时间戳，单位秒，如：1580000900
+        }
+        callback(func);
+    }).catch(res => {
+        console.log("getOSSToken error", res)
+    })
+}
+
 module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login,
     record, recordList, getStatus, getPosture, getStatistics, getRecord, getRecordDetail,
-    getProfiles, setProfiles, recordDelete}
+    getProfiles, setProfiles, recordDelete, getRecordItem, putRecordItem,
+    getCOSAuthorization}

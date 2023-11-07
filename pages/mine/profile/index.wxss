@@ -26,3 +26,15 @@ page {
     width: 80rpx;
     height: 80rpx;
 }
+
+.profile .content .avatar-button {
+    background: #fff;
+    height: auto;
+    width: auto;
+    margin: 0;
+    display: flex;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    padding: unset;
+}

@@ -5,7 +5,9 @@
     <view class="content">
         <cells title="头像" bordered>
             <view slot="note">
-                <t-image class="avatar" src="{{users.avatar ? users.avatar : 'https://ak48.qizue.com/doi/avatar.svg'}}"></t-image>
+                <t-button class="avatar-button" open-type="chooseAvatar" bindchooseavatar="onAvatarChoose">
+                    <t-image class="avatar" src="{{users.avatar ? users.avatar : 'https://ak48.qizue.com/doi/avatar.svg'}}"></t-image>
+                </t-button>
             </view>
         </cells>
         <cells title="昵称" bordered>
@@ -77,3 +79,5 @@
         start="1980-01-01"
         end="2023-01-01"
 />
+
+<t-action-sheet id="t-action-sheet" bind:selected="onActionSheetSelected" />

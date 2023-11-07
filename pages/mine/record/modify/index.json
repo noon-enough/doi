@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "修改记录",
+  "usingComponents": {
+    "record": "/components/record/index"
+  }
+}

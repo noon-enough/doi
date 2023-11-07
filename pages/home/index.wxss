@@ -106,3 +106,8 @@
     font-size: 26rpx;
     color: var(--secondary);
 }
+
+.wrapper .calendar-tips {
+    padding: 0 32rpx;
+    color: var(--secondary);
+}

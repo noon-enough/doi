@@ -1,17 +1,15 @@
-import {getTimeDate, showToast} from "../../utils/util";
+import {convertSecondsToTime, getTimeDate, showToast} from "../../utils/util";
 import {recode} from "../../utils/api";
 
 const app = getApp()
 Page({
     data: {
+        datetime: "00:00:00",
         is_show_submit: false,
         action: 'play',
-        h:'00',
-        m:'00',
-        s:'00',
         setInter: null,
         list: app.globalData.tabbar,
-        num: 1,
+        times: 1,
         duration: 1,
         status: [],
         posture: [],
@@ -69,10 +67,7 @@ Page({
         that.setData({
             setInter: null,
             action: 'play',
-            num: 1,
-            h:'00',
-            m:'00',
-            s:'00',
+            datetime: "00:00:00"
         })
     },
     onReplay() {
@@ -82,22 +77,18 @@ Page({
     },
     onDone() {
         let that = this,
-            h = parseInt(that.data.h),
-            m = parseInt(that.data.m),
-            s = parseInt(that.data.s),
-            duration = 0
+            times = that.data.times,
+            duration = Math.floor((times % 3600) / 60)
+
+        duration = duration <= 0 ? 1 : duration
+        duration = duration >= 180 ? 180 : duration
         clearInterval(that.data.setInter)
-        that.onCleanTimer()
-        if (h > 0) {
-            duration += h * 60
-        }
-        if (m > 0) {
-            duration += m
-        }
-        if (s > 0) {
-            duration += 1
-        }
-        console.log('h', h, 'm', m, 's', s, 'duration', duration)
+        that.setData({
+            setInter: null,
+            action: 'play',
+            times: 1,
+        })
+        console.log('duration', duration)
         that.setData({
             is_show_submit: true,
             ['recode.duration']: duration,
@@ -105,35 +96,16 @@ Page({
         })
     },
     queryTime(){
-        let that = this,
-            hou=that.data.h,
-            min=that.data.m,
-            sec=that.data.s
+        let that = this
 
         that.data.setInter = setInterval(function(){
-            sec++
-            if(sec>=60){
-                sec=0
-                min++
-                if(min>=60){
-                    min = 0
-                    hou++
-                    that.setData({
-                        h:(hou<10? '0' + min:min)
-                    })
-                }else{
-                    that.setData({
-                        m:(min<10?'0'+min:min)
-                    })
-                }
-            }else{
-                that.setData({
-                    s:(sec<10?'0'+sec:sec)
-                })
-            }
-
-            let numVal = that.data.num + 1;
-            that.setData({ num: numVal })
+            let times = that.data.times + 1,
+                datetime = convertSecondsToTime(times)
+            that.setData({
+                times: times,
+                datetime: datetime,
+            })
+            console.log('times', times, 'datetime', datetime)
         },1000)
     },
     onSubmit: function(e) {

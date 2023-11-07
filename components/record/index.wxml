@@ -17,7 +17,7 @@
     </view>
     <view class="labelBox">
         <text>刺激度：</text>
-        <t-rate value="{{recode.star}}" bind:change="onStarChange" />
+        <t-rate value="{{recode.star}}" t-class="star" texts="{{rateTexts}}" bind:change="onStarChange" showText/>
     </view>
     <view class="labelBox">
         <text>状态：</text>
@@ -58,6 +58,9 @@
     <!--        <text>对象：</text>-->
     <!--        <t-input placeholder="输入对象名字" type="text" borderless="{{true}}" tips="你记录此次事件的对象"/>-->
     <!--    </view>-->
+    <view class="tips">
+        事件时常最短 <text class="strong">10</text>分钟， 最长<text class="strong">180</text>分钟
+    </view>
     <view class="submitButton">
         <t-button theme="primary" block icon="{{submit_loading ? '' : 'send'}}" type="submit"
                   bind:tap="onSubmit"

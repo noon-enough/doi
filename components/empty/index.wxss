@@ -1,0 +1,8 @@
+.wrapper {
+    padding: 40rpx;
+}
+
+.wrapper .image {
+    width: 300rpx;
+    height: 300rpx;
+}

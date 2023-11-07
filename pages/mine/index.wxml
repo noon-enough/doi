@@ -10,7 +10,6 @@
             <view class="avatar-left">
                 <image class="img-avatar"
                        data-uid="{{uid}}"
-                       bind:tap="gotoMyProfile"
                        src="{{users.avatar ? users.avatar : 'https://ak48.qizue.com/doi/avatar.svg'}}"
                        mode="scaleToFill" lazy-load />
                 <view class="card-avatar">
@@ -61,9 +60,9 @@
     </view>
     <view class="footer mt-20">
         <t-cell-group theme="card">
-            <t-cell title="导出记录" leftIcon="beer" hover arrow />
-            <t-cell title="账号注销" leftIcon="delete-time" hover arrow />
-            <t-cell title="推荐给好友" leftIcon="share" hover arrow />
+<!--            <t-cell title="导出记录" leftIcon="beer" hover arrow />-->
+<!--            <t-cell title="账号注销" leftIcon="delete-time" hover arrow />-->
+            <t-cell title="给我们打分" leftIcon="share" description="男生月月记需要你的助力评分" hover arrow bind:click="onCommentPlugin" />
         </t-cell-group>
     </view>
 </view>

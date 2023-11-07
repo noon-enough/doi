@@ -1,5 +1,5 @@
 import {getRecordDetail, login, recordDelete} from "../../../utils/api";
-import {showToast} from "../../../utils/util";
+import {goto, showToast} from "../../../utils/util";
 import moment from "moment";
 
 const app = getApp()
@@ -165,6 +165,11 @@ Page({
             isRefresh: true,
         })
         that.onLoadData()
+    },
+    onRecordModify(e) {
+        let that = this,
+            id = e.currentTarget.dataset.id ?? 0
+        goto(`/pages/mine/record/modify/index?id=${id}`)
     },
     onRecordDelete(e) {
         let that = this,

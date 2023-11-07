@@ -1,0 +1,7 @@
+<view class="wrapper">
+    <record class="mt20"
+            wx:if="{{show_modify_record}}"
+            bind:submit="onSubmit"
+            recode="{{record}}"
+            status="{{status}}" posture="{{posture}}"></record>
+</view>

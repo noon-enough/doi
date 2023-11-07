@@ -7,7 +7,7 @@
 <view class="wrapper">
     <view class="area-op-content">
         <view class="text-center timer">
-            {{h}}:{{m}}:{{s}}
+            {{datetime}}
         </view>
         <view class="options">
             <view class="left" bind:tap="onOptionsTap" data-action="{{action}}">

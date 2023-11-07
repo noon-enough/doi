@@ -1,0 +1,7 @@
+<view class="wrapper">
+    <t-empty description="{{description}}">
+        <view slot="image">
+            <t-image src="{{image}}" mode="aspectFill" class="image"></t-image>
+        </view>
+    </t-empty>
+</view>

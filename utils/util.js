@@ -1,9 +1,11 @@
 import {
-    DELISTING_ARRAY, EDUCATION_ARRAY,
+    DELISTING_ARRAY,
+    EDUCATION_ARRAY,
     FEEDBACK_APPID,
     JOB_ARRAY,
     MARITAL_ARRAY,
-    OPEN_ID, ROLE_ARRAY,
+    OPEN_ID,
+    ROLE_ARRAY,
     TOKEN,
     USERS,
     YEARLY_SALARY
@@ -115,7 +117,7 @@ function getDayDate() {
     return  ('0' + now.getDate()).slice(-2)  + '日' + ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2)
 }
 
-function getTimeDate() {
+function getTimeDate(timestamp = 0) {
     // 获取当前时间
     let now = new Date();
 
@@ -159,6 +161,56 @@ function formatDateToYYYYMMDD(inputDate) {
     return `${year}-${month}-${day}`;
 }
 
+
+// 生成一个长度为10的随机字符串
+function generateRandomString(length) {
+    // 定义所有可能的字符
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    // 定义一个空字符串用来存放结果
+    let result = '';
+    // 循环length次，每次从characters中随机选一个字符并拼接到result中
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt (Math.floor (Math.random () * characters.length));
+    }
+    // 返回结果
+    return result;
+}
+
+
+function getUploadFileKey(action = "avatar"){
+    let uid = getLocalUid(),
+        format = 'png'
+
+    let string = formatUid(uid),
+        path = ""
+    if (action === "avatar") {
+        path = `public/doi/avatar/${string}`
+    } else {
+        path = `public/doi/default/${string}`
+    }
+
+    return `${path}/${generateRandomString(20)}.${format}`
+}
+
+function formatUid (uid) {
+    // 先用padStart方法在前面补0，然后用split方法按每4位分割成数组，最后用join方法用/连接
+    return String (uid).padStart (10, '0').split (/(.{4})/).filter (x => x).join ('/');
+}
+
+/**
+ *
+ * @param seconds
+ * @returns {string}
+ */
+function convertSecondsToTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    return hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + secs.toString().padStart(2, '0');
+}
+
 module.exports = {goto, gotoFeedback, showToast, historyBack, previewImage,
     getOpenID, setToken, getToken, getTimeDate, setLocalInfo, getLocalInfo, getLocalUid,
-    formatDateToYYYYMMDD, getDayDate, getConfigLabel}
+    formatDateToYYYYMMDD, getDayDate, getConfigLabel, generateRandomString, getUploadFileKey,
+    convertSecondsToTime}
