@@ -1,4 +1,4 @@
-import {get, post, put} from './http'
+import {d, get, post, put} from './http'
 
 function classify() {
     return get("https://tft.qizue.com/emotions/classify")
@@ -55,8 +55,8 @@ function getStatistics(period_time = '3months', status_time = '3months', duratio
 }
 
 
-function getRecordDetail(action = 'count') {
-    return get(`/record/detail?active=${action}`)
+function getRecordDetail(action = 'count', page = 1) {
+    return get(`/record/detail?active=${action}&page=${page}&limit=20`)
 }
 
 function getProfiles(uid = 0) {
@@ -67,6 +67,10 @@ function setProfiles(uid = 0, payload = {}) {
     return put(`/users/${uid}`, payload)
 }
 
+function recordDelete(id) {
+    return d(`/record/${id}`)
+}
+
 module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login,
     record, recordList, getStatus, getPosture, getStatistics, getRecord, getRecordDetail,
-    getProfiles, setProfiles}
+    getProfiles, setProfiles, recordDelete}

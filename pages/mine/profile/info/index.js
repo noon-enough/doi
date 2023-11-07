@@ -1,5 +1,6 @@
-import {getUsersInfo, historyBack, setUsersInfo, showToast} from "../../../../../utils/util";
-import {modified} from "../../../../../utils/api";
+import {getLocalInfo, historyBack, setLocalInfo, showToast}
+    from "../../../../utils/util";
+import {setProfiles} from "../../../../utils/api";
 
 Page({
     data: {
@@ -68,9 +69,8 @@ Page({
             content = that.data.content,
             data = {
             },
-            info = getUsersInfo(),
-            users = info.users,
-            uid = info.uid
+            users = getLocalInfo(),
+            uid = users.uid
 
         wx.showLoading({
             title: "数据保存中"
@@ -101,7 +101,7 @@ Page({
                 users.dream = content
                 break
         }
-        modified(JSON.stringify(data)).then(res => {
+        setProfiles(JSON.stringify(data)).then(res => {
             // 先提交保存
             let code = res.code
             if (code !== 200) {
@@ -110,10 +110,7 @@ Page({
             }
 
             wx.hideLoading()
-            setUsersInfo({
-                users: users,
-                uid: uid,
-            })
+            setLocalInfo(users)
             // 这里开始update缓存
             historyBack()
         })

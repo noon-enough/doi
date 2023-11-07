@@ -104,7 +104,6 @@ function getLocalUid() {
         uid = users.uid ?? 0
 
     console.log('getLocalUid users', users)
-    uid = parseInt(uid)
     return uid
 }
 

@@ -9,7 +9,7 @@ import {
     YEARLY_SALARY
 } from "../../../utils/config";
 import {getProfiles, setProfiles} from "../../../utils/api";
-import {formatDateToYYYYMMDD, getConfigLabel, getLocalUid, showToast} from "../../../utils/util";
+import {getConfigLabel, getLocalUid, setLocalInfo, showToast} from "../../../utils/util.js";
 
 Page({
     data: {
@@ -167,6 +167,7 @@ Page({
                 return
         }
 
+        wx.showLoading()
         setProfiles(uid, data).then(res => {
             let code = res.code,
                 data = res.data ?? {}
@@ -180,7 +181,14 @@ Page({
                 users: data
             })
             showToast("更新成功", {icon: "success"})
-        }).catch(res => {})
+            setLocalInfo(data)
+            wx.hideLoading()
+        }).catch(res => {
+            showToast(res.message ?? "数据更新失败", {icon: "error"})
+            wx.hideLoading()
+            return false
+        }).finally(() => {
+        })
     },
     onPickerCancel(e) {},
     onColumnChange(e) {
@@ -310,6 +318,43 @@ Page({
             commonDefault: role,
             commonTitle: "角色（取向）",
             commonVisible: true,
+        })
+    },
+    onUsernameDone(e) {
+        let that = this,
+            username = e.detail.value ?? '',
+            uid = that.data.uid
+        if (username === '') {
+            showToast('昵称不可为空', {icon: "error"})
+            return false
+        }
+
+        wx.showLoading()
+        setProfiles(uid, {
+            "username": username,
+        }).then(res => {
+            let code = res.code,
+                data = res.data ?? {}
+            if (code !== 200) {
+                showToast(res.message ?? "数据更新失败", {icon: "error"})
+                return false
+            }
+            data.username = data.username ? data.username : '(纯爱战士)'
+            data.roleString = getConfigLabel(data.role, 'role')
+            that.setData({
+                users: data,
+                show_modify_username_input: false,
+            })
+            showToast("更新成功", {icon: "success"})
+
+            // 这里需要更新用户数据
+            setLocalInfo(data)
+            wx.hideLoading()
+        }).catch(res => {
+            showToast(res.message ?? "数据更新失败", {icon: "error"})
+            wx.hideLoading()
+            return false
+        }).finally(() => {
         })
     }
 });

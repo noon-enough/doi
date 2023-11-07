@@ -7,6 +7,10 @@ const app = getApp()
 
 Page({
     data: {
+        isRefresh: false,
+        loadingProps: {
+            size: '50rpx',
+        },
         durationChartData: {},
         durationOpts: {
             color: [],
@@ -78,9 +82,8 @@ Page({
         })
     },
     onLoad: function (options) {
-        let that = this,
-            times = that.data.time_selected,
-            datetime = that.data.datetime
+        let that = this
+
         that.onLoadData()
     },
     onLoadData: function() {
@@ -98,6 +101,9 @@ Page({
             let status = data.status ?? [],
                 duration = data.duration ?? []
 
+            data.in_month.count = Math.round(data.in_month.count)
+            data.in_month.durationPre = Math.round(data.in_month.durationPre)
+            data.in_month.sumDuration = Math.round(data.in_month.sumDuration)
             let chartData= status.map((item) => {
                 return {
                     "name": item.name,
@@ -133,9 +139,13 @@ Page({
                 },
                 in_month: data.in_month ?? {},
                 periods: data.periods ?? [],
+                isRefresh: false,
             })
         }).finally(() => {
             wx.hideLoading()
+            that.setData({
+                isRefresh: false,
+            })
         })
     },
     onTimeChange: function(e) {
@@ -148,5 +158,25 @@ Page({
             [`time_selected.${type}`]: value,
         })
         that.onLoadData()
-    }
+    },
+    onPullDownRefresh() {
+        let that = this
+        that.setData({
+            isRefresh: true,
+        })
+        that.onLoadData()
+    },
+    onScrollToBottom(e) {
+    },
+    onScroll(e) {
+        let that = this,
+            { scrollTop } = e.detail,
+            windowHeight = app.globalData.system.height
+
+        if (scrollTop >= 400) {
+            that.setData({
+                show_backtop: true,
+            })
+        }
+    },
 });

@@ -1,4 +1,4 @@
-import {getRecordDetail} from "../../../utils/api";
+import {getRecordDetail, login, recordDelete} from "../../../utils/api";
 import {showToast} from "../../../utils/util";
 import moment from "moment";
 
@@ -38,6 +38,16 @@ Page({
             'watcher': 1,
             'share': 1,
         },
+        isDone: {
+            'count': false,
+            'watcher': false,
+            'share': false,
+        },
+        totalPage: {
+            'count': 1,
+            'watcher': 1,
+            'share': 1,
+        }
     },
     onLoadLogin(options){
         let that = this
@@ -53,16 +63,23 @@ Page({
     },
     onLoadData() {
         let that = this,
-            active = that.data.active
+            active = that.data.active,
+            isDone = that.data.isDone[active],
+            page = that.data.pages[active]
 
+        if (isDone === true) {
+            return
+        }
         wx.showLoading()
         that.setData({
             isRefresh: true,
         })
-        getRecordDetail(active).then(res => {
+        getRecordDetail(active, page).then(res => {
             console.log('getRecordDetail', res)
             let code = res.code,
-                data = res.data
+                data = res.data.data ?? [],
+                isDone = false,
+                totalPage = res.data.totalPage ?? 1
             if (code !== 200) {
                 showToast("数据拉取失败", {icon: "error"})
                 return false
@@ -77,10 +94,14 @@ Page({
             if (page >= 1) {
                 data = data.concat(that.data.record[active])
             }
-
+            if (page >= totalPage) {
+                isDone = true
+            }
             that.setData({
                 [`record.${active}`]: data,
                 isRefresh: false,
+                [`totalPage.${active}`]: totalPage,
+                [`isDone.${active}`]: isDone,
             })
         }).finally(() => {
             wx.hideLoading()
@@ -101,15 +122,15 @@ Page({
     },
     onReachBottom() {
         let that = this,
-            totalPage = that.data.totalPage,
             active = that.data.active,
+            totalPage = that.data.totalPage[active],
             page = that.data.pages[active]
 
         const nextPage = page + 1
         console.log('onReachBottom', nextPage)
         if (nextPage > totalPage) {
             that.setData({
-                isDone: true,
+                [`isDone.${active}`]: true,
             })
             return
         }
@@ -136,12 +157,41 @@ Page({
     },
     onPullDownRefresh() {
         let that = this,
-            active = that.data.active
+            active = that.data.active,
+            isDone = that.data.isDone[active]
         that.setData({
             [`pages.${active}`]: 1,
-            isDone: false,
+            [`isDone.${active}`]: false,
             isRefresh: true,
         })
         that.onLoadData()
     },
+    onRecordDelete(e) {
+        let that = this,
+            id = e.currentTarget.dataset.id ?? 0,
+            active = that.data.active,
+            idx = e.currentTarget.dataset.idx ?? 0,
+            data = that.data.record[active]
+        id = parseInt(id)
+        if (id === 0) {
+            showToast("删除失败", {icon: "error"})
+            return false
+        }
+
+        wx.showLoading()
+        recordDelete(id).then(res => {
+            let code = res.code
+            if (code !== 200) {
+                showToast("删除失败", {icon: "error"})
+                return false
+            }
+            showToast("删除成功", {icon:"success"})
+            data = data.splice(idx, 1)
+            console.log('data', data, 'idx', idx)
+            that.setData({
+                [`recode.${active}`]: data,
+            })
+            wx.hideLoading()
+        })
+    }
 });

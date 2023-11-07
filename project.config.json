@@ -1,7 +1,7 @@
 {
   "appid": "wx47f3efae01c67434",
   "compileType": "miniprogram",
-  "libVersion": "3.1.5",
+  "libVersion": "2.32.3",
   "packOptions": {
     "ignore": [],
     "include": []
@@ -29,5 +29,6 @@
   "editorSetting": {
     "tabIndent": "auto",
     "tabSize": 2
-  }
+  },
+  "projectname": "emotions"
 }

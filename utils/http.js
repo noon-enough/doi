@@ -89,7 +89,7 @@ function put(uri, params = {}) {
 function d(uri, params = {}) {
     console.log(log("Request"), log("DELETE"), uri, log(params))
 
-    return REQUEST.post(uri, params, {
+    return REQUEST.delete(uri, params, {
         headers: headers({
             'X-HTTP-Method-Override': 'DELETE',
             'Content-Type': 'application/json'

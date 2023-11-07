@@ -11,7 +11,6 @@
         "pages/mine/record/index",
         "pages/mine/profile/index"
     ],
-    "lazyCodeLoading": "requiredComponents",
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
@@ -66,6 +65,6 @@
         "t-image": "/miniprogram_npm/tdesign-miniprogram/image/image",
         "t-back-top": "/miniprogram_npm/tdesign-miniprogram/back-top/back-top",
         "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",
-        "t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon"
+        "t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon",
     }
 }

@@ -27,8 +27,11 @@
                         <view class="action">
                             <view class="date">{{item.datetime}}</view>
                             <view class="button">
-                                <t-icon name="edit" color="#6c757d"/>
-                                <t-icon name="delete-time" color="#6c757d"/>
+                                <t-icon name="edit" bind:click="onRecordModify"
+                                        data-id="{{item.id}}" color="#6c757d"/>
+                                <t-icon name="delete-time" bind:click="onRecordDelete"
+                                        data-idx="{{key}}"
+                                        data-id="{{item.id}}" color="#6c757d"/>
                             </view>
                         </view>
                     </view>

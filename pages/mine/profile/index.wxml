@@ -14,9 +14,11 @@
                     <view class="username" bind:tap="modifyUsername">{{users.username}}</view>
                 </view>
                 <view wx:if="{{show_modify_username_input}}">
-                    <t-input value="{{users.username}}" align="right" size="small"
+                    <t-input value="{{users.username}}"
+                             bind:enter="onUsernameDone"
+                             align="right" size="small"
                              confirm-type="done"
-                             focus
+                             focus type="nickname"
                              borderless></t-input>
                 </view>
             </view>

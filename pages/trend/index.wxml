@@ -3,130 +3,140 @@
         text-selected-color="#50b089"
         list="{{list}}"
 />
-
-<view class="wrapper">
-    <view class="title">
-        本月数据
-    </view>
-    <view class="describe">
-        数据统计范围为本月01日00:00 ~ {{datetime}}
-    </view>
-    <view class="content">
-        <t-row gutter="16">
-            <t-col span="8" t-class="dark">
-                <view class="name">做爱次数</view>
-                <view class="info">
-                    <view class="strong">
-                        {{in_month.count}}
-                    </view>
-                    次
-                </view>
-            </t-col>
-            <t-col span="8" t-class="light">
-                <view class="name">做爱总时长</view>
-                <view class="info"><view class="strong">{{in_month.sumDuration}}</view> 分钟</view>
-            </t-col>
-            <t-col span="8" t-class="light">
-                <view class="name">平均时长</view>
-                <view class="info"><view class="strong">{{in_month.durationPre}}</view> 分钟</view>
-            </t-col>
-        </t-row>
-    </view>
-    <t-divider />
-    <view class="title">
-        时段分析
-    </view>
-    <view class="times">
-        <block wx:for="{{times}}" wx:for-index="key" wx:for-item="item" wx:key="key">
-            <t-tag class="margin-16"
-                   data-value="{{key}}"
-                   data-type="period_time"
-                   bind:click="onTimeChange"
-                   variant="{{time_selected.period_time === key ? 'light': 'outline'}}" shape="round">{{item}}</t-tag>
-        </block>
-        <view class="map">
-            <t-row gutter="8">
-                <t-col span="6" t-class="dark" class="item">
-                    <view class="t-progress__canvas--circle" style="background-image: conic-gradient( #0052d9 {{periods[1].percentage}}%, #e7e7e7 0%);">
-                        <view class="t-progress__canvas--inner t-class-bar">
-                            <view class="t-progress__info t-class-label">
-                                {{periods[1].percentage}} %
-                            </view>
+<t-pull-down-refresh
+        value="{{isRefresh}}"
+        loadingProps="{{loadingProps}}"
+        loadingTexts="{{['下拉刷新', '松手刷新', '正在刷新', '刷新完成']}}"
+        bind:refresh="onPullDownRefresh"
+        bind:scroll="onScroll"
+        bind:scrolltolower="onScrollToBottom"
+        using-custom-navbar="{{true}}"
+>
+    <view class="wrapper">
+        <view class="title">
+            本月数据
+        </view>
+        <view class="describe">
+            数据统计范围为本月01日00:00 ~ {{datetime}}
+        </view>
+        <view class="content">
+            <t-row gutter="16">
+                <t-col span="8" t-class="dark">
+                    <view class="name">做爱次数</view>
+                    <view class="info">
+                        <view class="strong">
+                            {{in_month.count}}
                         </view>
+                        次
                     </view>
-                    <view class="info">00:00~07:00</view>
                 </t-col>
-                <t-col span="6" t-class="light" class="item">
-                    <view class="t-progress__canvas--circle" style="background-image: conic-gradient( #0052d9 {{periods[2].percentage}}%, #e7e7e7 0%);">
-                        <view class="t-progress__canvas--inner t-class-bar">
-                            <view class="t-progress__info t-class-label">
-                                {{periods[2].percentage}} %
-                            </view>
-                        </view>
-                    </view>
-                    <view class="info">07:00~12:00</view>
+                <t-col span="8" t-class="light">
+                    <view class="name">做爱总时长</view>
+                    <view class="info"><view class="strong">{{in_month.sumDuration}}</view> 分钟</view>
                 </t-col>
-                <t-col span="6" t-class="light" class="item">
-                    <view class="t-progress__canvas--circle" style="background-image: conic-gradient( #0052d9 {{periods[3].percentage}}%, #e7e7e7 0%);">
-                        <view class="t-progress__canvas--inner t-class-bar">
-                            <view class="t-progress__info t-class-label">
-                                {{periods[3].percentage}} %
-                            </view>
-                        </view>
-                    </view>
-                    <view class="info">12:00~18:00</view>
-                </t-col>
-                <t-col span="6" t-class="light" class="item">
-                    <view class="t-progress__canvas--circle" style="background-image: conic-gradient( #0052d9 {{periods[4].percentage}}%, #e7e7e7 0%);">
-                        <view class="t-progress__canvas--inner t-class-bar">
-                            <view class="t-progress__info t-class-label">
-                                {{periods[4].percentage}} %
-                            </view>
-                        </view>
-                    </view>
-                    <view class="info">18:00~24:00</view>
+                <t-col span="8" t-class="light">
+                    <view class="name">平均时长</view>
+                    <view class="info"><view class="strong">{{in_month.durationPre}}</view> 分钟</view>
                 </t-col>
             </t-row>
         </view>
-    </view>
-    <t-divider />
-    <view class="title">
-        状态分析
-    </view>
-    <view class="status">
+        <t-divider />
+        <view class="title">
+            时段分析
+        </view>
         <view class="times">
             <block wx:for="{{times}}" wx:for-index="key" wx:for-item="item" wx:key="key">
                 <t-tag class="margin-16"
                        data-value="{{key}}"
-                       data-type="status_time"
+                       data-type="period_time"
                        bind:click="onTimeChange"
-                       variant="{{time_selected.status_time === key ? 'light': 'outline'}}" shape="round">{{item}}</t-tag>
+                       variant="{{time_selected.period_time === key ? 'light': 'outline'}}" shape="round">{{item}}</t-tag>
             </block>
+            <view class="map">
+                <t-row gutter="8">
+                    <t-col span="6" t-class="dark" class="item">
+                        <view class="t-progress__canvas--circle" style="background-image: conic-gradient( #0052d9 {{periods[1].percentage}}%, #e7e7e7 0%);">
+                            <view class="t-progress__canvas--inner t-class-bar">
+                                <view class="t-progress__info t-class-label">
+                                    {{periods[1].percentage}} %
+                                </view>
+                            </view>
+                        </view>
+                        <view class="info">00:00~07:00</view>
+                    </t-col>
+                    <t-col span="6" t-class="light" class="item">
+                        <view class="t-progress__canvas--circle" style="background-image: conic-gradient( #0052d9 {{periods[2].percentage}}%, #e7e7e7 0%);">
+                            <view class="t-progress__canvas--inner t-class-bar">
+                                <view class="t-progress__info t-class-label">
+                                    {{periods[2].percentage}} %
+                                </view>
+                            </view>
+                        </view>
+                        <view class="info">07:00~12:00</view>
+                    </t-col>
+                    <t-col span="6" t-class="light" class="item">
+                        <view class="t-progress__canvas--circle" style="background-image: conic-gradient( #0052d9 {{periods[3].percentage}}%, #e7e7e7 0%);">
+                            <view class="t-progress__canvas--inner t-class-bar">
+                                <view class="t-progress__info t-class-label">
+                                    {{periods[3].percentage}} %
+                                </view>
+                            </view>
+                        </view>
+                        <view class="info">12:00~18:00</view>
+                    </t-col>
+                    <t-col span="6" t-class="light" class="item">
+                        <view class="t-progress__canvas--circle" style="background-image: conic-gradient( #0052d9 {{periods[4].percentage}}%, #e7e7e7 0%);">
+                            <view class="t-progress__canvas--inner t-class-bar">
+                                <view class="t-progress__info t-class-label">
+                                    {{periods[4].percentage}} %
+                                </view>
+                            </view>
+                        </view>
+                        <view class="info">18:00~24:00</view>
+                    </t-col>
+                </t-row>
+            </view>
         </view>
-        <qiun-wx-ucharts
-                type="rose"
-                opts="{{opts}}"
-                chartData="{{chartData}}"
-        />
-    </view>
-    <t-divider />
-    <view class="title">
-        时长分析
-    </view>
-    <view class="status">
-        <view class="times">
-            <block wx:for="{{times}}" wx:for-index="key" wx:for-item="item" wx:key="key">
-                <t-tag class="margin-16"
-                       data-value="{{key}}"
-                       data-type="duration_time"
-                       bind:click="onTimeChange"
-                       variant="{{time_selected.duration_time === key ? 'light': 'outline'}}" shape="round">{{item}}</t-tag>
-            </block>
+        <t-divider />
+        <view class="title">
+            状态分析
         </view>
-        <qiun-wx-ucharts
-                type="pie"
-                opts="{{durationOpts}}"
-                chartData="{{durationChartData}}"
-        />
+        <view class="status">
+            <view class="times">
+                <block wx:for="{{times}}" wx:for-index="key" wx:for-item="item" wx:key="key">
+                    <t-tag class="margin-16"
+                           data-value="{{key}}"
+                           data-type="status_time"
+                           bind:click="onTimeChange"
+                           variant="{{time_selected.status_time === key ? 'light': 'outline'}}" shape="round">{{item}}</t-tag>
+                </block>
+            </view>
+            <qiun-wx-ucharts
+                    type="rose"
+                    opts="{{opts}}"
+                    chartData="{{chartData}}"
+            />
+        </view>
+        <t-divider />
+        <view class="title">
+            时长分析
+        </view>
+        <view class="status">
+            <view class="times">
+                <block wx:for="{{times}}" wx:for-index="key" wx:for-item="item" wx:key="key">
+                    <t-tag class="margin-16"
+                           data-value="{{key}}"
+                           data-type="duration_time"
+                           bind:click="onTimeChange"
+                           variant="{{time_selected.duration_time === key ? 'light': 'outline'}}" shape="round">{{item}}</t-tag>
+                </block>
+            </view>
+            <qiun-wx-ucharts
+                    type="pie"
+                    opts="{{durationOpts}}"
+                    chartData="{{durationChartData}}"
+            />
+        </view>
     </view>
-</view>
+    <t-back-top wx:if="{{show_backtop}}" theme="round" text="顶部"></t-back-top>
+</t-pull-down-refresh>

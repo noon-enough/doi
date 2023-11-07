@@ -16,6 +16,10 @@ Page({
         let that = this
         that.onLoadData()
     },
+    onShow() {
+        let that = this
+        that.onLoadUsers()
+    },
     onLoadUsers(options){
         // 拿到用户信息了，可以走依赖用户信息的逻辑了
         let users = app.globalData.users ?? {},
