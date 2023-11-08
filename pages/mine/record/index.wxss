@@ -1,5 +1,7 @@
 .wrapper .records {
     padding: 20rpx 32rpx;
+    --td-rate-text-font-size: 26rpx;
+    --td-rate-text-active-font-weight: 400;
 }
 
 .wrapper .records .item {

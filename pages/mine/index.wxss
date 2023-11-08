@@ -94,7 +94,7 @@ page .main {
 .relationship {
     margin-top: 40rpx;
     margin-bottom: 40rpx;
-    padding: 20rpx;
+    padding: 20rpx 0 20rpx 0;
     display: flex;
     justify-content: space-between;
     align-items: center;

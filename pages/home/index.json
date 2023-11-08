@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "男生私密记",
+  "navigationBarTitleText": "Doi大记录",
   "usingComponents": {
     "t-search": "/miniprogram_npm/tdesign-miniprogram/search/search",
     "t-notice-bar" : "/miniprogram_npm/tdesign-miniprogram/notice-bar/notice-bar",

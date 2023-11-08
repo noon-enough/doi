@@ -137,6 +137,26 @@
                     chartData="{{durationChartData}}"
             />
         </view>
+        <t-divider />
+        <view class="title">
+            最爱姿势排名
+        </view>
+        <view class="status">
+            <view class="times">
+                <block wx:for="{{times}}" wx:for-index="key" wx:for-item="item" wx:key="key">
+                    <t-tag class="margin-16"
+                           data-value="{{key}}"
+                           data-type="duration_time"
+                           bind:click="onTimeChange"
+                           variant="{{time_selected.duration_time === key ? 'light': 'outline'}}" shape="round">{{item}}</t-tag>
+                </block>
+            </view>
+            <qiun-wx-ucharts
+                    type="pie"
+                    opts="{{durationOpts}}"
+                    chartData="{{durationChartData}}"
+            />
+        </view>
     </view>
     <t-back-top wx:if="{{show_backtop}}" theme="round" text="顶部"></t-back-top>
 </t-pull-down-refresh>
