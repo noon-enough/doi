@@ -1,6 +1,7 @@
 import {getRecordDetail, login, recordDelete} from "../../../utils/api";
 import {goto, showToast} from "../../../utils/util";
 import moment from "moment";
+import {RATE_ARRAY} from "../../../utils/config";
 
 const app = getApp()
 moment.defineLocale('zh-cn', {
@@ -23,6 +24,7 @@ moment.defineLocale('zh-cn', {
 
 Page({
     data: {
+        rateTexts: RATE_ARRAY,
         isRefresh: false,
         loadingProps: {
             size: '50rpx',
@@ -91,7 +93,7 @@ Page({
                 return item
             })
             let page = that.data.pages[active]
-            if (page >= 1) {
+            if (page > 1) {
                 data = data.concat(that.data.record[active])
             }
             if (page >= totalPage) {

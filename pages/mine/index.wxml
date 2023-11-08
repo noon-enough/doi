@@ -61,8 +61,8 @@
     <view class="footer mt-20">
         <t-cell-group theme="card">
 <!--            <t-cell title="导出记录" leftIcon="beer" hover arrow />-->
-<!--            <t-cell title="账号注销" leftIcon="delete-time" hover arrow />-->
-            <t-cell title="给我们打分" leftIcon="share" description="男生月月记需要你的助力评分" hover arrow bind:click="onCommentPlugin" />
+            <t-cell title="账号注销" leftIcon="delete-time" hover arrow />
+            <t-cell title="给我们打分" leftIcon="share" description="男生私密记需要你的助力评分" hover arrow bind:click="onCommentPlugin" />
         </t-cell-group>
     </view>
 </view>

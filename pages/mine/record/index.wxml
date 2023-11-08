@@ -23,7 +23,7 @@
                         <view class="duration">时长：{{item.duration}}分钟</view>
                         <view class="star">
                             <view class="name">刺激度：</view>
-                            <t-rate value="{{item.star}}" disable size="16px"/>
+                            <t-rate value="{{item.star}}" texts="{{rateTexts}}" showText disable size="16px"/>
                         </view>
                         <view class="action">
                             <view class="date">{{item.datetime}}</view>
@@ -53,7 +53,7 @@
                         <view class="duration">时长：{{item.duration}}分钟</view>
                         <view class="star">
                             <view class="name">刺激度：</view>
-                            <t-rate value="{{item.star}}" disable size="16px"/>
+                            <t-rate value="{{item.star}}" texts="{{rateTexts}}" showText disable size="16px"/>
                         </view>
                         <view class="action">
                             <view class="date">{{item.datetime}}</view>
@@ -83,7 +83,7 @@
                         <view class="duration">时长：{{item.duration}}分钟</view>
                         <view class="star">
                             <view class="name">刺激度：</view>
-                            <t-rate value="{{item.star}}" disable size="16px"/>
+                            <t-rate value="{{item.star}}" texts="{{rateTexts}}" showText disable size="16px"/>
                         </view>
                         <view class="action">
                             <view class="date">{{item.datetime}}</view>

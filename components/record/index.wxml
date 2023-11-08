@@ -1,7 +1,7 @@
 <view class="wrapper">
     <view class="labelBox">
         <text>时间：</text>
-        <view>{{recode.create_time}}</view>
+        <view bind:tap="onShowEventTime">{{recode.create_time}}</view>
     </view>
     <view class="labelBox">
         <text>时长：</text>
@@ -17,7 +17,7 @@
     </view>
     <view class="labelBox">
         <text>刺激度：</text>
-        <t-rate value="{{recode.star}}" t-class="star" texts="{{rateTexts}}" bind:change="onStarChange" showText/>
+        <t-rate value="{{recode.star}}" t-class="star" texts="{{rateTexts}}" showText bind:change="onStarChange"/>
     </view>
     <view class="labelBox">
         <text>状态：</text>
@@ -69,3 +69,16 @@
                   content="确认保存" size="medium" class="margin"></t-button>
     </view>
 </view>
+
+<t-date-time-picker
+        title="选择做爱开始时间"
+        visible="{{datetime_visible}}"
+        mode="hour"
+        start="{{last_start_event_time}}"
+        end="{{recode.create_time}}"
+        value="{{recode.create_time}}"
+        format="YYYY-MM-DD HH:mm:ss"
+        bindchange="onEventTimeChange"
+        bindpick="onEventTimePick"
+        bindcancel="onEventTimeHide"
+/>

@@ -78,6 +78,10 @@ App({
                 'envVersion': accountInfo.envVersion,
             }
 
+        wx.onNetworkStatusChange(function(res) {
+            console.log('wx.onNetworkStatusChange', res)
+        })
+
         console.log('wx.getAccountInfoSync()', wx.getAccountInfoSync(), 'systemInfo', systemInfo)
         let token = getToken()
         if (token === "") {

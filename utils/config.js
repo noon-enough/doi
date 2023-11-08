@@ -48,7 +48,7 @@ const YEARLY_SALARY = [
         "label": "100w以上"
     }
 ]
-
+const RATE_ARRAY = ["不爽", "失望", "一般", "爽", "刺激"]
 const JOB_ARRAY = [{"value":0,"label":"学生"},{"value":1,"label":"IT\/互联网"},{"value":2,"label":"教育\/科研"},{"value":3,"label":"建筑\/房地产"},{"value":4,"label":"生产\/制造"},{"value":5,"label":"金融"},{"value":6,"label":"政府机构"},{"value":7,"label":"医疗\/护理"},{"value":8,"label":"通信\/电子"},{"value":9,"label":"传媒\/艺术"},{"value":10,"label":"财会\/审计"},{"value":11,"label":"销售"},{"value":12,"label":"人事\/行政"},{"value":13,"label":"服务业"},{"value":14,"label":"交通运输"},{"value":15,"label":"商贸\/采购"},{"value":16,"label":"生物\/制药"},{"value":17,"label":"法律"},{"value":18,"label":"广告\/市场"},{"value":19,"label":"咨询\/顾问"},{"value":20,"label":"警察"},{"value":21,"label":"高级管理"},{"value":22,"label":"物流\/仓库"},{"value":23,"label":"农林牧渔"},{"value":24,"label":"自由职业"},{"value":25,"label":"其他职业"},{"value":26,"label":"待业"}]
 const EDUCATION_ARRAY = [{"value":0,"label":"小学"},{"value":1,"label":"初中"},{"value":2,"label":"高中"},{"value":3,"label":"专科"},{"value":4,"label":"本科"},{"value":5,"label":"硕士"},{"value":6,"label":"博士"}]
 const MARITAL_ARRAY = [{"value":0,"label":"未婚"},{"value":1,"label":"离异"},{"value":2,"label":"丧偶"}]
@@ -60,6 +60,6 @@ const DEFAULT_AVATAR = "https://ak48.qizue.com/assets/images/user_large.jpg"
 const DEFAULT_ASSETS_DOMAIN = "ashe-1251170538.cos.ap-beijing.myqcloud.com"
 
 module.exports = { FEEDBACK_APPID, API_DOMAIN , IMAGE_CACHE, OPEN_ID,
-    TOKEN, USERS, STATUS_COLORS,
+    TOKEN, USERS, STATUS_COLORS, RATE_ARRAY,
     DELISTING_ARRAY, MARITAL_ARRAY, HEIGHT_ARRAY, WEIGHT_ARRAY, YEARLY_SALARY, JOB_ARRAY, EDUCATION_ARRAY, ROLE_ARRAY,
     UPLOAD_COS_METHOD, COS_REGION, COS_BUCKET, ASSETS_DOMAIN, DEFAULT_AVATAR, DEFAULT_ASSETS_DOMAIN}

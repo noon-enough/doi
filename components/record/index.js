@@ -1,4 +1,7 @@
 import {getTimeDate, showToast} from "../../utils/util";
+import {RATE_ARRAY} from "../../utils/config";
+import dayjs from "dayjs";
+import moment from "moment";
 
 Component({
     properties: {
@@ -24,9 +27,33 @@ Component({
         }
     },
     data: {
-        rateTexts: ["不爽", "失望", "一般", "爽", "刺激"],
+        rateTexts: RATE_ARRAY,
+        datetime_visible: false,
+        last_start_event_time: "",
     },
     methods: {
+        onEventTimeChange: function(e) {
+            let that = this,
+                create_time = e.detail.value
+            that.setData({
+                ['recode.create_time'] : create_time,
+            })
+        },
+        onEventTimePick: function(e) {
+            console.log('onEventTimePick', e)
+        },
+        onShowEventTime: function(e) {
+            let that = this
+            that.setData({
+                datetime_visible: true,
+            })
+        },
+        onEventTimeHide: function() {
+            let that = this
+            that.setData({
+                datetime_visible: false,
+            })
+        },
         onDurationChange: function(e) {
             let that = this,
                 duration = e.detail.value ?? 10
@@ -94,7 +121,13 @@ Component({
     },
     lifetimes: {
         attached() {
-            console.log('attached', this.properties.recode)
+            let that = this,
+                create_time = that.properties.recode.create_time,
+                lastDay = moment(create_time).add(-30, 'days').format('YYYY-MM-DD HH:mm:ss')
+
+            that.setData({
+                last_start_event_time: lastDay,
+            })
         }
     },
 });
