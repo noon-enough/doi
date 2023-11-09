@@ -47,6 +47,12 @@ function getStatus() {
     return get("/status")
 }
 
+function addPosture(name = '') {
+    return post("/posture",  {
+        'content': name,
+    })
+}
+
 function getPosture() {
     return get("/posture")
 }
@@ -121,7 +127,17 @@ function getPlaces() {
     return get('/places')
 }
 
+function putPosture(id, name) {
+    return put(`/posture/${id}`, {
+        content: name
+    })
+}
+
+function deletePosture(id) {
+    return d(`/posture/${id}`)
+}
+
 module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login,
     record, recordList, getStatus, getPosture, getStatistics, getRecord, getRecordDetail,
     getProfiles, setProfiles, recordDelete, getRecordItem, putRecordItem,
-    getCOSAuthorization, cancel, unCancel, getPlaces}
+    getCOSAuthorization, cancel, unCancel, getPlaces, addPosture, deletePosture, putPosture}

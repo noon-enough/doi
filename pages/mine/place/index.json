@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "我的场所",
+  "navigationBarTitleText": "场所管理",
   "usingComponents": {
     "t-cell": "/miniprogram_npm/tdesign-miniprogram/cell/cell",
     "t-fab": "/miniprogram_npm/tdesign-miniprogram/fab/fab",

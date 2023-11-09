@@ -301,12 +301,9 @@ Page({
     },
     onEmotionalState(e) {},
     modifyUsername(e){
-        let that = this,
-            show_modify_username_input = that.data.show_modify_username_input
-
-        show_modify_username_input = show_modify_username_input !== true;
+        let that = this
         that.setData({
-            show_modify_username_input: show_modify_username_input,
+            show_modify_username_input: true,
         })
     },
     onBirthday(e) {
@@ -331,15 +328,15 @@ Page({
             commonVisible: true,
         })
     },
-    onUsernameDone(e) {
+    onUsersNameModify(uid, username) {
         let that = this,
-            username = e.detail.value ?? '',
-            uid = that.data.uid
-        if (username === '') {
-            showToast('昵称不可为空', {icon: "error"})
+            users = that.data.users
+        if (username === users.username) {
+            that.setData({
+                show_modify_username_input: false,
+            })
             return false
         }
-
         wx.showLoading()
         setProfiles(uid, {
             "username": username,
@@ -368,6 +365,30 @@ Page({
             return false
         }).finally(() => {
         })
+    },
+    onUsernameBlur(e) {
+        let that = this,
+            username = e.detail.value ?? '',
+            uid = that.data.uid
+        if (username === '') {
+            that.setData({
+                show_modify_username_input: false,
+            })
+            return false
+        }
+
+        that.onUsersNameModify(uid, username)
+    },
+    onUsernameDone(e) {
+        let that = this,
+            username = e.detail.value ?? '',
+            uid = that.data.uid
+        if (username === '') {
+            showToast('昵称不可为空', {icon: "error"})
+            return false
+        }
+
+        that.onUsersNameModify(uid, username)
     },
     onAvatarChoose(e) {
         let that = this,

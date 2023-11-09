@@ -64,6 +64,11 @@ Page({
     onLoad: function (options) {
         let that = this
     },
+    onShow() {
+        let that = this
+        that.onLoadStatus()
+        that.onLoadPosture()
+    },
     onLoadData(uid, timestamp) {
         let that = this,
             status = app.globalData.statusData

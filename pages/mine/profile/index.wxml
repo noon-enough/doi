@@ -12,17 +12,18 @@
         </cells>
         <cells title="昵称" bordered>
             <view slot="note">
-                <view wx:if="{{users.username && show_modify_username_input === false}}">
+                <block wx:if="{{show_modify_username_input === false}}">
                     <view class="username" bind:tap="modifyUsername">{{users.username}}</view>
-                </view>
-                <view wx:if="{{show_modify_username_input}}">
+                </block>
+                <block wx:else>
                     <t-input value="{{users.username}}"
                              bind:enter="onUsernameDone"
+                             bind:blur="onUsernameBlur"
                              align="right" size="small"
                              confirm-type="done"
                              focus type="nickname"
                              borderless></t-input>
-                </view>
+                </block>
             </view>
         </cells>
         <cells title="性别" bordered note="{{users.roleString ? users.roleString: '请选择你的角色（取向）'}}" data-role="{{users.role}}" bind:click="onRole" description="性别仅可修改一次"/>
