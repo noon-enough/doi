@@ -1,5 +1,5 @@
 import tabbar from "./tabbar";
-import {getLocalInfo, getToken, setLocalInfo, setToken, showToast} from "./utils/util";
+import {getLocalInfo, getToken, goto, setLocalInfo, setToken, showToast} from "./utils/util";
 import {getPosture, getStatus, login} from "./utils/api";
 import CustomHook from "spa-custom-hooks";
 

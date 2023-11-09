@@ -4,12 +4,29 @@ Component({
             type: Number,
             value: 0,
         },
+        description: {
+            type: String,
+            value: "",
+        },
+        showButton: {
+            type: Boolean,
+            value: false,
+        },
+        button: {
+            type: Object,
+            value: {
+                theme: 'text',
+            },
+        }
     },
     data: {
         image: '',
-        description: '',
     },
-    methods: {},
+    methods: {
+        onClick(e) {
+            this.triggerEvent('click', e.currentTarget.dataset)
+        }
+    },
     attached() {
         let that = this,
             type = that.properties.type,
@@ -22,7 +39,7 @@ Component({
                 description = '没有找到相关信息'
                 break;
             case 1:
-                image = 'https://ak48.qizue.com/doi/tips/505.svg'
+                image = 'https://ak48.qizue.com/doi/tips/502.svg'
                 description = '出现了一个致命错误'
                 break;
             case 2:
@@ -80,7 +97,7 @@ Component({
         }
 
         that.setData({
-            description: description,
+            description: that.properties.description === '' ? description: that.properties.description,
             image: image,
         })
     }

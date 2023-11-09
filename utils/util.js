@@ -23,6 +23,20 @@ function goto(url) {
     })
 }
 
+function switchTab(url) {
+    console.log('switch-tab', url)
+    wx.switchTab({
+        url: url,
+    })
+}
+
+function redirect(url) {
+    console.log('redirect', url)
+    wx.redirectTo({
+        url: url,
+    })
+}
+
 /**
  * 打开意见反馈
  */
@@ -213,4 +227,4 @@ function convertSecondsToTime(seconds) {
 module.exports = {goto, gotoFeedback, showToast, historyBack, previewImage,
     getOpenID, setToken, getToken, getTimeDate, setLocalInfo, getLocalInfo, getLocalUid,
     formatDateToYYYYMMDD, getDayDate, getConfigLabel, generateRandomString, getUploadFileKey,
-    convertSecondsToTime}
+    convertSecondsToTime, switchTab, redirect}

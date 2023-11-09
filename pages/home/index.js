@@ -1,4 +1,4 @@
-import {getTimeDate, showToast} from "../../utils/util";
+import {getTimeDate, goto, redirect, showToast} from "../../utils/util";
 import {record, recordList} from "../../utils/api"
 import {STATUS_COLORS} from "../../utils/config";
 
@@ -32,7 +32,15 @@ Page({
             users =  app.globalData.users,
             uid = app.globalData.users.uid ?? 0
 
-        uid = parseInt(uid)
+        // 看看是不是申请注销状态？
+        let is_cancel = users.is_cancel ?? 0
+        is_cancel = parseInt(is_cancel)
+
+        if (is_cancel === 1) {
+            redirect('/pages/mine/status/index')
+            return
+        }
+
         that.onLoadData(uid, timestamp)
 
         console.log('users', users, 'uid', uid)

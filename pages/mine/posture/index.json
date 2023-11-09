@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "我的姿势",
+  "usingComponents": {
+    "t-cell": "/miniprogram_npm/tdesign-miniprogram/cell/cell",
+    "t-fab": "/miniprogram_npm/tdesign-miniprogram/fab/fab",
+    "t-swipe-cell": "/miniprogram_npm/tdesign-miniprogram/swipe-cell/swipe-cell"
+  }
+}

@@ -6,3 +6,9 @@
     width: 300rpx;
     height: 300rpx;
 }
+
+
+.wrapper .description {
+    text-align: left;
+    vertical-align: text-top;
+}

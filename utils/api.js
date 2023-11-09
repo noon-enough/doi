@@ -109,7 +109,19 @@ function getCOSAuthorization(options, callback) {
     })
 }
 
+function cancel(uid) {
+    return post(`/users/${uid}/cancel`)
+}
+
+function unCancel(uid) {
+    return post(`/users/${uid}/uncancel`)
+}
+
+function getPlaces() {
+    return get('/places')
+}
+
 module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login,
     record, recordList, getStatus, getPosture, getStatistics, getRecord, getRecordDetail,
     getProfiles, setProfiles, recordDelete, getRecordItem, putRecordItem,
-    getCOSAuthorization}
+    getCOSAuthorization, cancel, unCancel, getPlaces}

@@ -10,7 +10,12 @@
         "pages/mine/index",
         "pages/mine/record/index",
         "pages/mine/profile/index",
-        "pages/mine/record/modify/index"
+        "pages/mine/record/modify/index",
+        "pages/mine/posture/index",
+        "pages/mine/place/index",
+        "pages/mine/cancel/index",
+        "pages/mine/status/index",
+        "pages/wifi/index"
     ],
     "window": {
         "backgroundTextStyle": "light",

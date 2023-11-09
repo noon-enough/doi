@@ -1,7 +1,15 @@
 <view class="wrapper">
-    <t-empty description="{{description}}">
+    <t-empty>
         <view slot="image">
             <t-image src="{{image}}" mode="aspectFill" class="image"></t-image>
         </view>
+        <view slot="description">
+            <view class="description">{{description}}</view>
+        </view>
+        <t-button wx:if="{{showButton}}" slot="action"
+                  bind:tap="onClick"
+                  theme="{{button.theme ? button.theme : 'text'}}"
+                  size="{{button.size ? button.size : 'small'}}"
+                  icon="{{button.icon ? button.icon : 'loading'}}">{{button.name ? button.name : '刷新一下'}}</t-button>
     </t-empty>
 </view>

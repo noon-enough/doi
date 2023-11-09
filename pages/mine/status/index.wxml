@@ -1,0 +1,4 @@
+<view class="wrapper">
+    <empty type="2" description="你的账号【{{users.username}}】已经申请注销; \n- 账号7天内方可注销成功；\n- 注销后所有数据将被清空；\n- 点击👇【重新激活】可取消注销申请；"
+           showButton button="{{button}}" bind:click="onUnCancel"/>
+</view>

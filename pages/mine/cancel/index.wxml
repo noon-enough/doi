@@ -1,0 +1,22 @@
+<view class="wrapper">
+    <view class="title text-center mt-20">注销账号须知</view>
+    <t-divider/>
+    <view class="content">
+        <view class="mb-20">
+            - 注销申请提交后，系统将在<text class="strong red">7天内</text>完成注销流程，期间你可以通过小程序指引恢复账号使用；
+        </view>
+        <view class="mb-20">
+            - 账号注销后所有数据均<text class="strong red">无法恢复</text> ；
+        </view>
+        <view class="">
+            - 注销成功后，你再次进入【Doi大记录】小程序，我们将会为你<text class="red">自动生成新的账号</text> ；
+        </view>
+    </view>
+    <view class="submitButton mt-40">
+        <t-button theme="primary" block icon="{{submit_loading ? '' : 'send'}}" type="submit"
+                  bind:tap="onSubmit"
+                  loading="{{submit_loading}}"
+                  disabled="{{submit_loading}}"
+                  content="申请注销" size="medium" class="margin"></t-button>
+    </view>
+</view>
