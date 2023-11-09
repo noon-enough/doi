@@ -45,14 +45,14 @@ Page({
             })
             that.setData({
                 places: data,
-                isRefresh: true,
+                isRefresh: false,
             })
         })
     },
     onPullDownRefresh() {
         let that = this
         that.setData({
-            isRefresh: false,
+            isRefresh: true,
         })
         that.onLoadData()
     },

@@ -45,14 +45,18 @@ Page({
             })
             that.setData({
                 postures: data,
-                isRefresh: true,
+                isRefresh: false,
+            })
+        }).finally(() => {
+            that.setData({
+                isRefresh: false,
             })
         })
     },
     onPullDownRefresh() {
         let that = this
         that.setData({
-            isRefresh: false,
+            isRefresh: true,
         })
         that.onLoadData()
     },

@@ -16,6 +16,7 @@
             </t-swipe-cell>
             <view class="tips mt-20 ml-20">
                 侧滑可管理场所
+                <text>系统创建类别不可编辑、删除</text>
             </view>
         </block>
     </view>

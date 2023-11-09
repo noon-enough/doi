@@ -22,3 +22,8 @@
 .favor-btn {
     background-color: #0052d9;
 }
+
+.note {
+    font-size: 26rpx;
+    color: var(--gray)
+}
