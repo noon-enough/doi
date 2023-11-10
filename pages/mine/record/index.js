@@ -88,7 +88,7 @@ Page({
             }
 
             data = data.map((item) => {
-                let datetime = new Date(item.create_time)
+                let datetime = new Date(item.create_time * 1000)
                 item.datetime = moment(datetime).fromNow()
                 return item
             })

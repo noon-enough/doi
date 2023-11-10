@@ -57,8 +57,30 @@ function getPosture() {
     return get("/posture")
 }
 
-function getStatistics(period_time = '3months', status_time = '3months', duration_time = "3months") {
-    return get(`/statistics?period_time=${period_time}&status_time=${status_time}&duration_time=${duration_time}`)
+function getStatistics(type = 'month', time = '3months') {
+    let action_type = ''
+    switch (type) {
+        case 'status':
+            action_type = 'status_time'
+            break;
+        case 'posture':
+            action_type = 'posture_time'
+            break;
+        case 'place':
+            action_type = 'place_time'
+            break;
+        case 'duration':
+            action_type = 'duration_time'
+            break;
+        case 'periods':
+            action_type = 'period_time'
+            break
+        case 'month':
+        default:
+            action_type = 'time'
+            break
+    }
+    return get(`/statistics/${type}?${action_type}=${time}`)
 }
 
 

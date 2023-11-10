@@ -30,7 +30,7 @@ page {
 
 .wrapper {
   background-color: var(--white);
-  margin-bottom: 200rpx;
+  /*margin-bottom: 200rpx;*/
   padding-bottom: 200rpx;
 }
 

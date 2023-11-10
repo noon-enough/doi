@@ -11,6 +11,22 @@ Page({
         loadingProps: {
             size: '50rpx',
         },
+        postureOpts: {
+            padding: [5,5,5,5],
+            enableScroll: false,
+            extra: {
+                pie: {
+                    activeOpacity: 0.5,
+                    activeRadius: 10,
+                    offsetAngle: 0,
+                    labelWidth: 15,
+                    border: true,
+                    borderWidth: 3,
+                    borderColor: "#FFFFFF"
+                }
+            }
+        },
+        postureChartData: {},
         durationChartData: {},
         durationOpts: {
             color: [],
@@ -71,6 +87,7 @@ Page({
             period_time: '3months',
             status_time: '3months',
             duration_time: '3months',
+            posture_time: '3months',
         },
     },
     onLoadStatus() {
@@ -90,63 +107,109 @@ Page({
         let that = this,
             times = that.data.time_selected
         wx.showLoading()
-        getStatistics(times.period_time, times.status_time, times.duration_time).then(res => {
-            console.log('getStatistics', res)
-            let data = res.data,
-                code = res.code
-            if (code !== 200) {
-                showToast("数据拉取失败", {icon: "error"})
-                return false
+        Promise.all([
+            getStatistics(),
+            getStatistics('periods', times.period_time),
+            getStatistics('status', times.status_time),
+            getStatistics('duration', times.duration_time),
+            getStatistics('posture', times.posture_time),
+        ]
+        ).then(([
+            inMonthRes,
+            periodsRes,
+            statusRes,
+            durationRes,
+            postureRes
+        ]) => {
+            console.log('inMonthRes', inMonthRes,
+                'periodsRes', periodsRes, 'statusRes', statusRes,
+                'durationRes', durationRes, 'postureRes', postureRes)
+            let data = {
+                isRefresh: false,
+                in_month: {
+                    count: 0,
+                    durationPre: 0,
+                    sumDuration: 0,
+                },
+                chartData: {},
+                durationChartData: {},
+                postureChartData: {},
             }
-            let status = data.status ?? [],
-                duration = data.duration ?? []
 
-            data.in_month.count = Math.round(data.in_month.count)
-            data.in_month.durationPre = Math.round(data.in_month.durationPre)
-            data.in_month.sumDuration = Math.round(data.in_month.sumDuration)
-            let chartData= status.map((item) => {
-                return {
-                    "name": item.name,
-                    "value": item.percentage,
-                    "labelShow": true,
-                    "labelText": `${item.percentage}%`
+            if (inMonthRes.code === 200) {
+                data.in_month.count = Math.round(inMonthRes.data.count)
+                data.in_month.durationPre = Math.round(inMonthRes.data.durationPre)
+                data.in_month.sumDuration = Math.round(inMonthRes.data.sumDuration)
+            }
+
+            if (periodsRes.code === 200) {
+                data.periods = periodsRes.data ?? {}
+            }
+
+            if (statusRes.code === 200) {
+                let statusData = statusRes.data ?? []
+                let chartData= statusData.map((item) => {
+                        return {
+                            "name": item.name,
+                            "value": item.percentage,
+                            "labelShow": true,
+                            "labelText": `${item.percentage}%`
+                        }
+                    })
+                data.chartData = {
+                    series: [
+                        {
+                            data: chartData,
+                        }
+                    ],
                 }
-            }),
-                durationChartData = duration.map((item) => {
+            }
+
+            if (durationRes.code === 200) {
+                let durationData = durationRes.data ?? []
+                let durationChartData = durationData.map((item) => {
+                        return {
+                            "name": item.name,
+                            "value": item.percentage,
+                            "labelShow": true,
+                            "labelText": `${item.percentage}%`
+                        }
+                    })
+
+                data.durationChartData = {
+                    series: [
+                        {
+                            data: durationChartData,
+                        }
+                    ],
+                }
+            }
+
+
+            if (postureRes.code === 200) {
+                let postureData = postureRes.data ?? []
+                let postureChartData = postureData.map((item) => {
                     return {
-                        "name": item.name,
+                        "name": item.data.name,
                         "value": item.percentage,
                         "labelShow": true,
                         "labelText": `${item.percentage}%`
                     }
                 })
 
-            console.log('chartData', chartData, 'status', status)
-            that.setData({
-                chartData: {
+                data.postureChartData = {
                     series: [
                         {
-                            data: chartData,
+                            data: postureChartData,
                         }
                     ],
-                },
-                durationChartData: {
-                    series: [
-                        {
-                            data: durationChartData,
-                        }
-                    ],
-                },
-                in_month: data.in_month ?? {},
-                periods: data.periods ?? [],
-                isRefresh: false,
-            })
-        }).finally(() => {
+                }
+            }
+
+            console.log('data', data)
+            that.setData(data)
             wx.hideLoading()
-            that.setData({
-                isRefresh: false,
-            })
-        })
+        }).finally(() => {})
     },
     onTimeChange: function(e) {
         console.log('onTimeChange', e)
