@@ -158,7 +158,6 @@ App({
         getPosture().then(res => {
             let data = res.data,
                 code = res.code ?? 200
-
             console.log('app.js', 'getPosture', data)
             that.globalData.postureData = data
         })
