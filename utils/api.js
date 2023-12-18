@@ -30,9 +30,10 @@ function login(data) {
     return post(`/passport/login`, data)
 }
 
-function recordList(uid, date = "") {
-    date = encodeURIComponent(date)
-    return get(`/record/users/${uid}?date=${date}`)
+function recordList(uid, beginTime = "", endTime = "") {
+    beginTime = encodeURIComponent(beginTime)
+    endTime = encodeURIComponent(endTime)
+    return get(`/record/users/${uid}?begin=${beginTime}&end=${endTime}`)
 }
 
 function getRecord() {

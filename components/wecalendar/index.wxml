@@ -4,37 +4,60 @@
 <gestureContainer bind:onSlide="onSlide">
   <view class="calendar" slot="content">
     <view class="calendar-header">
-      <image class="left-icon" src="./images/right.png" catchtap="onPrev" />
-      <text>{{MonthText}}</text>
-      <view>
-        <image wx:if="{{isToday}}" src="./images/today.png" style="width:48rpx;height:48rpx; margin-right: 20rpx;" catchtap="onToToday" />
-        <image class="right-icon" src="./images/left.png" catchtap="onNext" />
+      <!-- <image class="left-icon" src="./images/right.png" catchtap="onPrev" /> -->
+      <view class="wc__header-title">
+        <span>{{MonthText}}</span>
+        <span class="wc__header-title-info">{{friendlyTime}}</span>
       </view>
-      
+      <view class="wc__operators">
+        <view catchtap="onToToday" class="wc__operator wc__operator--today {{value !== today ? 'wc__operator--show' : ''}}"></view>
+        <view class="wc__operator wc__operator--views" hidden="{{ !showFolding }}" catchtap="onFold">
+          <view class="wc__operator-view" style=";;width:{{isFold ? 'var(--wc-operator-padding)' : 'calc(var(--wc-operator-side) - var(--wc-operator-padding))'}}">
+            <view class="wc__operator-view-text">月</view>
+          </view>
+          <view class="wc__operator-view" style=";;width:{{isFold ? 'calc(var(--wc-operator-side) - var(--wc-operator-padding))': 'var(--wc-operator-padding)'}}">
+            <view class="wc__operator-view-text">周</view>
+          </view>
+          <view class="wx__views-bar" style=";;transform:translateX({{isFold ? 'var(--wc-operator-side)' : 0}}) translateZ(0px)"></view>
+        </view>
+        <!-- <image wx:if="{{isToday}}" src="./images/today.png" style="width:48rpx;height:48rpx; margin-right: 20rpx;" catchtap="onToToday" /> -->
+        <!-- <image class="right-icon" src="./images/left.png" catchtap="onNext" /> -->
+      </view>
+
     </view>
     <view class="calendar-body" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
       <view class="weekday">
-        <view style="color: #999; font-size:14px;" class="weekday-item" wx:for="{{weekdaysShort}}" wx:key="item"  >
+        <view class="weekday-item" wx:for="{{weekdaysShort}}" wx:key="item">
           {{item}}
         </view>
       </view>
 
       <view class="weekday" animation="{{animation}}" >
-        <view style="color: {{ item.isCurrent ? '' : '#ccc' }};" class="calendar-cell {{ item.date === value ? 'cell-selected' : '' }}" wx:for="{{isFold ? calendarGroups : calendar}}" wx:key="date" >
-          <view class="cell-today" data-item="{{item}}" style="color: {{ item.date === value ? '#fff': '' }};" catchtap="onCheck" wx:if="{{ today === item.date }}">
-            今
+        <view class="calendar-cell {{ item.date === value ? 'cell-selected' : '' }} {{ item.isCurrent ? 'wc__panel-date--current' : 'wc__panel-date--last' }}" wx:for="{{isFold ? calendarGroups : calendar}}" wx:key="date" >
+          <view class="cell-today" data-item="{{item}}"  catchtap="onCheck" wx:if="{{ today === item.date }}">
+            <view class="wc__panel-solar">今</view>
+            <view class="wc__panel-mark"></view>
           </view>
-          <view style="color: {{ item.date === value ? '#fff': '' }};" data-item="{{item}}" catchtap="onCheck" wx:else>
-            {{ tools.formatDay(item.date)}}
+          <view data-item="{{item}}" catchtap="onCheck" class="wc__panel-day" wx:else>
+            <view class="wc__panel-solar">{{ tools.formatDay(item.date)}}</view>
+            <view class="wc__panel-mark"></view>
           </view>
-          <view style="background: {{ item.pointColor }};" hidden="{{ item.pointColor == undefined }}" class="procColor">
+          <view class="schedules">
+            <view class="procColor" style="background: {{ item.pointColor }};" hidden="{{ item.pointColor === undefined }}"></view>
+            <view class="procColor" style="background: red;"></view>
+            <view class="procColor" style="background: green;"></view>
           </view>
         </view>
       </view>
     </view>
 
-    <view bindtap="onFold" class="action-fold" hidden="{{ !showFolding }}">
-      <image src="{{!isFold ? './images/close.png' : './images/unfold.png'}}"></image>
+    <view class="wc__bar-control">
+      <view class="wc__bar-control-item">
+        <view class="wc__bar-control-item-bar"></view>
+      </view>
+      <view class="wc__bar-control-item">
+        <view class="wc__bar-control-item-bar"></view>
+      </view>
     </view>
   </view>
 </gestureContainer>

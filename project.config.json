@@ -1,5 +1,5 @@
 {
-  "appid": "wx47f3efae01c67434",
+  "appid": "wxc0c404b97e812a61",
   "compileType": "miniprogram",
   "libVersion": "2.32.3",
   "packOptions": {
@@ -23,12 +23,15 @@
     "ignoreDevUnusedFiles": false,
     "ignoreUploadUnusedFiles": true,
     "uglifyFileName": true,
-    "compileWorklet": true
+    "compileWorklet": true,
+    "useCompilerPlugins": [
+      "less"
+    ]
   },
   "condition": {},
   "editorSetting": {
     "tabIndent": "auto",
     "tabSize": 2
   },
-  "projectname": "emotions"
+  "projectname": "doi大记录"
 }

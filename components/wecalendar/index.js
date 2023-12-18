@@ -1,5 +1,10 @@
 // component/Calendar/index.js
 import dayjs from 'dayjs'
+import relativeTime from "../../utils/dayjs/plugin/relativeTime"
+import "../../utils/dayjs/locale/zh-cn"
+
+dayjs.locale("zh-cn")
+dayjs.extend(relativeTime); 
 
 const weekdaysShort = [
   '日',
@@ -16,6 +21,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    view: {
+      typ: String,
+      value: 'week',
+    },
     markCalendarList: {
       type: Array,
       value: [],
@@ -50,11 +59,25 @@ Component({
       let animation = wx.createAnimation({
         duration: 230,
         delay: 0
-      });
+      }),
+        that = this,
+        friendlyTime = "",
+        value = that.data.defaultDate ? dayjs(that.data.defaultDate).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD'),
+        MonthRange = that.data.defaultDate ? dayjs(that.data.defaultDate) : dayjs(),
+        today = that.data.today
+
+      if (today === value) {
+        friendlyTime = "今天"
+      } else {
+        friendlyTime = dayjs(value).fromNow()
+      }
+
+      console.log('value', value, 'today', today, 'friendlyTime', friendlyTime)
       this.setData({
         animation: animation.export(),
-        MonthRange: this.data.defaultDate ? dayjs(this.data.defaultDate) : dayjs(),
-        value: this.data.defaultDate ? dayjs(this.data.defaultDate).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD'),
+        MonthRange: MonthRange,
+        value: value,
+        friendlyTime: friendlyTime,
       }, () => {
         this.generationCalendar()
       })
@@ -65,6 +88,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    friendlyTime: "",
     today: dayjs().format('YYYY-MM-DD'),
     MonthRange: dayjs(),
     MonthText: dayjs().format('YYYY年MM月'),
@@ -72,7 +96,7 @@ Component({
     calendar: [],
     calendarGroups: [],
     weekdaysShort: weekdaysShort,
-    isFold: false,
+    isFold: true,
     showFolding: true,
     weeekLayer: 1,
     animation: {},
@@ -196,6 +220,7 @@ Component({
     },
     handeleMarkCalendarList() {
       const { calendar, calendarGroups, markCalendarList } = this.data
+      console.log('calendar', calendar, 'calendarGroups', calendarGroups, 'markCalendarList', markCalendarList)
       this.setData({
         calendar: calendar.map(item => ({
           ...item,
@@ -208,10 +233,13 @@ Component({
       })
     },
     onCheck(e) {
-      const { item } = e.target.dataset
+      const { item } = e.currentTarget.dataset
       const { date } = item
-      this.setData({
+      let that = this,
+          today = that.data.today
+      that.setData({
         value: date,
+        friendlyTime: today === date ? '今天': dayjs().from(dayjs(date))
       }, () => {
         this.triggerEvent('onSelect', {day: date})
       })

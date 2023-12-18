@@ -4,13 +4,18 @@
         list="{{list}}"
 />
 <view class="wrapper">
-    <calendar id="calendar"
+    <wecalendar markCalendarList="{{marks}}" 
+            isToday="{{true}}"
+            bind:onRangeDate="onRangeDate"
+            bind:onSelect="onSelect"></wecalendar>
+    <!-- <calendar id="calendar"
               marks="{{marks}}"
+              view="{{calendarView}}"
               darkmode="{{false}}" vibrate="{{false}}"
               bindchange="onCalendarChange"
-              bindload="onCalendarLoad" />
+              bindload="onCalendarLoad" /> -->
     <view class="calendar-tips">
-        日历上每个自然日用 <text class="strong red">F</text> 标记发生了做爱事件；
+        日历上每个自然日用 <text class="strong red">小圆点</text> 标记发生了做爱事件；
         <text>\n点击每个自然日会展开具体事件行为；</text>
         <text>\n不可对将来日期添加事件行为；</text>
     </view>

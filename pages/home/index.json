@@ -6,6 +6,7 @@
     "t-link": "/miniprogram_npm/tdesign-miniprogram/link/link",
     "calendar": "/miniprogram_npm/@lspriv/wx-calendar",
     "t-progress": "/miniprogram_npm/tdesign-miniprogram/progress/progress",
-    "record": "/components/record/index"
+    "record": "/components/record/index",
+    "wecalendar": "/components/wecalendar/index"
   }
 }

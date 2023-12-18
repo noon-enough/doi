@@ -5,8 +5,12 @@ import {STATUS_COLORS} from "../../utils/config";
 const app = getApp()
 Page({
     data: {
+        uid: 0,
+        markCalendarList: [{ date: '2023-12-10', pointColor: '#333' }, { date: '2023-12-06', pointColor: 'red' }, { date: '2023-12-13', pointColor: 'red' }],
+        calendarView: 'week',
+        weekText: ['日', '一', '二', '三', '四', '五', '六'],
         today: [],
-        last_30_records: [],
+        range_records: [],
         last_ten_records: [],
         marks: [],
         list: app.globalData.tabbar,
@@ -41,7 +45,10 @@ Page({
             return
         }
 
-        that.onLoadData(uid, timestamp)
+        // that.onLoadData(uid, timestamp)
+        that.setData({
+            uid: uid,
+        })
 
         console.log('users', users, 'uid', uid)
     },
@@ -69,72 +76,48 @@ Page({
         that.onLoadStatus()
         that.onLoadPosture()
     },
-    onLoadData(uid, timestamp) {
+    onLoadData(uid, begin, end) {
         let that = this,
             status = app.globalData.statusData
         wx.showLoading()
-        recordList(uid, timestamp).then(res => {
+        recordList(uid, begin, end).then(res => {
             console.log('recodeList', res)
             let code = res.code,
                 data = res.data,
-                last_30_records = data.last_30_records ?? [],
+                last_record = data.last_record ?? [],
                 last_ten_records = data.last_ten_records ?? [],
-                today = []
+                range_records = data.range_records ?? {},
+                today = [],
+                marks = {}
+                
             if (code !== 200) {
                 wx.hideLoading()
                 showToast(res.message ?? "数据获取失败", {icon: "error"})
                 return false
             }
 
-            let marks = last_30_records.map((item) => {
-                let comment = item.comment
-                if (comment === "") {
-                    comment = `一个${item.duration}''的做爱事件`
-                }
-                return  {
-                    year: item.Y,
-                    month: item.m,
-                    day: item.d,
-                    type: 'schedule',
-                    text: comment,
-                    color: STATUS_COLORS[item.status],
-                }
-            })
-
-            const uniqueData = {}
-            const now = new Date()
-            const todayDate = now.toISOString().split('T')[0]
-
-            console.log('todayDate', todayDate)
-            last_30_records.forEach((item) => {
-                const date = new Date(item.create_time);
-                const formattedDate = date.toISOString().split('T')[0] // 格式化为YYYY-MM-DD
-                if (!uniqueData[formattedDate] || date > new Date(uniqueData[formattedDate].create_time)) {
-                    uniqueData[formattedDate] = item;
-                }
-
-                if (todayDate === item.date) {
-                    today.push(item)
-                }
-            })
-
-            // 转回数组形式
-            const result = Object.values(uniqueData);
-            result.forEach((item) => {
-                marks.push({
-                    year: item.Y,
-                    month: item.m,
-                    day: item.d,
-                    type: 'corner',
-                    text: "F",
-                    color: STATUS_COLORS[item.status],
+            for (const key in range_records) {
+                marks[key] = range_records[key].map((item) => {
+                    let comment = item.comment
+                    if (comment === "") {
+                        comment = `一个${item.duration}''的做爱事件`
+                    }
+                        return  {
+                                    year: item.Y,
+                                    month: item.m,
+                                    day: item.d,
+                                    type: 'schedule',
+                                    text: comment,
+                                    color: STATUS_COLORS[item.status]
+                                }
                 })
-            })
+            }
 
             that.setData({
+                last_record: last_record,
                 marks: marks,
                 last_ten_records: last_ten_records,
-                last_30_records: last_30_records,
+                range_records: range_records,
                 today: today,
             })
             console.log('marks', marks, 'status', status, 'today', today)
@@ -161,7 +144,7 @@ Page({
             todayData = []
 
         // date = formatDateToYYYYMMDD(date)
-
+        console.log('today', today, 'year', year, 'month', month, 'day', day, 'date', date)
         last_30_records.forEach((item) => {
             console.log('date', date, 'item.date', item.date)
             if (date === item.date) {
@@ -212,4 +195,17 @@ Page({
             })
         })
     },
+    onRangeDate(e) {
+        let {beginTime, endTime} = e.detail,
+            that = this,
+            uid = app.globalData.users.uid ?? 0
+        
+        wx.showLoading()
+
+        console.log('onRangeDate', beginTime, endTime)
+        that.onLoadData(uid, beginTime, endTime)
+    },
+    onSelect(e) {
+        console.log('onSelect', e)
+    }
 });
