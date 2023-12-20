@@ -89,7 +89,7 @@ Page({
                 range_records = data.range_records ?? {},
                 today = [],
                 marks = {}
-                
+
             if (code !== 200) {
                 wx.hideLoading()
                 showToast(res.message ?? "数据获取失败", {icon: "error"})
@@ -199,13 +199,14 @@ Page({
         let {beginTime, endTime} = e.detail,
             that = this,
             uid = app.globalData.users.uid ?? 0
-        
-        wx.showLoading()
 
-        console.log('onRangeDate', beginTime, endTime)
-        that.onLoadData(uid, beginTime, endTime)
+        // wx.showLoading()
+        // that.onLoadData(uid, beginTime, endTime)
     },
     onSelect(e) {
         console.log('onSelect', e)
+    },
+    onViewChange(e) {
+        console.log('onViewChange', e)
     }
 });

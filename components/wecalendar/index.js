@@ -1,10 +1,9 @@
-// component/Calendar/index.js
 import dayjs from 'dayjs'
 import relativeTime from "../../utils/dayjs/plugin/relativeTime"
 import "../../utils/dayjs/locale/zh-cn"
 
+dayjs.extend(relativeTime)
 dayjs.locale("zh-cn")
-dayjs.extend(relativeTime); 
 
 const weekdaysShort = [
   '日',
@@ -20,6 +19,9 @@ Component({
   /**
    * 组件的属性列表
    */
+  options: {
+    multipleSlots: true
+  },
   properties: {
     view: {
       typ: String,
@@ -41,7 +43,7 @@ Component({
       type: Boolean,
       value: true
     },
-    weeekLayer: {
+    weekLayer: {
       type: Number,
       value: 1
     }
@@ -72,14 +74,13 @@ Component({
         friendlyTime = dayjs(value).fromNow()
       }
 
-      console.log('value', value, 'today', today, 'friendlyTime', friendlyTime)
-      this.setData({
+      that.setData({
         animation: animation.export(),
         MonthRange: MonthRange,
         value: value,
         friendlyTime: friendlyTime,
       }, () => {
-        this.generationCalendar()
+        that.generationCalendar()
       })
     }
   },
@@ -98,7 +99,7 @@ Component({
     weekdaysShort: weekdaysShort,
     isFold: true,
     showFolding: true,
-    weeekLayer: 1,
+    weekLayer: 1,
     animation: {},
   },
   observers: {
@@ -126,7 +127,8 @@ Component({
    */
   methods: {
     generationCalendar() {
-      const { MonthRange } = this.data
+      let that = this
+      const { MonthRange } = that.data
       // 当前月份的天数
       const daysInMonth = MonthRange.daysInMonth();
       // 当前月份1日是周几
@@ -159,76 +161,89 @@ Component({
 
       // 补齐最后一周
       for (let i = 0; i < 6 - Number(endDayOfMonth); i++) {
-        const date = endDay.add(i + 1, 'days').format('YYYY-MM-DD');;
+        const date = endDay.add(i + 1, 'days').format('YYYY-MM-DD');
         calendar.push({
           date,
           isCurrent: 0,
         });
       }
 
-      this.setData({
+      that.setData({
         calendar,
-      }, () => this.generationWeek())
+      }, () => that.generationWeek())
     },
     generationWeek(type) {
-      const { value, weeekLayer } = this.data
-      const len = 7 * weeekLayer
+      let that = this
+      const { value, weekLayer, today} = that.data
+      const len = 7 * weekLayer
+      let newWeekSameDay = value
       // 处理周日历
       let groups = [];
       if (type === 'next') {
+        let currentDate = dayjs(value),
+            dayOfWeek = currentDate.day(),
+            nextWeekSameDay = currentDate.add(7, 'day'),
+            weekStart = nextWeekSameDay.subtract(dayOfWeek, 'day')
+        newWeekSameDay = nextWeekSameDay.format('YYYY-MM-DD')
         for (let i = 0; i < len; i++) {
           groups.push({
-            date: dayjs(this.data.calendarGroups[0].date)
-              .add(weeekLayer, 'week')
-              .startOf('week')
-              .add(i, 'day').format('YYYY-MM-DD'),
+            date: weekStart.add(i, 'day').format('YYYY-MM-DD'),
             isCurrent: 1,
-          });
+          })
         }
       } else if (type === 'prev') {
+        let currentDate = dayjs(value),
+            dayOfWeek = currentDate.day(),
+            nextWeekSameDay = currentDate.add(-7, 'day'),
+            weekStart = nextWeekSameDay.subtract(dayOfWeek, 'day')
+        newWeekSameDay = nextWeekSameDay.format('YYYY-MM-DD')
         for (let i = 0; i < len; i++) {
           groups.push({
-            date: dayjs(this.data.calendarGroups[0].date)
-              .subtract(weeekLayer, 'week')
-              .startOf('week')
-              .add(i, 'day').format('YYYY-MM-DD'),
+            date: weekStart.add(i, 'day').format('YYYY-MM-DD'),
             isCurrent: 1,
-          });
+          })
         }
       } else {
+        let current = dayjs(value).startOf('week');
+        if (current.day() !== 0) {
+          current = current.subtract(current.day(), 'day');
+        }
         for (let i = 0; i < len; i++) {
           groups.push({
-            date: value
-              ? dayjs(value).startOf('week').add(i, 'day').format('YYYY-MM-DD')
-              : MonthRange.startOf('week').add(i, 'day').format('YYYY-MM-DD'),
+            date: current.format('YYYY-MM-DD'),
             isCurrent: 1,
-          });
+          })
+          current = current.add(1, 'day')
         }
       }
-      this.setData({
-        calendarGroups: groups
+      that.setData({
+        calendarGroups: groups,
+        value: newWeekSameDay,
+        friendlyTime: today === newWeekSameDay ? '今天': dayjs().from(dayjs(newWeekSameDay))
       }, () => {
-        this.getRangeDate()
-        this.handeleMarkCalendarList()
+        that.getRangeDate()
+        that.handleMarkCalendarList()
       })
     },
     getRangeDate() {
-      const { isFold, calendar, calendarGroups } = this.data
-      const beginTime = isFold ? calendarGroups[0].date : calendar[0].date
-      const endTime = isFold ? calendarGroups[calendarGroups.length - 1].date : calendar[calendar.length - 1].date
-      this.triggerEvent('onRangeDate', { beginTime, endTime });
+      let that = this
+      const { isFold, calendar, calendarGroups } = that.data
+      const beginTime = isFold ? calendarGroups[0].date : calendar[0].date,
+          endTime = isFold ? calendarGroups[calendarGroups.length - 1].date : calendar[calendar.length - 1].date
+
+      that.triggerEvent('onRangeDate', { beginTime, endTime });
     },
-    handeleMarkCalendarList() {
-      const { calendar, calendarGroups, markCalendarList } = this.data
-      console.log('calendar', calendar, 'calendarGroups', calendarGroups, 'markCalendarList', markCalendarList)
+    handleMarkCalendarList() {
+      let that = this
+      const { calendar, calendarGroups, markCalendarList } = that.data
       this.setData({
         calendar: calendar.map(item => ({
           ...item,
-          pointColor: markCalendarList.find(it => item.date == it.date)?.pointColor
+          pointColor: markCalendarList.find(it => item.date === it.date)?.pointColor
         })),
         calendarGroups: calendarGroups.map(item => ({
           ...item,
-          pointColor: markCalendarList.find(it => item.date == it.date)?.pointColor
+          pointColor: markCalendarList.find(it => item.date === it.date)?.pointColor
         })),
       })
     },
@@ -241,47 +256,58 @@ Component({
         value: date,
         friendlyTime: today === date ? '今天': dayjs().from(dayjs(date))
       }, () => {
-        this.triggerEvent('onSelect', {day: date})
+        that.triggerEvent('onSelect', {day: date})
       })
     },
     onFold() {
-      this.setData({
+      let that = this
+      that.setData({
         isFold: !this.data.isFold
       }, () => {
-        this.generationCalendar()
+        that.generationCalendar()
       })
     },
     onNext() {
-      const { MonthRange, isFold } = this.data
+      let that = this
+      const { MonthRange, isFold } = that.data
       if (!isFold) {
-        this.setData({
+        that.setData({
           MonthRange: MonthRange.add(1, isFold ? 'week' : 'month'),
         }, () => {
-          this.generationCalendar()
+          that.generationCalendar()
         })
       }
-      this.generationWeek('next');
-      this.onAnimation()
+      that.generationWeek('next');
+      that.onAnimation()
     },
     onPrev() {
-      const { MonthRange, isFold } = this.data
+      let that = this
+      const { MonthRange, isFold } = that.data
       if (!isFold) {
-        this.setData({
+        that.setData({
           MonthRange: MonthRange.subtract(1, isFold ? 'week' : 'month'),
         }, () => {
-          this.generationCalendar()
+          that.generationCalendar()
         })
       }
-      this.generationWeek('prev');
-      this.onAnimation()
+      that.generationWeek('prev');
+      that.onAnimation()
     },
     onSlide(e) {
+      let that = this
+      console.log('onSlide', e.detail)
       switch (e.detail) {
         case 'R':
-          this.onPrev()
+          that.onPrev()
           break;
         case 'L':
-          this.onNext()
+          that.onNext()
+          break;
+        case 'U':
+          that.onFold()
+          break
+        case 'D':
+          that.onFold()
           break;
         default:
           break;
@@ -292,20 +318,22 @@ Component({
         duration: 320,
         timingFunction: 'step-start',
         delay: 0
-      });
+      }),
+          that = this
       animation.opacity(0.3).step()
       animation.opacity(1).step();
-      this.setData({
+      that.setData({
         animation: animation.export(),
       });
     },
     onToToday () {
-      this.setData({
+      let that = this
+      that.setData({
         value: dayjs().format('YYYY-MM-DD'),
         MonthRange: dayjs()
       }, () => {
-        this.generationCalendar()
-        this.triggerEvent('onSelect', {day: dayjs().format('YYYY-MM-DD')})
+        that.generationCalendar()
+        that.triggerEvent('onSelect', {day: dayjs().format('YYYY-MM-DD')})
       })
     }
   }

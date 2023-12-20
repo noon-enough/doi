@@ -1,4 +1,3 @@
-// component/gestureContainer/index.js
 Component({
   /**
    * 组件的属性列表
@@ -39,11 +38,12 @@ Component({
       })
     },
     touchEnd: function (e) {
-      const { minOffset, minTime, startX, startY, startTime } = this.data
-      let endX = e.changedTouches[0].pageX;
-      let endY = e.changedTouches[0].pageY;
-      let touchTime = new Date().getTime() - startTime;
-      let direction = false
+      let that = this
+      const { minOffset, minTime, startX, startY, startTime } = that.data
+      let endX = e.changedTouches[0].pageX,
+          endY = e.changedTouches[0].pageY,
+          touchTime = new Date().getTime() - startTime,
+          direction = false
 
       if (touchTime >= minTime) {
         let xOffset = endX - startX;
@@ -64,7 +64,7 @@ Component({
       } else {
         console.log('滑动时间过短', touchTime)
       }
-      this.triggerEvent('onSlide', direction)
+      that.triggerEvent('onSlide', direction)
     },
 
   }

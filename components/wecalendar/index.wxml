@@ -1,4 +1,3 @@
-<!--component/Calendar/index.wxml-->
 <wxs src="./tools.wxs" module="tools"></wxs>
 
 <gestureContainer bind:onSlide="onSlide">
@@ -6,8 +5,8 @@
     <view class="calendar-header">
       <!-- <image class="left-icon" src="./images/right.png" catchtap="onPrev" /> -->
       <view class="wc__header-title">
-        <span>{{MonthText}}</span>
-        <span class="wc__header-title-info">{{friendlyTime}}</span>
+        <view>{{MonthText}}</view>
+        <view class="wc__header-title-info">{{friendlyTime}}</view>
       </view>
       <view class="wc__operators">
         <view catchtap="onToToday" class="wc__operator wc__operator--today {{value !== today ? 'wc__operator--show' : ''}}"></view>
@@ -25,7 +24,7 @@
       </view>
 
     </view>
-    <view class="calendar-body" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+    <view class="calendar-body">
       <view class="weekday">
         <view class="weekday-item" wx:for="{{weekdaysShort}}" wx:key="item">
           {{item}}
@@ -44,14 +43,12 @@
           </view>
           <view class="schedules">
             <view class="procColor" style="background: {{ item.pointColor }};" hidden="{{ item.pointColor === undefined }}"></view>
-            <view class="procColor" style="background: red;"></view>
-            <view class="procColor" style="background: green;"></view>
           </view>
         </view>
       </view>
     </view>
 
-    <view class="wc__bar-control">
+    <view class="wc__bar-control" bind:tap="onFold">
       <view class="wc__bar-control-item">
         <view class="wc__bar-control-item-bar"></view>
       </view>
