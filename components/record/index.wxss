@@ -22,6 +22,7 @@
     height: 48rpx;
     color: #646566;
     font-size: 28rpx;
+    line-height: 2;
 }
 
 .labelBox .star {

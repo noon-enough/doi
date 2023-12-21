@@ -51,13 +51,15 @@
         </t-checkbox-group>
     </view>
     <view class="labelBox">
-        <text>备注：</text>
-        <t-input placeholder="输入备注" type="text" value="{{recode.comment}}" borderless="{{true}}" bind:change="onCommentChange" tips="可以对此次事件做个备忘录" />
+        <text>对象：</text>
+        <t-input placeholder="输入对象名字" type="text" value="{{recode.partner}}"
+                 borderless="{{true}}" tips="你记录此次事件的对象" bind:change="onPartnerChange"/>
     </view>
-    <!--    <view class="labelBox">-->
-    <!--        <text>对象：</text>-->
-    <!--        <t-input placeholder="输入对象名字" type="text" borderless="{{true}}" tips="你记录此次事件的对象"/>-->
-    <!--    </view>-->
+    <view class="labelBox">
+        <text>备注：</text>
+        <t-input placeholder="输入备注" type="text" value="{{recode.comment}}" borderless="{{true}}"
+                 bind:change="onCommentChange" tips="可以对此次事件做个备忘录" />
+    </view>
     <view class="tips">
         事件时常最短 <text class="strong">10</text>分钟， 最长<text class="strong">180</text>分钟
     </view>

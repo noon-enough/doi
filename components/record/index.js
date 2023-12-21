@@ -1,6 +1,5 @@
-import {getTimeDate, showToast} from "../../utils/util";
+import {getTimeDate} from "../../utils/util";
 import {RATE_ARRAY} from "../../utils/config";
-import dayjs from "dayjs";
 import moment from "moment";
 
 Component({
@@ -23,6 +22,7 @@ Component({
                 star: 3,
                 status: 4,
                 posture: [],
+                partner: "",
             },
         }
     },
@@ -57,7 +57,7 @@ Component({
         onDurationChange: function(e) {
             let that = this,
                 duration = e.detail.value ?? 10
-            duration = parseInt(duration)
+
             that.setData({
                 ['recode.duration']: duration
             })
@@ -72,7 +72,6 @@ Component({
         onStarChange: function(e) {
             let that = this,
                 star = e.detail.value ?? 3
-            star = parseInt(star)
 
             that.setData({
                 ['recode.star']: star,
@@ -81,7 +80,6 @@ Component({
         onStatusChange: function(e) {
             let that = this,
                 status = e.detail.value ?? 3
-            status = parseInt(status)
 
             that.setData({
                 ['recode.status']: status,
@@ -93,6 +91,15 @@ Component({
 
             that.setData({
                 ['recode.posture']: posture,
+            })
+        },
+        onPartnerChange: function(e) {
+            let that = this,
+                partner = e.detail.value ?? ""
+            partner = partner.trim()
+
+            that.setData({
+                ['recode.partner']: partner,
             })
         },
         onCommentChange: function(e) {

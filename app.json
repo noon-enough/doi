@@ -1,83 +1,86 @@
 {
-    "pages": [
-        "pages/home/index",
-        "pages/index/index",
-        "pages/category/index",
-        "pages/detail/index",
-        "pages/diy/index",
-        "pages/trend/index",
-        "pages/record/index",
-        "pages/mine/index",
-        "pages/mine/record/index",
-        "pages/mine/profile/index",
-        "pages/mine/record/modify/index",
-        "pages/mine/posture/index",
-        "pages/mine/place/index",
-        "pages/mine/cancel/index",
-        "pages/mine/status/index",
-        "pages/wifi/index"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
-        "backgroundColor": "#f6f6f6",
-        "navigationBarTextStyle": "black"
-    },
-    "tabBar": {
-        "color": "#707070",
-        "selectedColor": "#2c2c2c",
-        "backgroundColor": "#ffffff",
-        "borderStyle": "white",
-        "custom": true,
-        "list": [
-            {
-                "pagePath":"pages/home/index",
-                "text":"首页",
-                "iconPath":"/assets/icons/tabbar/fire.png",
-                "selectedIconPath":"/assets/icons/tabbar/fire.png"
-            },
-            {
-                "pagePath":"pages/trend/index",
-                "text":"趋势",
-                "iconPath":"/assets/icons/tabbar/category-management.png",
-                "selectedIconPath":"/assets/icons/tabbar/category-management.png"
-            },
-            {
-                "pagePath":"pages/record/index",
-                "text":"记录",
-                "iconPath":"/assets/icons/tabbar/category-management.png",
-                "selectedIconPath":"/assets/icons/tabbar/category-management.png"
-            },
-            {
-                "pagePath":"pages/index/index",
-                "text":"表情包",
-                "iconPath":"/assets/icons/tabbar/category-management.png",
-                "selectedIconPath":"/assets/icons/tabbar/category-management.png"
-            },
-            {
-                "pagePath":"pages/mine/index",
-                "text":"我的",
-                "iconPath":"/assets/icons/tabbar/category-management.png",
-                "selectedIconPath":"/assets/icons/tabbar/category-management.png"
-            }
-        ]
-    },
-    "style": "v2",
-    "sitemapLocation": "sitemap.json",
-    "usingComponents": {
-        "t-pull-down-refresh": "/miniprogram_npm/tdesign-miniprogram/pull-down-refresh/pull-down-refresh",
-        "l-tab-bar": "/miniprogram_npm/lin-ui/tab-bar/index",
-        "t-divider": "/miniprogram_npm/tdesign-miniprogram/divider/divider",
-        "t-image": "/miniprogram_npm/tdesign-miniprogram/image/image",
-        "t-back-top": "/miniprogram_npm/tdesign-miniprogram/back-top/back-top",
-        "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",
-        "t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon",
-        "empty": "/components/empty/index"
-    },
-    "plugins": {
-        "wxacommentplugin": {
-            "version": "latest",
-            "provider": "wx82e6ae1175f264fa"
-        }
-    }
+	"pages": [
+		"pages/home/index",
+		"pages/index/index",
+		"pages/category/index",
+		"pages/detail/index",
+		"pages/diy/index",
+		"pages/trend/index",
+		"pages/record/index",
+		"pages/mine/index",
+		"pages/mine/record/index",
+		"pages/mine/profile/index",
+		"pages/mine/record/modify/index",
+		"pages/mine/posture/index",
+		"pages/mine/place/index",
+		"pages/mine/cancel/index",
+		"pages/mine/status/index",
+		"pages/wifi/index"
+	],
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#f6f6f6",
+		"navigationBarTextStyle": "black"
+	},
+	"tabBar": {
+		"color": "#707070",
+		"selectedColor": "#2c2c2c",
+		"backgroundColor": "#ffffff",
+		"borderStyle": "white",
+		"custom": true,
+		"list": [
+			{
+				"pagePath": "pages/home/index",
+				"text": "首页",
+				"iconPath": "/assets/icons/tabbar/fire.png",
+				"selectedIconPath": "/assets/icons/tabbar/fire.png"
+			},
+			{
+				"pagePath": "pages/trend/index",
+				"text": "趋势",
+				"iconPath": "/assets/icons/tabbar/category-management.png",
+				"selectedIconPath": "/assets/icons/tabbar/category-management.png"
+			},
+			{
+				"pagePath": "pages/record/index",
+				"text": "记录",
+				"iconPath": "/assets/icons/tabbar/category-management.png",
+				"selectedIconPath": "/assets/icons/tabbar/category-management.png"
+			},
+			{
+				"pagePath": "pages/index/index",
+				"text": "表情包",
+				"iconPath": "/assets/icons/tabbar/category-management.png",
+				"selectedIconPath": "/assets/icons/tabbar/category-management.png"
+			},
+			{
+				"pagePath": "pages/mine/index",
+				"text": "我的",
+				"iconPath": "/assets/icons/tabbar/category-management.png",
+				"selectedIconPath": "/assets/icons/tabbar/category-management.png"
+			}
+		]
+	},
+	"style": "v2",
+	"sitemapLocation": "sitemap.json",
+	"usingComponents": {
+		"t-pull-down-refresh": "/miniprogram_npm/tdesign-miniprogram/pull-down-refresh/pull-down-refresh",
+		"l-tab-bar": "/miniprogram_npm/lin-ui/tab-bar/index",
+		"t-divider": "/miniprogram_npm/tdesign-miniprogram/divider/divider",
+		"t-image": "/miniprogram_npm/tdesign-miniprogram/image/image",
+		"t-back-top": "/miniprogram_npm/tdesign-miniprogram/back-top/back-top",
+		"t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",
+		"t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon",
+		"empty": "/components/empty/index"
+	},
+	"plugins": {
+		"wxacommentplugin": {
+			"version": "latest",
+			"provider": "wx82e6ae1175f264fa"
+		}
+	},
+	"miniApp": {
+		"useAuthorizePage": true
+	}
 }

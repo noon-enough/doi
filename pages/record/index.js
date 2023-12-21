@@ -1,5 +1,4 @@
 import {convertSecondsToTime, getTimeDate, showToast} from "../../utils/util";
-import {recode} from "../../utils/api";
 
 const app = getApp()
 Page({
@@ -21,6 +20,7 @@ Page({
             star: 3,
             status: 4,
             posture: [],
+            partner: "",
         },
     },
     onLoadStatus() {

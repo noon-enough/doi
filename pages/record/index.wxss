@@ -1,14 +1,14 @@
 .wrapper .area-op-content .timer {
-    margin-top: 40rpx;
-    font-size: 70rpx;
-    font-weight: bold;
+    margin-top: 60rpx;
+    font-size: 100rpx;
+    font-weight: bolder;
 }
 
 .wrapper .area-op-content .options {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 40rpx;
+    margin-top: 60rpx;
 }
 
 .wrapper .area-op-content .options .left {
