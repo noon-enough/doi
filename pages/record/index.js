@@ -1,12 +1,18 @@
-import {convertSecondsToTime, getTimeDate, showToast} from "../../utils/util";
+import {convertSecondsToTime, getTimeDate, showToast} from "../../utils/util"
+import dayjs from "dayjs"
+import {record} from "../../utils/api";
 
 const app = getApp()
 Page({
     data: {
-        datetime: "00:00:00",
+        hours: '00',
+        minutes: '00',
+        seconds: '00',
+        running: false,
+        timer: null,
+        startTime: null,
+        elapsedTime: 0,
         is_show_submit: false,
-        action: 'play',
-        setInter: null,
         list: app.globalData.tabbar,
         times: 1,
         duration: 1,
@@ -51,62 +57,94 @@ Page({
         } else if (action === 'pause') {
             that.onDone()
         } else if (action === 'replay') {
-            that.onReplay()
+            that.resetTimer()
         }
     },
     onStart() {
-        let that = this
-        that.queryTime()
-        that.setData({
-            action: 'pause',
-        })
+        let that = this,
+            running = !!that.data.running
+
+        // 暂停
+        if (running === true) {
+            clearInterval(that.data.timer)
+            that.setData({
+                running: false,
+                elapsedTime: dayjs().diff(this.data.startTime) + this.data.elapsedTime
+            })
+        } else {
+            // 每次开始前，需要 clean一下
+            clearInterval(that.data.timer)
+            // 开始
+            that.setData({
+                running: true,
+                startTime: dayjs(),
+                timer: setInterval(that.updateTime, 1000)
+            });
+        }
     },
-    onCleanTimer() {
-        let that = this
-        clearInterval(that.data.setInter)
-        that.setData({
-            setInter: null,
-            action: 'play',
-            datetime: "00:00:00"
-        })
+    stopTimer(cleanAll = true) {
+        let that = this,
+            data = {
+                running: false,
+                timer: null,
+                startTime: null,
+                elapsedTime: 0
+            }
+        if (cleanAll === true) {
+            data.hours = '00'
+            data.minutes = '00'
+            data.seconds = '00'
+        }
+        clearInterval(that.data.timer);
+        that.setData(data)
     },
-    onReplay() {
+    resetTimer() {
         let that = this
-        that.onCleanTimer()
+        that.stopTimer()
         that.onStart()
+    },
+    updateTime() {
+        let that = this,
+            {startTime, elapsedTime, running} =  that.data
+        if (startTime !== null && elapsedTime !== null) {
+            const now = dayjs();
+            const diff = now.diff(startTime) + elapsedTime;
+
+            const hours = Math.floor(diff / 3600000).toString().padStart(2, '0');
+            const minutes = Math.floor(diff / 60000).toString().padStart(2, '0');
+            const seconds = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+
+            that.setData({
+                hours,
+                minutes,
+                seconds
+            }, () => {
+                console.log('running', running, 'startTime', startTime, 'elapsedTime', elapsedTime)
+            });
+        }
     },
     onDone() {
         let that = this,
-            times = that.data.times,
-            duration = Math.floor((times % 3600) / 60)
+            {hours, minutes, seconds} = that.data
+
+        // 转换为数字类型
+        hours = Number(hours);
+        minutes = Number(minutes);
+        seconds = Number(seconds);
+
+        // 计算总分钟数
+        let duration = (hours * 60) + minutes + (seconds / 60);
+
+        duration = Math.round(duration)
 
         duration = duration <= 0 ? 1 : duration
-        duration = duration >= 180 ? 180 : duration
-        clearInterval(that.data.setInter)
-        that.setData({
-            setInter: null,
-            action: 'play',
-            times: 1,
-        })
-        console.log('duration', duration)
+
+        that.stopTimer(false)
         that.setData({
             is_show_submit: true,
             ['recode.duration']: duration,
             ['recode.create_time']: getTimeDate(),
         })
-    },
-    queryTime(){
-        let that = this
-
-        that.data.setInter = setInterval(function(){
-            let times = that.data.times + 1,
-                datetime = convertSecondsToTime(times)
-            that.setData({
-                times: times,
-                datetime: datetime,
-            })
-            console.log('times', times, 'datetime', datetime)
-        },1000)
     },
     onSubmit: function(e) {
         let that = this,
@@ -119,7 +157,7 @@ Page({
         data.create_time = (new Date(data.create_time)).getTime() / 1000;
 
         console.log('data', data)
-        recode(data).then(res => {
+        record(data).then(res => {
             console.log('recode', res)
             let code = res.code,
                 data = res.data

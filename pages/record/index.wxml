@@ -7,12 +7,12 @@
 <view class="wrapper">
     <view class="area-op-content">
         <view class="text-center timer">
-            {{datetime}}
+            {{hours}}<text class="ml-10 mr-10">:</text>{{minutes}}<text class="ml-10 mr-10">:</text>{{seconds}}
         </view>
         <view class="options">
-            <view class="left" bind:tap="onOptionsTap" data-action="{{action}}">
-                <t-image class="play" src="https://ak48.qizue.com/doi/icons/{{action}}.svg"/>
-                <view class="name">{{action === 'play' ? '开始': '停止'}}</view>
+            <view class="left" bind:tap="onOptionsTap" data-action="{{running === false ? 'play' : 'pause'}}">
+                <t-image class="play" src="https://ak48.qizue.com/doi/icons/{{running === false ? 'play' : 'pause'}}.svg"/>
+                <view class="name">{{running === false ? '开始': '停止'}}</view>
             </view>
             <view class="right" bind:tap="onOptionsTap" data-action="replay">
                 <t-image class="replay" src="https://ak48.qizue.com/doi/icons/replay.svg"/>
