@@ -4,8 +4,8 @@
     "t-search": "/miniprogram_npm/tdesign-miniprogram/search/search",
     "t-notice-bar" : "/miniprogram_npm/tdesign-miniprogram/notice-bar/notice-bar",
     "t-link": "/miniprogram_npm/tdesign-miniprogram/link/link",
-    "calendar": "/miniprogram_npm/@lspriv/wx-calendar",
     "t-progress": "/miniprogram_npm/tdesign-miniprogram/progress/progress",
+    "t-fab": "/miniprogram_npm/tdesign-miniprogram/fab/fab",
     "record": "/components/record/index",
     "wecalendar": "/components/wecalendar/index"
   }

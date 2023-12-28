@@ -1,4 +1,4 @@
-import {getTimeDate, goto, redirect, showToast} from "../../utils/util";
+import {getTimeDate, goto, redirect, showToast, switchTab} from "../../utils/util";
 import {record, recordList} from "../../utils/api"
 import {STATUS_COLORS} from "../../utils/config";
 
@@ -208,5 +208,9 @@ Page({
     },
     onViewChange(e) {
         console.log('onViewChange', e)
+    },
+    onRecordClick(e) {
+        console.log('onRecordClick', e)
+        switchTab('/pages/record/index')
     }
 });

@@ -4,20 +4,9 @@
         list="{{list}}"
 />
 <view class="wrapper">
-    <wecalendar markCalendarList="{{marks}}"
-            isToday="{{true}}"
-            bind:onRangeDate="onRangeDate"
-            bind:onSelect="onSelect"></wecalendar>
-    <!---<calendar id="calendar"
-              marks="{{marks}}"
-              view="{{calendarView}}"
-              darkmode="{{false}}" vibrate="{{false}}"
-              bindchange="onCalendarChange"
-              bindload="onCalendarLoad"></calendar>--->
-    <view class="calendar-tips">
-        日历上每个自然日用 <text class="strong red">小圆点</text> 标记发生了做爱事件；
-        <text>\n点击每个自然日会展开具体事件行为；</text>
-        <text>\n不可对将来日期添加事件行为；</text>
+    <view class="progress">
+        <view class="datetime"></view>
+        <view class="tips text-center">距你上次做爱时间已经过去了</view>
     </view>
     <block wx:if="{{today.length}}">
         <view class="today-list">
@@ -70,4 +59,5 @@
     <record
             bind:submit="onSubmit"
             recode="{{recode}}" status="{{status}}" posture="{{posture}}"></record>
+    <t-fab icon="time" style="right: 40px; bottom: 120px;" bind:click="onRecordClick" aria-label="增加"></t-fab>
 </view>
