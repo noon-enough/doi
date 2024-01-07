@@ -212,5 +212,8 @@ Page({
     onRecordClick(e) {
         console.log('onRecordClick', e)
         switchTab('/pages/record/index')
-    }
+    },
+    onPosture(e) {
+        console.log('onPosture', e)
+    },
 });

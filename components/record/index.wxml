@@ -36,19 +36,22 @@
     </view>
     <view class="labelBox">
         <text>姿势：</text>
-        <t-checkbox-group t-class="checkbox" borderless
-                          bind:change="onPostureChange"
-                          defaultValue="{{recode.posture}}">
-            <block wx:if="{{posture.length}}">
-                <t-checkbox wx:for="{{posture}}"
-                            wx:for-item="item"
-                            wx:key="id"
-                            wx:for-index="key"
-                            icon="rectangle"
-                            style="padding: 8rpx 8rpx 8rpx 0"
-                            block="{{false}}" value="{{item.id}}" label="{{item.name}}" />
-            </block>
-        </t-checkbox-group>
+        <view class="" style="width: 100%;">
+            <t-checkbox-group t-class="checkbox" borderless
+                              bind:change="onPostureChange"
+                              defaultValue="{{recode.posture}}">
+                <block wx:if="{{posture.length}}">
+                    <t-checkbox wx:for="{{posture}}"
+                                wx:for-item="item"
+                                wx:key="id"
+                                wx:for-index="key"
+                                icon="rectangle"
+                                style="padding: 8rpx 8rpx 8rpx 0"
+                                block="{{false}}" value="{{item.id}}" label="{{item.name}}" />
+                </block>
+            </t-checkbox-group>
+            <view class="tips small" bind:tap="onAddPosture">添加姿势</view>
+        </view>
     </view>
     <view class="labelBox">
         <text>对象：</text>
@@ -84,3 +87,30 @@
         bindpick="onEventTimePick"
         bindcancel="onEventTimeHide"
 />
+
+
+<t-dialog
+        visible="{{show_add_dialog}}"
+        title="{{type === 'edit'? '编辑姿势': '新增姿势'}}"
+        confirm-btn="确定"
+        cancel-btn="取消"
+        bind:confirm="confirmAddDialog"
+        bind:cancel="closeAddDialog"
+>
+    <view slot="content" class="tips">
+        <text wx:if="{{type === 'add'}}">请添加你喜欢的、常用的、期待的DOI姿势类名；</text>
+        <text>\n姿势类名最多输入20个字符；</text>
+    </view>
+    <t-input
+            bind:change="onContentChange"
+            borderless
+            class="dialog-input"
+            clearable
+            data-type="{{type}}"
+            data-id="{{id}}"
+            value="{{content}}"
+            slot="content"
+            placeholder="输入姿势类名"
+            placeholder-class="placeholder"
+    />
+</t-dialog>

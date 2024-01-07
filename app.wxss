@@ -78,9 +78,6 @@ page {
   margin-top: 20rpx;
 }
 
-view, swiper {
-  box-sizing: unset;
-}
 
 .wrapper .title {
   font-size: 30rpx;

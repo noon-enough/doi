@@ -54,6 +54,10 @@ function addPosture(name = '') {
     })
 }
 
+function deletePosture(id) {
+    return d(`/posture/${id}`)
+}
+
 function getPosture() {
     return get("/posture")
 }
@@ -154,10 +158,6 @@ function putPosture(id, name) {
     return put(`/posture/${id}`, {
         content: name
     })
-}
-
-function deletePosture(id) {
-    return d(`/posture/${id}`)
 }
 
 module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login,

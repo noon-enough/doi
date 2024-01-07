@@ -145,6 +145,7 @@ function getTimeDate(timestamp = 0) {
 }
 
 function getConfigLabel(value, type = "delisting") {
+    console.log('type', type, 'value', value)
     switch (type) {
         case "delisting":
             return DELISTING_ARRAY[value].label ?? ""

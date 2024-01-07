@@ -72,7 +72,11 @@
 		"t-back-top": "/miniprogram_npm/tdesign-miniprogram/back-top/back-top",
 		"t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",
 		"t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon",
-		"empty": "/components/empty/index"
+		"empty": "/components/empty/index",
+
+		"t-input": "/miniprogram_npm/tdesign-miniprogram/input/input",
+		"t-dialog": "/miniprogram_npm/tdesign-miniprogram/dialog/dialog",
+		"t-fab": "/miniprogram_npm/tdesign-miniprogram/fab/fab"
 	},
 	"plugins": {
 		"wxacommentplugin": {

@@ -1,0 +1,45 @@
+.wrapper {
+  .progress {
+    &.countdown-body {
+      display: flex;
+      flex-direction: column;
+
+      .countdown {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        & > view {
+          padding: 10rpx;
+          margin-right: 10rpx;
+        }
+
+        .time-unit {
+          background: var(--secondary);
+          text-align: center;
+          color: var(--white);
+          border-radius: 10%;
+          font-size: 28rpx;
+          padding: 12rpx;
+        }
+
+        .day {
+          .time-unit();
+        }
+
+        .hours {
+          .time-unit();
+        }
+
+        .minutes {
+          .time-unit();
+        }
+
+        .seconds {
+          .time-unit();
+        }
+      }
+    }
+  }
+}

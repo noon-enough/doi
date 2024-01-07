@@ -17,6 +17,12 @@
     font-weight: 700;
 }
 
+.small {
+    font-size: 24rpx;
+    color: var(--blue);
+    padding: 10rpx 0;
+}
+
 .labelBox text{
     width: 140rpx;
     height: 48rpx;

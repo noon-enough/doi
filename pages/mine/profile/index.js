@@ -53,7 +53,7 @@ Page({
                 showToast("数据拉取失败", {icon: "error"})
                 return false
             }
-            data.roleString = getConfigLabel(data.role, 'role')
+            data.roleString = getConfigLabel(data.role ?? 0, 'role')
             data.username = data.username ? data.username : '(纯爱战士)'
             that.setData({
                 users: data,
