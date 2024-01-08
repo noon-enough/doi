@@ -64,7 +64,7 @@
                  bind:change="onCommentChange" tips="可以对此次事件做个备忘录" />
     </view>
     <view class="tips">
-        事件时常最短 <text class="strong">10</text>分钟， 最长<text class="strong">180</text>分钟
+        事件时长最短 <text class="strong">10</text>分钟， 最长<text class="strong">180</text>分钟
     </view>
     <view class="submitButton">
         <t-button theme="primary" block icon="{{submit_loading ? '' : 'send'}}" type="submit"

@@ -30,10 +30,10 @@ function login(data) {
     return post(`/passport/login`, data)
 }
 
-function recordList(uid, beginTime = "", endTime = "") {
-    beginTime = encodeURIComponent(beginTime)
-    endTime = encodeURIComponent(endTime)
-    return get(`/record/users/${uid}?begin=${beginTime}&end=${endTime}`)
+function recordList(uid) {
+   //  beginTime = encodeURIComponent(beginTime)
+   // endTime = encodeURIComponent(endTime)
+    return get(`/record/users/${uid}`)
 }
 
 function getRecord() {
@@ -43,6 +43,11 @@ function getRecord() {
 function record(payload = {}) {
     return post('/record', payload)
 }
+
+function recordDetail(id) {
+    return get(`/record/${id}`)
+}
+
 
 function getStatus() {
     return get("/status")
@@ -163,4 +168,5 @@ function putPosture(id, name) {
 module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login,
     record, recordList, getStatus, getPosture, getStatistics, getRecord, getRecordDetail,
     getProfiles, setProfiles, recordDelete, getRecordItem, putRecordItem,
-    getCOSAuthorization, cancel, unCancel, getPlaces, addPosture, deletePosture, putPosture}
+    getCOSAuthorization, cancel, unCancel, getPlaces, addPosture, deletePosture, putPosture,
+    recordDetail}

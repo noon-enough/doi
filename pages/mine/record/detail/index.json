@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "记录详情",
+  "usingComponents": {
+    "t-rate": "/miniprogram_npm/tdesign-miniprogram/rate/rate",
+    "qiun-wx-ucharts": "/miniprogram_npm/@qiun/wx-ucharts"
+  }
+}

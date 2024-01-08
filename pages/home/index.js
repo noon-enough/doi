@@ -1,10 +1,23 @@
-import {getTimeDate, goto, redirect, showToast, switchTab} from "../../utils/util";
-import {record, recordList} from "../../utils/api"
+import {getDayDate, getTimeDate, goto, gotoRecordDetail, redirect, showToast, switchTab} from "../../utils/util";
+import {getStatistics, record, recordList} from "../../utils/api"
 import {STATUS_COLORS} from "../../utils/config";
 
 const app = getApp()
 Page({
     data: {
+        countdown: {
+            days: "NaN天",
+            hours: "NaN小时",
+            minutes: "NaN分钟",
+            seconds: "NaN秒",
+        },
+        in_month: {},
+        datetime: getDayDate(),
+        timer: null,
+        isRefresh: false,
+        loadingProps: {
+            size: '50rpx',
+        },
         uid: 0,
         markCalendarList: [{ date: '2023-12-10', pointColor: '#333' }, { date: '2023-12-06', pointColor: 'red' }, { date: '2023-12-13', pointColor: 'red' }],
         calendarView: 'week',
@@ -45,11 +58,11 @@ Page({
             return
         }
 
-        // that.onLoadData(uid, timestamp)
         that.setData({
             uid: uid,
         })
 
+        that.onLoadData(uid)
         console.log('users', users, 'uid', uid)
     },
     onLoadStatus() {
@@ -76,12 +89,28 @@ Page({
         that.onLoadStatus()
         that.onLoadPosture()
     },
-    onLoadData(uid, begin, end) {
+    onUnload: function() {
+        clearInterval(this.timer);
+    },
+    onPullDownRefresh() {
+        let that = this
+        that.setData({
+            isRefresh: true,
+        })
+        that.onLoadData(that.data.uid)
+    },
+    onScroll() {},
+    onScrollToBottom(e) {},
+    onLoadData(uid) {
         let that = this,
             status = app.globalData.statusData
         wx.showLoading()
-        recordList(uid, begin, end).then(res => {
-            console.log('recodeList', res)
+        Promise.all([
+            recordList(uid),
+            getStatistics(),
+        ]).then(([res, inMonthRes]) => {
+            console.log('recodeList', res, 'getStatistics', res)
+
             let code = res.code,
                 data = res.data,
                 last_record = data.last_record ?? [],
@@ -92,6 +121,9 @@ Page({
 
             if (code !== 200) {
                 wx.hideLoading()
+                that.setData({
+                    isRefresh: false
+                })
                 showToast(res.message ?? "数据获取失败", {icon: "error"})
                 return false
             }
@@ -102,58 +134,44 @@ Page({
                     if (comment === "") {
                         comment = `一个${item.duration}''的做爱事件`
                     }
-                        return  {
-                                    year: item.Y,
-                                    month: item.m,
-                                    day: item.d,
-                                    type: 'schedule',
-                                    text: comment,
-                                    color: STATUS_COLORS[item.status]
-                                }
+                    return  {
+                        year: item.Y,
+                        month: item.m,
+                        day: item.d,
+                        type: 'schedule',
+                        text: comment,
+                        color: STATUS_COLORS[item.status]
+                    }
                 })
             }
 
+            let createDate = new Date(last_record.create_time) * 1000,
+                in_month = {}
+            if (inMonthRes.code === 200) {
+                in_month.count = Math.round(inMonthRes.data.count)
+                in_month.durationPre = Math.round(inMonthRes.data.durationPre)
+                in_month.sumDuration = Math.round(inMonthRes.data.sumDuration)
+            }
+
             that.setData({
+                in_month: in_month,
                 last_record: last_record,
                 marks: marks,
                 last_ten_records: last_ten_records,
                 range_records: range_records,
                 today: today,
+                isRefresh: false,
+                timer: setInterval(() => {
+                    that.getTimeDifference(createDate);
+                }, 1000)
             })
-            console.log('marks', marks, 'status', status, 'today', today)
+            console.log('marks', marks, 'status', status, 'today', today, 'last_record', last_record)
+
         }).finally(() => {
             wx.hideLoading()
-        })
-    },
-    onDateChange: function(e) {
-        console.log('onDateChange', e)
-    },
-    onCalendarLoad: function(e) {
-        const calendar = this.selectComponent('#calendar');
-        console.log('calendar-load', calendar);
-    },
-    onCalendarChange: function(e) {
-        console.log('onCalendarChange', e)
-        let that = this,
-            last_30_records = that.data.last_30_records,
-            today = !!e.detail.checked.today,
-            year = e.detail.checked.year,
-            month = e.detail.checked.month,
-            day = e.detail.checked.day,
-            date = `${year}-${month}-${day}`,
-            todayData = []
-
-        // date = formatDateToYYYYMMDD(date)
-        console.log('today', today, 'year', year, 'month', month, 'day', day, 'date', date)
-        last_30_records.forEach((item) => {
-            console.log('date', date, 'item.date', item.date)
-            if (date === item.date) {
-                todayData.push(item)
-            }
-        })
-
-        that.setData({
-            today: todayData,
+            that.setData({
+                isRefresh: false,
+            })
         })
     },
     onSubmit: function(e) {
@@ -195,20 +213,6 @@ Page({
             })
         })
     },
-    onRangeDate(e) {
-        let {beginTime, endTime} = e.detail,
-            that = this,
-            uid = app.globalData.users.uid ?? 0
-
-        // wx.showLoading()
-        // that.onLoadData(uid, beginTime, endTime)
-    },
-    onSelect(e) {
-        console.log('onSelect', e)
-    },
-    onViewChange(e) {
-        console.log('onViewChange', e)
-    },
     onRecordClick(e) {
         console.log('onRecordClick', e)
         switchTab('/pages/record/index')
@@ -216,4 +220,33 @@ Page({
     onPosture(e) {
         console.log('onPosture', e)
     },
+    getTimeDifference(createDate) {
+        const now = new Date(), // 当前时间,
+              that = this,
+              diff = now - createDate; // 差异（毫秒）
+
+        // 计算天数、小时数、分钟数和秒数
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+
+        let msg =  `${days}天，${hours}小时，${minutes}分钟，${seconds}秒`
+        console.log('diff', msg)
+        that.setData({
+            countdown: {
+                days: `${days}天`,
+                hours: `${hours}小时`,
+                minutes: `${minutes}分钟`,
+                seconds: `${seconds}秒`,
+            },
+        })
+    },
+    onRecordDetail(e) {
+        let that = this,
+            id = e.currentTarget.dataset.id  ?? 0
+
+        gotoRecordDetail(id)
+    }
 });

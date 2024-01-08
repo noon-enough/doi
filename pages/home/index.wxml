@@ -3,78 +3,93 @@
         text-selected-color="#50b089"
         list="{{list}}"
 />
-<view class="wrapper">
-    <view class="progress countdown-body">
-        <view class="countdown">
-            <view class="day">
-                55天
+<t-pull-down-refresh
+        value="{{isRefresh}}"
+        loadingProps="{{loadingProps}}"
+        loadingTexts="{{['下拉刷新', '松手刷新', '正在刷新', '刷新完成']}}"
+        bind:refresh="onPullDownRefresh"
+        bind:scroll="onScroll"
+        bind:scrolltolower="onScrollToBottom"
+        using-custom-navbar="{{true}}"
+>
+    <view class="wrapper">
+        <view class="progress countdown-body">
+            <view class="countdown">
+                <view class="day">
+                    {{countdown.days}}
+                </view>
+                <view class="hours">
+                    {{countdown.hours}}
+                </view>
+                <view class="minutes">
+                    {{countdown.minutes}}
+                </view>
+                <view class="seconds">
+                    {{countdown.seconds}}
+                </view>
             </view>
-            <view class="hours">
-                22小时
-            </view>
-            <view class="minutes">
-                10分钟
-            </view>
-            <view class="seconds">
-                55秒
-            </view>
+            <view class="tips text-center mt-10">距你上次做爱已过去</view>
         </view>
-        <view class="tips text-center mt-10">距你上次做爱已过去</view>
+        <view class="title">
+            本月实时数据
+        </view>
+        <view class="describe">
+            数据统计范围为本月01日00:00 ~ {{datetime}}
+        </view>
+        <view class="content">
+            <t-row gutter="16">
+                <t-col span="8" t-class="dark">
+                    <view class="name">做爱次数</view>
+                    <view class="info">
+                        <view class="strong">
+                            {{in_month.count}}
+                        </view>
+                        次
+                    </view>
+                </t-col>
+                <t-col span="8" t-class="light">
+                    <view class="name">做爱总时长</view>
+                    <view class="info"><view class="strong">{{in_month.sumDuration}}</view> 分钟</view>
+                </t-col>
+                <t-col span="8" t-class="light">
+                    <view class="name">平均时长</view>
+                    <view class="info"><view class="strong">{{in_month.durationPre}}</view> 分钟</view>
+                </t-col>
+            </t-row>
+        </view>
+        <t-divider />
+        <block wx:if="{{last_ten_records.length}}">
+            <view class="title">最近10次时长统计</view>
+            <view class="progress">
+                <view class="item"
+                      wx:key="id"
+                      wx:for-index="key"
+                      wx:for-item="item"
+                      wx:for="{{last_ten_records}}"
+                      bind:tap="onRecordDetail" data-id="{{item.id}}"
+                >
+                    <view class="description">
+                        <view class="comment">{{item.comment === "" ? '(无备注)' : item.comment}}</view>
+                        <view class="comment">
+                            <text class="mr20">时长：{{item.duration}}''</text>
+                            <text>体验：{{item.star}}星</text>
+                        </view>
+                    </view>
+                    <t-progress percentage="{{item.percentage}}"
+                                t-class-label="percentage"
+                                label="" />
+                </view>
+            </view>
+        </block>
+        <t-divider />
+        <view class="title">添加做爱事件</view>
+        <record
+                bind:submit="onSubmit"
+                recode="{{recode}}"
+                status="{{status}}"
+                posture="{{posture}}"
+                bind:onPosture="onPosture"
+        ></record>
+        <t-fab icon="time" style="right: 40px; bottom: 120px;" bind:click="onRecordClick" aria-label="增加"></t-fab>
     </view>
-    <block wx:if="{{today.length}}">
-        <view class="today-list">
-            <view class="list">
-                <view class="item" wx:for="{{today}}" wx:for-item="item" wx:for-index="i" wx:key="id">
-                    <view class="badge badge-{{item.status}}"></view>
-                    <view class="right">
-                        <view class="comment">{{item.comment === '' ? '(无备注)': item.comment}}</view>
-                        <view class="tips">
-                            时长：{{item.duration}}''
-                        </view>
-                        <view class="tips">
-                            体验：{{item.star}} 星
-                        </view>
-                    </view>
-                </view>
-            </view>
-            <view class="status">
-                <view class="item" wx:for="{{status}}" wx:key="key" wx:for-index="key" wx:for-item="item">
-                    <view class="badge badge-{{key}}"></view>
-                    <view class="name">{{item}}</view>
-                </view>
-            </view>
-        </view>
-    </block>
-    <t-divider />
-    <block wx:if="{{last_ten_records.length}}">
-        <view class="title">最近10次时长统计</view>
-        <view class="progress">
-            <view class="item"
-                  wx:key="id"
-                  wx:for-index="key"
-                  wx:for-item="item"
-                  wx:for="{{last_ten_records}}">
-                <view class="description">
-                    <view class="comment">{{item.comment === "" ? '(无备注)' : item.comment}}</view>
-                    <view class="comment">
-                        <text class="mr20">时长：{{item.duration}}''</text>
-                        <text>体验：{{item.star}}星</text>
-                    </view>
-                </view>
-                <t-progress percentage="{{item.percentage}}"
-                            t-class-label="percentage"
-                            label="" />
-            </view>
-        </view>
-    </block>
-    <t-divider />
-    <view class="title">添加做爱事件</view>
-    <record
-            bind:submit="onSubmit"
-            recode="{{recode}}"
-            status="{{status}}"
-            posture="{{posture}}"
-            bind:onPosture="onPosture"
-    ></record>
-    <t-fab icon="time" style="right: 40px; bottom: 120px;" bind:click="onRecordClick" aria-label="增加"></t-fab>
-</view>
+</t-pull-down-refresh>

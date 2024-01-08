@@ -14,7 +14,7 @@
         <t-tab-panel label="我的记录" value="count">
             <view class="records" wx:if="{{record.count.length > 0}}">
                 <block wx:for="{{record.count}}" wx:for-item="item" wx:for-index="key" wx:key="key">
-                    <view class="item">
+                    <view class="item" bind:tap="onRecordDetail" data-id="{{item.id}}">
                         <view class="title">
                             <view class="comment">{{item.comment ? item.comment : '(无备注)'}}</view>
                             <t-icon wx:if="{{item.watcher}}" name="star-filled" color="#fd7e14" class="watcher" />

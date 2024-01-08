@@ -1,0 +1,114 @@
+.records {
+  padding: 20rpx 32rpx;
+  --td-rate-text-font-size: 26rpx;
+  --td-rate-text-active-font-weight: 400;
+  height: 100%;
+
+  .item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .status {
+      font-size: 26rpx;
+      color: var(--dark);
+      margin-bottom: 10rpx;
+    }
+
+    .duration {
+      font-size: 26rpx;
+      color: var(--dark);
+      margin-bottom: 10rpx;
+    }
+
+    .title {
+      display: flex;
+      flex-direction: row;
+      justify-items: center;
+      justify-content: space-between;
+      align-items: center;
+      padding:unset;
+
+      .comment {
+        font-size: 28rpx;
+        margin-bottom: 10rpx;
+        font-weight: 700;
+      }
+    }
+
+    .star {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      justify-items: center;
+      align-items: center;
+      margin-bottom: 10rpx;
+
+      .name {
+        font-size: 26rpx;
+        color: var(--dark);
+      }
+    }
+
+    .action {
+      display: flex;
+      flex-direction: row;
+      justify-items: center;
+      justify-content: space-between;
+
+      .date {
+        font-size: 28rpx;
+        color: var(--secondary);
+      }
+
+      .button {
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        justify-content: space-between;
+
+        & > view {
+          padding: 10rpx;
+        }
+      }
+    }
+
+    .charts {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      .charts-box {
+        width: 50%;
+        height: auto;
+      }
+    }
+
+  }
+
+
+  .comments {
+    .title{
+      font-size: 28rpx;
+      color: #1f2f3d;
+      margin-left: 20rpx;
+      line-height: 80rpx;
+      font-weight: 700;
+      white-space: nowrap;
+      position: relative;
+
+      &::before {
+        content: "";
+        display: block;
+        border-radius: 20rpx;
+        background-color: var(--gray);
+        width: 10rpx;
+        height: 40rpx;
+        position: absolute;
+        top: 20rpx;
+        left: -24rpx;
+      }
+    }
+
+  }
+}

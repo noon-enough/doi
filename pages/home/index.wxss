@@ -85,30 +85,3 @@
 .today-list .status .item .badge.badge-4, .today-list .list .item .badge.badge-4 {
     background: var(--cyan);
 }
-
-.wrapper .progress {
-    padding: 20rpx 32rpx;
-}
-
-.wrapper .progress .item {
-    margin-bottom: 20rpx;
-}
-
-.wrapper .progress .description {
-    font-size: 26rpx;
-    color: var(--secondary);
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10rpx;
-}
-
-.wrapper .progress .item .percentage {
-    font-size: 26rpx;
-    color: var(--secondary);
-}
-
-.wrapper .calendar-tips {
-    padding: 0 32rpx;
-    color: var(--secondary);
-}
-

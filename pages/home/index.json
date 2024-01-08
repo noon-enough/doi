@@ -7,6 +7,7 @@
     "t-progress": "/miniprogram_npm/tdesign-miniprogram/progress/progress",
     "t-fab": "/miniprogram_npm/tdesign-miniprogram/fab/fab",
     "record": "/components/record/index",
-    "wecalendar": "/components/wecalendar/index"
+    "t-row": "/miniprogram_npm/tdesign-miniprogram/row/row",
+    "t-col": "/miniprogram_npm/tdesign-miniprogram/col/col"
   }
 }

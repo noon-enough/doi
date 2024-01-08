@@ -27,7 +27,7 @@
     width: 140rpx;
     height: 48rpx;
     color: #646566;
-    font-size: 28rpx;
+    font-size: 26rpx;
     line-height: 2;
 }
 

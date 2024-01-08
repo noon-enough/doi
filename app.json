@@ -15,7 +15,8 @@
 		"pages/mine/place/index",
 		"pages/mine/cancel/index",
 		"pages/mine/status/index",
-		"pages/wifi/index"
+		"pages/wifi/index",
+		"pages/mine/record/detail/index"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
