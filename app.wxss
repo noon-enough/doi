@@ -196,3 +196,11 @@ page {
 .text-left {
   text-align: left;
 }
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}

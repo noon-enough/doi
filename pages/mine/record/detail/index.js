@@ -1,6 +1,7 @@
 import {recordDetail} from "../../../../utils/api";
 import {showToast} from "../../../../utils/util";
 import {RATE_ARRAY} from "../../../../utils/config";
+import moment from "moment";
 
 Page({
     data: {
@@ -38,7 +39,8 @@ Page({
                     linearType: "custom"
                 }
             }
-        }
+        },
+        comments: [],
     },
     onLoad: function (options) {
         let id = options.id ?? 0,
@@ -58,29 +60,34 @@ Page({
             console.log('recordDetail', res)
             let code = res.code,
                 msg = res.message ?? '数据拉取失败',
-                data = res.data
+                data = res.data,
+                extra = res.extra,
+                percentage = extra.percentage ?? 0
+
             if (code !== 200) {
                 showToast(msg, {icon: 'error'})
                 return false
             }
 
+            let datetime = new Date(data.create_time)
+            data.datetime = moment(datetime).fromNow()
             wx.hideLoading()
             that.setData({
+                chartData: {
+                    series: [
+                        {
+                            name: "持久度超过",
+                            color: "#2fc25b",
+                            data: percentage,
+                        }
+                    ]
+                },
+                [`opts.title.name`]:  `${percentage * 100} %`,
                 isRefresh: false,
                 data: data,
             })
         })
 
-        let res = {
-            series: [
-                {
-                    name: "正确率",
-                    color: "#2fc25b",
-                    data: 0.8
-                }
-            ]
-        };
-        this.setData({ chartData: JSON.parse(JSON.stringify(res)) });
     },
     onPullDownRefresh() {
         let that = this

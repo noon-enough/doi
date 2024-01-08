@@ -40,7 +40,7 @@
         bind:cancel="closeAddDialog"
 >
     <view slot="content" class="tips">
-        <text wx:if="{{type === 'add'}}">请添加你喜欢的、常用的、期待的DOI姿势类名；</text>
+        <text wx:if="{{type === 'add'}}">请添加你喜欢的、常用的、期待的做爱姿势；</text>
         <text>\n姿势类名最多输入20个字符；</text>
     </view>
     <t-input

@@ -19,9 +19,14 @@
             <view class="name">刺激度：</view>
             <t-rate value="{{data.star}}" texts="{{rateTexts}}" showText disable size="16px"/>
         </view>
+        <view class="posture" wx:if="{{data.postures.length}}">
+            <view class="name">姿势：</view>
+            <t-tag class="mr-20" wx:for="{{data.postures}}" wx:for-index="idx" wx:key="idx"
+                   wx:for-item="posture" variant="light">{{posture.name}}</t-tag>
+        </view>
         <view class="action">
-            <view class="date">{{item.datetime}}</view>
-            <view class="button">
+            <view class="date">{{data.datetime}}</view>
+            <view class="button hidden" hidden>
                 <t-icon name="share" size="20px" bind:click="onRecordDelete"
                         data-idx="{{key}}"
                         data-id="{{item.id}}" color="#6c757d"/>
@@ -47,7 +52,8 @@
     <view class="comments mt-10">
         <view class="title">评论此次记录</view>
         <view class="tips mt-10">仅允许参与者和邀请（分享）者参与评论</view>
-        <view class="item">
+        <empty wx:if="{{comments.length <=0 }}" type="0"></empty>
+        <view wx:else class="item">
 
         </view>
     </view>
