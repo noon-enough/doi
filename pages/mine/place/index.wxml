@@ -11,12 +11,12 @@
         <empty wx:if="{{places.length <=0 }}" type="0"></empty>
         <block wx:else>
             <t-swipe-cell right="{{right}}" bind:click="onSwipeCellClick" data-posture="{{place}}"
-                          wx:for="{{places}}" wx:for-index="key" wx:key="key" wx:for-item="posture">
+                          wx:for="{{places}}" wx:for-index="key" wx:key="key" wx:for-item="place">
                 <t-cell title="{{place.name}}" note="{{place.is_system ? '系统' : ''}}" hover />
             </t-swipe-cell>
             <view class="tips mt-20 ml-20">
                 侧滑可管理场所
-                <text>系统创建类别不可编辑、删除</text>
+                <text>\n系统创建类别不可编辑、删除</text>
             </view>
         </block>
     </view>
@@ -24,3 +24,29 @@
 <t-fab icon="add" button-props="{{fabButton}}"
        style="bottom: 100rpx;"
        bind:click="onAddClick" text="添加" />
+
+<t-dialog
+        visible="{{show_add_dialog}}"
+        title="{{type === 'edit'? '编辑场所': '新增场所'}}"
+        confirm-btn="确定"
+        cancel-btn="取消"
+        bind:confirm="confirmAddDialog"
+        bind:cancel="closeAddDialog"
+>
+    <view slot="content" class="tips">
+        <text wx:if="{{type === 'add'}}">请添加你喜欢的、常用的、期待的做爱场所；</text>
+        <text>\n场所名最多输入20个字符；</text>
+    </view>
+    <t-input
+            bind:change="onContentChange"
+            borderless
+            class="dialog-input"
+            clearable
+            data-type="{{type}}"
+            data-id="{{id}}"
+            value="{{content}}"
+            slot="content"
+            placeholder="输入场所名"
+            placeholder-class="placeholder"
+    />
+</t-dialog>

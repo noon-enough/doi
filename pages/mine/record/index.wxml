@@ -28,8 +28,10 @@
                         <view class="action">
                             <view class="date">{{item.datetime}}</view>
                             <view class="button">
-                                <t-icon name="edit" bind:click="onRecordModify"
+                                <t-icon name="share" bind:click="onRecordShare"
                                         data-id="{{item.id}}" color="#6c757d"/>
+                                <t-icon name="edit" bind:click="onRecordModify"
+                                        data-id="{{item.id}}" class="mr-20" color="#6c757d"/>
                                 <t-icon name="delete-time" bind:click="onRecordDelete"
                                         data-idx="{{key}}"
                                         data-id="{{item.id}}" color="#6c757d"/>
@@ -44,7 +46,7 @@
         <t-tab-panel label="我关注的" value="watcher">
             <view class="records" wx:if="{{record.watcher.length > 0}}">
                 <block wx:for="{{record.watcher}}" wx:for-item="item" wx:for-index="key" wx:key="key">
-                    <view class="item">
+                    <view class="item" bind:tap="onRecordDetail" data-id="{{item.id}}">
                         <view class="title">
                             <view class="comment">{{item.comment ? item.comment : '(无备注)'}}</view>
                             <t-icon wx:if="{{item.watcher}}" name="star-filled" color="#fd7e14" class="watcher" />
@@ -58,8 +60,10 @@
                         <view class="action">
                             <view class="date">{{item.datetime}}</view>
                             <view class="button">
-                                <t-icon name="edit" bind:click="onRecordModify"
+                                <t-icon name="share" bind:click="onRecordShare"
                                         data-id="{{item.id}}" color="#6c757d"/>
+                                <t-icon name="edit" bind:click="onRecordModify"
+                                        data-id="{{item.id}}" class="mr-20" color="#6c757d"/>
                                 <t-icon name="delete-time" bind:click="onRecordDelete"
                                         data-idx="{{key}}"
                                         data-id="{{item.id}}" color="#6c757d"/>

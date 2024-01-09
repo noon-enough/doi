@@ -48,6 +48,9 @@ function recordDetail(id) {
     return get(`/record/${id}`)
 }
 
+function recordInvite(id) {
+    return get(`/record/${id}/invite`)
+}
 
 function getStatus() {
     return get("/status")
@@ -156,7 +159,20 @@ function unCancel(uid) {
 }
 
 function getPlaces() {
-    return get('/places')
+    return get('/place')
+}
+
+
+function putPlace(id, name) {
+    return put(`/place/${id}`, {
+        content: name
+    })
+}
+
+function addPlace(name) {
+    return post("/place",  {
+        'content': name,
+    })
 }
 
 function putPosture(id, name) {
@@ -169,4 +185,4 @@ module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login
     record, recordList, getStatus, getPosture, getStatistics, getRecord, getRecordDetail,
     getProfiles, setProfiles, recordDelete, getRecordItem, putRecordItem,
     getCOSAuthorization, cancel, unCancel, getPlaces, addPosture, deletePosture, putPosture,
-    recordDetail}
+    recordDetail, putPlace, addPlace, recordInvite}

@@ -24,17 +24,16 @@
             <t-tag class="mr-20" wx:for="{{data.postures}}" wx:for-index="idx" wx:key="idx"
                    wx:for-item="posture" variant="light">{{posture.name}}</t-tag>
         </view>
-        <view class="action">
+        <view class="action mt-10">
             <view class="date">{{data.datetime}}</view>
-            <view class="button hidden" hidden>
-                <t-icon name="share" size="20px" bind:click="onRecordDelete"
-                        data-idx="{{key}}"
-                        data-id="{{item.id}}" color="#6c757d"/>
+            <view class="button" hidden>
+                <t-icon name="share" size="20px" bind:click="onRecordShare"
+                        data-id="{{data.id}}" color="#6c757d"/>
                 <t-icon name="edit" size="20px" bind:click="onRecordModify"
-                        data-id="{{item.id}}" color="#6c757d"/>
+                        data-id="{{data.id}}" color="#6c757d"/>
                 <t-icon name="delete-time" size="20px" bind:click="onRecordDelete"
                         data-idx="{{key}}"
-                        data-id="{{item.id}}" color="#6c757d"/>
+                        data-id="{{data.id}}" color="#6c757d"/>
             </view>
         </view>
         <view class="charts">

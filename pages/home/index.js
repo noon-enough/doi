@@ -29,6 +29,7 @@ Page({
         list: app.globalData.tabbar,
         status: [],
         posture: [],
+        place: [],
         recode: {
             create_time: getTimeDate(),
             watcher: false,
@@ -81,6 +82,14 @@ Page({
             posture: posture,
         })
     },
+    onLoadPlace() {
+        let that = this,
+            place = app.globalData.placeData ?? []
+
+        that.setData({
+            place: place,
+        })
+    },
     onLoad: function (options) {
         let that = this
     },
@@ -88,6 +97,7 @@ Page({
         let that = this
         that.onLoadStatus()
         that.onLoadPosture()
+        that.onLoadPlace()
     },
     onUnload: function() {
         clearInterval(this.timer);

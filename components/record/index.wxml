@@ -54,6 +54,25 @@
         </view>
     </view>
     <view class="labelBox">
+        <text>地点：</text>
+        <view class="" style="width: 100%;">
+            <t-checkbox-group t-class="checkbox" borderless
+                              bind:change="onPlaceChange"
+                              defaultValue="{{recode.place}}">
+                <block wx:if="{{place.length}}">
+                    <t-checkbox wx:for="{{place}}"
+                                wx:for-item="item"
+                                wx:key="id"
+                                wx:for-index="key"
+                                icon="rectangle"
+                                style="padding: 8rpx 8rpx 8rpx 0"
+                                block="{{false}}" value="{{item.id}}" label="{{item.name}}" />
+                </block>
+            </t-checkbox-group>
+            <view class="tips small" bind:tap="onAddPlace">添加场所</view>
+        </view>
+    </view>
+    <view class="labelBox">
         <text>对象：</text>
         <t-input placeholder="输入对象名字" type="text" value="{{recode.partner}}"
                  borderless="{{true}}" tips="你记录此次事件的对象" bind:change="onPartnerChange"/>
@@ -111,6 +130,32 @@
             value="{{content}}"
             slot="content"
             placeholder="输入姿势类名"
+            placeholder-class="placeholder"
+    />
+</t-dialog>
+
+<t-dialog
+        visible="{{show_add_place_dialog}}"
+        title="{{type === 'edit'? '编辑场所': '新增场所'}}"
+        confirm-btn="确定"
+        cancel-btn="取消"
+        bind:confirm="confirmAddPlaceDialog"
+        bind:cancel="closeAddPlaceDialog"
+>
+    <view slot="content" class="tips">
+        <text wx:if="{{type === 'add'}}">请添加你喜欢的、常用的、期待的做爱场所；</text>
+        <text>\n场所名最多输入20个字符；</text>
+    </view>
+    <t-input
+            bind:change="onPlaceContentChange"
+            borderless
+            class="dialog-input"
+            clearable
+            data-type="{{place_type}}"
+            data-id="{{place_id}}"
+            value="{{place_content}}"
+            slot="content"
+            placeholder="输入场所名"
             placeholder-class="placeholder"
     />
 </t-dialog>

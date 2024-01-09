@@ -1,5 +1,5 @@
 import {recordDetail} from "../../../../utils/api";
-import {showToast} from "../../../../utils/util";
+import {goto, showToast} from "../../../../utils/util";
 import {RATE_ARRAY} from "../../../../utils/config";
 import moment from "moment";
 
@@ -95,5 +95,11 @@ Page({
             isRefresh: true,
         })
         that.onLoadData()
-    }
+    },
+    onRecordShare(e) {
+        console.log('e', e)
+        let that = this,
+            id = e.currentTarget.dataset.id ?? 0
+        goto(`/pages/record/share/index?id=${id}`)
+    },
 });

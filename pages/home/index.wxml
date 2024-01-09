@@ -89,6 +89,7 @@
                 status="{{status}}"
                 posture="{{posture}}"
                 bind:onPosture="onPosture"
+                place="{{place}}"
         ></record>
         <t-fab icon="time" style="right: 40px; bottom: 120px;" bind:click="onRecordClick" aria-label="增加"></t-fab>
     </view>
