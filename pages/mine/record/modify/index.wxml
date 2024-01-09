@@ -4,5 +4,6 @@
             bind:submit="onSubmit"
             recode="{{record}}"
             place="{{place}}"
-            status="{{status}}" posture="{{posture}}"></record>
+            status="{{status}}"
+            posture="{{posture}}"></record>
 </view>
