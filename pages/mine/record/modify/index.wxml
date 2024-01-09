@@ -5,5 +5,5 @@
             recode="{{record}}"
             place="{{place}}"
             status="{{status}}"
-            posture="{{posture}}"></record>
+            posture="{{posture}}" />
 </view>
