@@ -1,0 +1,21 @@
+<view class="wrapper">
+    <view class="title text-center mt-20">做爱记录分享须知</view>
+    <t-divider/>
+    <view class="content">
+        <view class="mb-20">
+            - 原则上你的做爱记录仅自己可见，但你可以将其分享给参与者或者你信任的人；
+        </view>
+        <view class="mb-20">
+            - 分享后，仅当前记录可被分享者或邀请者<text class="red">浏览</text>、<text class="red">评论</text>、<text class="red">点赞</text> ；
+        </view>
+        <view class="">
+            - 做爱记录应该是私密行为，请勿随意扩大分享范围 ；
+        </view>
+    </view>
+    <view class="submitButton mt-40">
+        <t-button theme="primary" block icon="share" type="submit"
+                  open-type="share"
+                  content="分享给好友"
+                  size="medium" class="margin"></t-button>
+    </view>
+</view>

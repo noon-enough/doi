@@ -1,0 +1,100 @@
+.wrapper {
+
+  .describe {
+    font-size: 26rpx;
+    padding: 20rpx 32rpx;
+    color: var(--secondary);
+  }
+
+  .progress {
+    padding: 20rpx 32rpx;
+
+    .description {
+      font-size: 26rpx;
+      color: var(--secondary);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10rpx;
+    }
+
+    .item {
+      margin-bottom: 20rpx;
+
+      &.percentage {
+        font-size: 26rpx;
+        color: var(--secondary);
+      }
+    }
+
+    &.countdown-body {
+      display: flex;
+      flex-direction: column;
+
+      .countdown {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        & > view {
+          padding: 10rpx;
+          margin-right: 10rpx;
+        }
+
+        .time-unit {
+          background: var(--secondary);
+          text-align: center;
+          color: var(--white);
+          border-radius: 10%;
+          font-size: 28rpx;
+          padding: 12rpx;
+        }
+
+        .day {
+          .time-unit();
+        }
+
+        .hours {
+          .time-unit();
+        }
+
+        .minutes {
+          .time-unit();
+        }
+
+        .seconds {
+          .time-unit();
+        }
+      }
+    }
+  }
+
+  .content {
+    .name {
+      font-size: 26rpx;
+    }
+
+    .info {
+      font-size: 28rpx;
+      display: flex;
+      flex-direction: row;
+      text-align: center;
+      justify-content: center;
+
+      .strong {
+        font-size: 30rpx;
+        font-weight: bold;
+        margin-right: 8rpx;
+      }
+
+    }
+  }
+}
+
+.dark, .light {
+  background-clip: content-box;
+  font-size: 28rpx;
+  line-height: 80rpx;
+  margin-bottom: 20rpx;
+  text-align: center;
+}

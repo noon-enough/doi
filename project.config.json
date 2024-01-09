@@ -1,11 +1,5 @@
 {
-  "appid": "wx47f3efae01c67434",
   "compileType": "miniprogram",
-  "libVersion": "2.32.3",
-  "packOptions": {
-    "ignore": [],
-    "include": []
-  },
   "setting": {
     "coverView": true,
     "es6": true,
@@ -19,16 +13,27 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "condition": false,
+    "condition": true,
     "ignoreDevUnusedFiles": false,
     "ignoreUploadUnusedFiles": true,
     "uglifyFileName": true,
-    "compileWorklet": true
+    "compileWorklet": true,
+    "useCompilerPlugins": [
+      "less"
+    ]
   },
   "condition": {},
   "editorSetting": {
     "tabIndent": "auto",
     "tabSize": 2
   },
-  "projectname": "emotions"
+  "simulatorPluginLibVersion": {
+    "wxext14566970e7e9f62": "2.27.3-4"
+  },
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "appid": "wxc0c404b97e812a61",
+  "projectArchitecture": "multiPlatform"
 }

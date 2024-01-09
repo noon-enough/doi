@@ -1,17 +1,35 @@
-import {getTimeDate, goto, redirect, showToast} from "../../utils/util";
-import {record, recordList} from "../../utils/api"
+import {getDayDate, getTimeDate, goto, gotoRecordDetail, redirect, showToast, switchTab} from "../../utils/util";
+import {getStatistics, record, recordList} from "../../utils/api"
 import {STATUS_COLORS} from "../../utils/config";
 
 const app = getApp()
 Page({
     data: {
+        countdown: {
+            days: "NaN天",
+            hours: "NaN小时",
+            minutes: "NaN分钟",
+            seconds: "NaN秒",
+        },
+        in_month: {},
+        datetime: getDayDate(),
+        timer: null,
+        isRefresh: false,
+        loadingProps: {
+            size: '50rpx',
+        },
+        uid: 0,
+        markCalendarList: [{ date: '2023-12-10', pointColor: '#333' }, { date: '2023-12-06', pointColor: 'red' }, { date: '2023-12-13', pointColor: 'red' }],
+        calendarView: 'week',
+        weekText: ['日', '一', '二', '三', '四', '五', '六'],
         today: [],
-        last_30_records: [],
+        range_records: [],
         last_ten_records: [],
         marks: [],
         list: app.globalData.tabbar,
         status: [],
         posture: [],
+        place: [],
         recode: {
             create_time: getTimeDate(),
             watcher: false,
@@ -41,8 +59,11 @@ Page({
             return
         }
 
-        that.onLoadData(uid, timestamp)
+        that.setData({
+            uid: uid,
+        })
 
+        that.onLoadData(uid)
         console.log('users', users, 'uid', uid)
     },
     onLoadStatus() {
@@ -61,6 +82,14 @@ Page({
             posture: posture,
         })
     },
+    onLoadPlace() {
+        let that = this,
+            place = app.globalData.placeData ?? []
+
+        that.setData({
+            place: place,
+        })
+    },
     onLoad: function (options) {
         let that = this
     },
@@ -68,109 +97,91 @@ Page({
         let that = this
         that.onLoadStatus()
         that.onLoadPosture()
+        that.onLoadPlace()
     },
-    onLoadData(uid, timestamp) {
+    onUnload: function() {
+        clearInterval(this.timer);
+    },
+    onPullDownRefresh() {
+        let that = this
+        that.setData({
+            isRefresh: true,
+        })
+        that.onLoadData(that.data.uid)
+    },
+    onScroll() {},
+    onScrollToBottom(e) {},
+    onLoadData(uid) {
         let that = this,
             status = app.globalData.statusData
         wx.showLoading()
-        recordList(uid, timestamp).then(res => {
-            console.log('recodeList', res)
+        Promise.all([
+            recordList(uid),
+            getStatistics(),
+        ]).then(([res, inMonthRes]) => {
+            console.log('recodeList', res, 'getStatistics', res)
+
             let code = res.code,
                 data = res.data,
-                last_30_records = data.last_30_records ?? [],
+                last_record = data.last_record ?? [],
                 last_ten_records = data.last_ten_records ?? [],
-                today = []
+                range_records = data.range_records ?? {},
+                today = [],
+                marks = {}
+
             if (code !== 200) {
                 wx.hideLoading()
+                that.setData({
+                    isRefresh: false
+                })
                 showToast(res.message ?? "数据获取失败", {icon: "error"})
                 return false
             }
 
-            let marks = last_30_records.map((item) => {
-                let comment = item.comment
-                if (comment === "") {
-                    comment = `一个${item.duration}''的做爱事件`
-                }
-                return  {
-                    year: item.Y,
-                    month: item.m,
-                    day: item.d,
-                    type: 'schedule',
-                    text: comment,
-                    color: STATUS_COLORS[item.status],
-                }
-            })
-
-            const uniqueData = {}
-            const now = new Date()
-            const todayDate = now.toISOString().split('T')[0]
-
-            console.log('todayDate', todayDate)
-            last_30_records.forEach((item) => {
-                const date = new Date(item.create_time);
-                const formattedDate = date.toISOString().split('T')[0] // 格式化为YYYY-MM-DD
-                if (!uniqueData[formattedDate] || date > new Date(uniqueData[formattedDate].create_time)) {
-                    uniqueData[formattedDate] = item;
-                }
-
-                if (todayDate === item.date) {
-                    today.push(item)
-                }
-            })
-
-            // 转回数组形式
-            const result = Object.values(uniqueData);
-            result.forEach((item) => {
-                marks.push({
-                    year: item.Y,
-                    month: item.m,
-                    day: item.d,
-                    type: 'corner',
-                    text: "F",
-                    color: STATUS_COLORS[item.status],
+            for (const key in range_records) {
+                marks[key] = range_records[key].map((item) => {
+                    let comment = item.comment
+                    if (comment === "") {
+                        comment = `一个${item.duration}''的做爱事件`
+                    }
+                    return  {
+                        year: item.Y,
+                        month: item.m,
+                        day: item.d,
+                        type: 'schedule',
+                        text: comment,
+                        color: STATUS_COLORS[item.status]
+                    }
                 })
-            })
+            }
+
+            let createDate = new Date(last_record.create_time) * 1000,
+                in_month = {}
+            if (inMonthRes.code === 200) {
+                in_month.count = Math.round(inMonthRes.data.count)
+                in_month.durationPre = Math.round(inMonthRes.data.durationPre)
+                in_month.sumDuration = Math.round(inMonthRes.data.sumDuration)
+            }
 
             that.setData({
+                in_month: in_month,
+                last_record: last_record,
                 marks: marks,
                 last_ten_records: last_ten_records,
-                last_30_records: last_30_records,
+                range_records: range_records,
                 today: today,
+                isRefresh: false,
+                timer: setInterval(() => {
+                    that.getTimeDifference(createDate);
+                }, 1000)
             })
-            console.log('marks', marks, 'status', status, 'today', today)
+            console.log('marks', marks, 'status', status, 'today', today, 'last_record', last_record)
+
         }).finally(() => {
             wx.hideLoading()
-        })
-    },
-    onDateChange: function(e) {
-        console.log('onDateChange', e)
-    },
-    onCalendarLoad: function(e) {
-        const calendar = this.selectComponent('#calendar');
-        console.log('calendar-load', calendar);
-    },
-    onCalendarChange: function(e) {
-        console.log('onCalendarChange', e)
-        let that = this,
-            last_30_records = that.data.last_30_records,
-            today = !!e.detail.checked.today,
-            year = e.detail.checked.year,
-            month = e.detail.checked.month,
-            day = e.detail.checked.day,
-            date = `${year}-${month}-${day}`,
-            todayData = []
-
-        // date = formatDateToYYYYMMDD(date)
-
-        last_30_records.forEach((item) => {
-            console.log('date', date, 'item.date', item.date)
-            if (date === item.date) {
-                todayData.push(item)
-            }
-        })
-
-        that.setData({
-            today: todayData,
+            that.setData({
+                isRefresh: false,
+            })
         })
     },
     onSubmit: function(e) {
@@ -212,4 +223,40 @@ Page({
             })
         })
     },
+    onRecordClick(e) {
+        console.log('onRecordClick', e)
+        switchTab('/pages/record/index')
+    },
+    onPosture(e) {
+        console.log('onPosture', e)
+    },
+    getTimeDifference(createDate) {
+        const now = new Date(), // 当前时间,
+              that = this,
+              diff = now - createDate; // 差异（毫秒）
+
+        // 计算天数、小时数、分钟数和秒数
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+
+        let msg =  `${days}天，${hours}小时，${minutes}分钟，${seconds}秒`
+        console.log('diff', msg)
+        that.setData({
+            countdown: {
+                days: `${days}天`,
+                hours: `${hours}小时`,
+                minutes: `${minutes}分钟`,
+                seconds: `${seconds}秒`,
+            },
+        })
+    },
+    onRecordDetail(e) {
+        let that = this,
+            id = e.currentTarget.dataset.id  ?? 0
+
+        gotoRecordDetail(id)
+    }
 });

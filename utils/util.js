@@ -145,6 +145,7 @@ function getTimeDate(timestamp = 0) {
 }
 
 function getConfigLabel(value, type = "delisting") {
+    console.log('type', type, 'value', value)
     switch (type) {
         case "delisting":
             return DELISTING_ARRAY[value].label ?? ""
@@ -224,7 +225,12 @@ function convertSecondsToTime(seconds) {
     return hours.toString().padStart(2, '0') + ":" + minutes.toString().padStart(2, '0') + ":" + secs.toString().padStart(2, '0');
 }
 
+function gotoRecordDetail(id) {
+    let url = `/pages/mine/record/detail/index?id=${id}`
+    return goto(url)
+}
+
 module.exports = {goto, gotoFeedback, showToast, historyBack, previewImage,
     getOpenID, setToken, getToken, getTimeDate, setLocalInfo, getLocalInfo, getLocalUid,
     formatDateToYYYYMMDD, getDayDate, getConfigLabel, generateRandomString, getUploadFileKey,
-    convertSecondsToTime, switchTab, redirect}
+    convertSecondsToTime, switchTab, redirect, gotoRecordDetail}

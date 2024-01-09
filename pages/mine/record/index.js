@@ -1,5 +1,5 @@
 import {getRecordDetail, login, recordDelete} from "../../../utils/api";
-import {goto, showToast} from "../../../utils/util";
+import {goto, gotoRecordDetail, showToast} from "../../../utils/util";
 import moment from "moment";
 import {RATE_ARRAY} from "../../../utils/config";
 
@@ -200,5 +200,11 @@ Page({
             })
             wx.hideLoading()
         })
+    },
+    onRecordDetail(e) {
+        let that = this,
+            id = e.currentTarget.dataset.id  ?? 0
+
+        gotoRecordDetail(id)
     }
 });

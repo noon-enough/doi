@@ -1,0 +1,10 @@
+.title {
+    color: var(--dark);
+    font-size: 32rpx;
+}
+
+.content {
+    font-size: 26rpx;
+    color: var(--gray-dark);
+    padding: 20rpx 32rpx;
+}

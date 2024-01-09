@@ -1,4 +1,4 @@
-import {addPosture, getPosture, putPosture} from "../../../utils/api";
+import {addPosture, deletePosture, getPosture, putPosture} from "../../../utils/api";
 import {showToast} from "../../../utils/util";
 
 const app = getApp()
@@ -102,6 +102,23 @@ Page({
                 })
                 break
             case 'delete':
+                // 删除
+                wx.showLoading()
+                deletePosture(id).then(res => {
+                    if (res.code !== 200) {
+                        showToast(res.message ?? '非法操作', {icon: "error"})
+                        return false
+                    }
+                    wx.hideLoading()
+                    let newPosture = that.data.postures.filter((item, index) => {
+                        return index !== idx
+                    })
+                    showToast('删除成功', {icon: "success"})
+                    that.setData({
+                        postures: newPosture,
+                    })
+                    app.globalData.postureData = newPosture
+                })
                 break
         }
     },

@@ -1,6 +1,6 @@
 import tabbar from "./tabbar";
 import {getLocalInfo, getToken, goto, setLocalInfo, setToken, showToast} from "./utils/util";
-import {getPosture, getStatus, login} from "./utils/api";
+import {getPlaces, getPosture, getStatus, login} from "./utils/api";
 import CustomHook from "spa-custom-hooks";
 
 let globalData =  {
@@ -17,6 +17,7 @@ let globalData =  {
     },
     statusData: [],
     postureData: [],
+    placeData: [],
 }
 
 CustomHook.install({
@@ -47,6 +48,13 @@ CustomHook.install({
         watchKey: 'postureData',
         onUpdate(postureData) {
             return postureData.length >= 1
+        }
+    },
+    'Place': {
+        name: 'placeData',
+        watchKey: 'placeData',
+        onUpdate(placeData) {
+            return placeData.length >= 1
         }
     },
 }, globalData || 'globalData')
@@ -114,6 +122,7 @@ App({
 
                         that.onStatusData()
                         that.onPostureData()
+                        that.onPlaceData()
                     })
                 },
             });
@@ -125,6 +134,7 @@ App({
 
             that.onStatusData()
             that.onPostureData()
+            that.onPlaceData()
         }
 
         that.globalData.system = {
@@ -160,6 +170,15 @@ App({
                 code = res.code ?? 200
             console.log('app.js', 'getPosture', data)
             that.globalData.postureData = data
+        })
+    },
+    onPlaceData() {
+        let that = this
+        getPlaces().then(res => {
+            let data = res.data,
+                code = res.code ?? 200
+            console.log('app.js', 'getPlaces', data)
+            that.globalData.placeData = data
         })
     },
 })

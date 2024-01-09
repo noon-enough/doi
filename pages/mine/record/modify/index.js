@@ -6,6 +6,7 @@ Page({
     data: {
         status: [],
         postureL: [],
+        place: [],
         record: {},
         id: 0,
         show_modify_record: false,
@@ -24,6 +25,14 @@ Page({
 
         that.setData({
             posture: posture,
+        })
+    },
+    onLoadPlace() {
+        let that = this,
+            place = app.globalData.placeData ?? []
+
+        that.setData({
+            place: place,
         })
     },
     onLoadUsers(){

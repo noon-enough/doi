@@ -143,7 +143,7 @@
         </view>
         <t-divider />
         <view class="title">
-            最爱姿势排名
+            最爱姿势占比
         </view>
         <view class="status">
             <view class="times">

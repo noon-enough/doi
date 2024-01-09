@@ -30,9 +30,10 @@ function login(data) {
     return post(`/passport/login`, data)
 }
 
-function recordList(uid, date = "") {
-    date = encodeURIComponent(date)
-    return get(`/record/users/${uid}?date=${date}`)
+function recordList(uid) {
+   //  beginTime = encodeURIComponent(beginTime)
+   // endTime = encodeURIComponent(endTime)
+    return get(`/record/users/${uid}`)
 }
 
 function getRecord() {
@@ -43,6 +44,14 @@ function record(payload = {}) {
     return post('/record', payload)
 }
 
+function recordDetail(id) {
+    return get(`/record/${id}`)
+}
+
+function recordInvite(id) {
+    return get(`/record/${id}/invite`)
+}
+
 function getStatus() {
     return get("/status")
 }
@@ -51,6 +60,10 @@ function addPosture(name = '') {
     return post("/posture",  {
         'content': name,
     })
+}
+
+function deletePosture(id) {
+    return d(`/posture/${id}`)
 }
 
 function getPosture() {
@@ -146,7 +159,20 @@ function unCancel(uid) {
 }
 
 function getPlaces() {
-    return get('/places')
+    return get('/place')
+}
+
+
+function putPlace(id, name) {
+    return put(`/place/${id}`, {
+        content: name
+    })
+}
+
+function addPlace(name) {
+    return post("/place",  {
+        'content': name,
+    })
 }
 
 function putPosture(id, name) {
@@ -155,11 +181,8 @@ function putPosture(id, name) {
     })
 }
 
-function deletePosture(id) {
-    return d(`/posture/${id}`)
-}
-
 module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login,
     record, recordList, getStatus, getPosture, getStatistics, getRecord, getRecordDetail,
     getProfiles, setProfiles, recordDelete, getRecordItem, putRecordItem,
-    getCOSAuthorization, cancel, unCancel, getPlaces, addPosture, deletePosture, putPosture}
+    getCOSAuthorization, cancel, unCancel, getPlaces, addPosture, deletePosture, putPosture,
+    recordDetail, putPlace, addPlace, recordInvite}

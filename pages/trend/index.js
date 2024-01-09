@@ -102,6 +102,7 @@ Page({
         let that = this
 
         that.onLoadData()
+        console.log('datetime', that.data.datetime)
     },
     onLoadData: function() {
         let that = this,

@@ -36,30 +36,54 @@
     </view>
     <view class="labelBox">
         <text>姿势：</text>
-        <t-checkbox-group t-class="checkbox" borderless
-                          bind:change="onPostureChange"
-                          defaultValue="{{recode.posture}}">
-            <block wx:if="{{posture.length}}">
-                <t-checkbox wx:for="{{posture}}"
-                            wx:for-item="item"
-                            wx:key="id"
-                            wx:for-index="key"
-                            icon="rectangle"
-                            style="padding: 8rpx 8rpx 8rpx 0"
-                            block="{{false}}" value="{{item.id}}" label="{{item.name}}" />
-            </block>
-        </t-checkbox-group>
+        <view class="" style="width: 100%;">
+            <t-checkbox-group t-class="checkbox" borderless
+                              bind:change="onPostureChange"
+                              defaultValue="{{recode.posture}}">
+                <block wx:if="{{posture.length}}">
+                    <t-checkbox wx:for="{{posture}}"
+                                wx:for-item="item"
+                                wx:key="id"
+                                wx:for-index="key"
+                                icon="rectangle"
+                                style="padding: 8rpx 8rpx 8rpx 0"
+                                block="{{false}}" value="{{item.id}}" label="{{item.name}}" />
+                </block>
+            </t-checkbox-group>
+            <view class="tips small" bind:tap="onAddPosture">添加姿势</view>
+        </view>
+    </view>
+    <view class="labelBox">
+        <text>地点：</text>
+        <view class="" style="width: 100%;">
+            <t-checkbox-group t-class="checkbox" borderless
+                              bind:change="onPlaceChange"
+                              defaultValue="{{recode.place}}">
+                <block wx:if="{{place.length}}">
+                    <t-checkbox wx:for="{{place}}"
+                                wx:for-item="item"
+                                wx:key="id"
+                                wx:for-index="key"
+                                icon="rectangle"
+                                style="padding: 8rpx 8rpx 8rpx 0"
+                                block="{{false}}" value="{{item.id}}" label="{{item.name}}" />
+                </block>
+            </t-checkbox-group>
+            <view class="tips small" bind:tap="onAddPlace">添加场所</view>
+        </view>
+    </view>
+    <view class="labelBox">
+        <text>对象：</text>
+        <t-input placeholder="输入对象名字" type="text" value="{{recode.partner}}"
+                 borderless="{{true}}" tips="你记录此次事件的对象" bind:change="onPartnerChange"/>
     </view>
     <view class="labelBox">
         <text>备注：</text>
-        <t-input placeholder="输入备注" type="text" value="{{recode.comment}}" borderless="{{true}}" bind:change="onCommentChange" tips="可以对此次事件做个备忘录" />
+        <t-input placeholder="输入备注" type="text" value="{{recode.comment}}" borderless="{{true}}"
+                 bind:change="onCommentChange" tips="可以对此次事件做个备忘录" />
     </view>
-    <!--    <view class="labelBox">-->
-    <!--        <text>对象：</text>-->
-    <!--        <t-input placeholder="输入对象名字" type="text" borderless="{{true}}" tips="你记录此次事件的对象"/>-->
-    <!--    </view>-->
     <view class="tips">
-        事件时常最短 <text class="strong">10</text>分钟， 最长<text class="strong">180</text>分钟
+        事件时长最短 <text class="strong">10</text>分钟， 最长<text class="strong">180</text>分钟
     </view>
     <view class="submitButton">
         <t-button theme="primary" block icon="{{submit_loading ? '' : 'send'}}" type="submit"
@@ -82,3 +106,56 @@
         bindpick="onEventTimePick"
         bindcancel="onEventTimeHide"
 />
+
+
+<t-dialog
+        visible="{{show_add_dialog}}"
+        title="{{type === 'edit'? '编辑姿势': '新增姿势'}}"
+        confirm-btn="确定"
+        cancel-btn="取消"
+        bind:confirm="confirmAddDialog"
+        bind:cancel="closeAddDialog"
+>
+    <view slot="content" class="tips">
+        <text wx:if="{{type === 'add'}}">请添加你喜欢的、常用的、期待的DOI姿势类名；</text>
+        <text>\n姿势类名最多输入20个字符；</text>
+    </view>
+    <t-input
+            bind:change="onContentChange"
+            borderless
+            class="dialog-input"
+            clearable
+            data-type="{{type}}"
+            data-id="{{id}}"
+            value="{{content}}"
+            slot="content"
+            placeholder="输入姿势类名"
+            placeholder-class="placeholder"
+    />
+</t-dialog>
+
+<t-dialog
+        visible="{{show_add_place_dialog}}"
+        title="{{type === 'edit'? '编辑场所': '新增场所'}}"
+        confirm-btn="确定"
+        cancel-btn="取消"
+        bind:confirm="confirmAddPlaceDialog"
+        bind:cancel="closeAddPlaceDialog"
+>
+    <view slot="content" class="tips">
+        <text wx:if="{{type === 'add'}}">请添加你喜欢的、常用的、期待的做爱场所；</text>
+        <text>\n场所名最多输入20个字符；</text>
+    </view>
+    <t-input
+            bind:change="onPlaceContentChange"
+            borderless
+            class="dialog-input"
+            clearable
+            data-type="{{place_type}}"
+            data-id="{{place_id}}"
+            value="{{place_content}}"
+            slot="content"
+            placeholder="输入场所名"
+            placeholder-class="placeholder"
+    />
+</t-dialog>

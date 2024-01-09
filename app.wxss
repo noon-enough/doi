@@ -78,9 +78,6 @@ page {
   margin-top: 20rpx;
 }
 
-view, swiper {
-  box-sizing: unset;
-}
 
 .wrapper .title {
   font-size: 30rpx;
@@ -198,4 +195,12 @@ view, swiper {
 
 .text-left {
   text-align: left;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
 }
