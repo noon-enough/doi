@@ -10,6 +10,7 @@ Page({
         loadingProps: {
             size: '50rpx',
         },
+        allow: {},
         data: {},
         rateTexts: RATE_ARRAY,
         chartData: {},
@@ -44,12 +45,16 @@ Page({
     },
     onLoad: function (options) {
         let id = options.id ?? 0,
-            that = this
-        console.log('id', id)
+            that = this,
+            invite = options.invite ?? ''
+        console.log('id', id, 'invite', invite)
         that.setData({
             id: id,
         })
 
+        if (invite !== "") {
+
+        }
         that.onLoadData()
     },
     onLoadData() {
@@ -62,7 +67,12 @@ Page({
                 msg = res.message ?? '数据拉取失败',
                 data = res.data,
                 extra = res.extra,
-                percentage = extra.percentage ?? 0
+                percentage = extra.percentage ?? 0,
+                allow = {
+                    'delete': extra.allow_delete ?? false,
+                    'edit': extra.allow_edit ?? false,
+                    'share': extra.allow_share ?? false,
+                }
 
             if (code !== 200) {
                 showToast(msg, {icon: 'error'})
@@ -85,6 +95,7 @@ Page({
                 [`opts.title.name`]:  `${percentage * 100} %`,
                 isRefresh: false,
                 data: data,
+                allow: allow,
             })
         })
 
@@ -97,9 +108,13 @@ Page({
         that.onLoadData()
     },
     onRecordShare(e) {
-        console.log('e', e)
         let that = this,
             id = e.currentTarget.dataset.id ?? 0
         goto(`/pages/record/share/index?id=${id}`)
+    },
+    onRecordModify(e) {
+        let that = this,
+            id = e.currentTarget.dataset.id ?? 0
+        goto(`/pages/mine/record/modify/index?id=${id}`)
     },
 });

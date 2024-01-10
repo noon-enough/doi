@@ -13,6 +13,10 @@
             <view class="comment">{{data.comment ? data.comment : '(无备注)'}}</view>
             <t-icon wx:if="{{data.watcher}}" name="star-filled" color="#fd7e14" class="watcher" />
         </view>
+        <view class="partner" wx:if="{{data.partner}}">
+            <view class="name">对象：</view>
+            <view class="subname">{{data.partner}}</view>
+        </view>
         <view class="status">状态：{{data.status_name}}</view>
         <view class="duration">时长：{{data.duration}}分钟</view>
         <view class="star">
@@ -24,15 +28,23 @@
             <t-tag class="mr-20" wx:for="{{data.postures}}" wx:for-index="idx" wx:key="idx"
                    wx:for-item="posture" variant="light">{{posture.name}}</t-tag>
         </view>
+        <view class="posture" wx:if="{{data.places.length}}">
+            <view class="name">场所：</view>
+            <t-tag class="mr-20" wx:for="{{data.places}}" wx:for-index="idx" wx:key="idx"
+                   wx:for-item="place" variant="light">{{place.name}}</t-tag>
+        </view>
         <view class="action mt-10">
             <view class="date">{{data.datetime}}</view>
             <view class="button" hidden>
                 <t-icon name="share" size="20px" bind:click="onRecordShare"
+                        wx:if="{{allow.share}}"
                         data-id="{{data.id}}" color="#6c757d"/>
                 <t-icon name="edit" size="20px" bind:click="onRecordModify"
+                        wx:if="{{allow.edit}}"
                         data-id="{{data.id}}" color="#6c757d"/>
                 <t-icon name="delete-time" size="20px" bind:click="onRecordDelete"
                         data-idx="{{key}}"
+                        wx:if="{{allow.delete}}"
                         data-id="{{data.id}}" color="#6c757d"/>
             </view>
         </view>

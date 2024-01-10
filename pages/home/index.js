@@ -11,7 +11,11 @@ Page({
             minutes: "NaN分钟",
             seconds: "NaN秒",
         },
-        in_month: {},
+        in_month: {
+            count: 0,
+            durationPre: 0,
+            sumDuration: 0,
+        },
         datetime: getDayDate(),
         timer: null,
         isRefresh: false,
@@ -19,13 +23,10 @@ Page({
             size: '50rpx',
         },
         uid: 0,
-        markCalendarList: [{ date: '2023-12-10', pointColor: '#333' }, { date: '2023-12-06', pointColor: 'red' }, { date: '2023-12-13', pointColor: 'red' }],
         calendarView: 'week',
         weekText: ['日', '一', '二', '三', '四', '五', '六'],
         today: [],
-        range_records: [],
         last_ten_records: [],
-        marks: [],
         list: app.globalData.tabbar,
         status: [],
         posture: [],
@@ -37,9 +38,11 @@ Page({
             comment: "",
             star: 3,
             status: 4,
+            place: [],
             posture: [],
         },
         submit_loading: false,
+        hasRecord: false,
     },
     onLoadLogin(){
     },
@@ -48,10 +51,10 @@ Page({
         let that = this,
             timestamp = getTimeDate(),
             users =  app.globalData.users,
-            uid = app.globalData.users.uid ?? 0
+            uid = app.globalData.users.uid ?? 0,
+            is_cancel = users.is_cancel ?? 0
 
         // 看看是不是申请注销状态？
-        let is_cancel = users.is_cancel ?? 0
         is_cancel = parseInt(is_cancel)
 
         if (is_cancel === 1) {
@@ -123,11 +126,8 @@ Page({
 
             let code = res.code,
                 data = res.data,
-                last_record = data.last_record ?? [],
-                last_ten_records = data.last_ten_records ?? [],
-                range_records = data.range_records ?? {},
-                today = [],
-                marks = {}
+                last_record = data.last_record ?? {},
+                last_ten_records = data.last_ten_records ?? []
 
             if (code !== 200) {
                 wx.hideLoading()
@@ -138,50 +138,34 @@ Page({
                 return false
             }
 
-            for (const key in range_records) {
-                marks[key] = range_records[key].map((item) => {
-                    let comment = item.comment
-                    if (comment === "") {
-                        comment = `一个${item.duration}''的做爱事件`
-                    }
-                    return  {
-                        year: item.Y,
-                        month: item.m,
-                        day: item.d,
-                        type: 'schedule',
-                        text: comment,
-                        color: STATUS_COLORS[item.status]
-                    }
-                })
-            }
-
-            let createDate = new Date(last_record.create_time) * 1000,
-                in_month = {}
-            if (inMonthRes.code === 200) {
-                in_month.count = Math.round(inMonthRes.data.count)
-                in_month.durationPre = Math.round(inMonthRes.data.durationPre)
-                in_month.sumDuration = Math.round(inMonthRes.data.sumDuration)
-            }
-
-            that.setData({
+            let in_month = {},
+                setData = {
                 in_month: in_month,
                 last_record: last_record,
-                marks: marks,
                 last_ten_records: last_ten_records,
-                range_records: range_records,
-                today: today,
                 isRefresh: false,
-                timer: setInterval(() => {
+                hasRecord: false,
+            }
+
+            if (Object.prototype.isPrototypeOf(last_record)) {
+                setData.hasRecord = false
+            } else {
+                if (inMonthRes.code === 200) {
+                    in_month.count = Math.round(inMonthRes.data.count)
+                    in_month.durationPre = Math.round(inMonthRes.data.durationPre)
+                    in_month.sumDuration = Math.round(inMonthRes.data.sumDuration)
+                }
+                let createDate = new Date(last_record.create_time) * 1000
+
+                setData.in_month = in_month
+                setData.timer = setInterval(() => {
                     that.getTimeDifference(createDate);
                 }, 1000)
-            })
-            console.log('marks', marks, 'status', status, 'today', today, 'last_record', last_record)
+                setData.hasRecord = true
+            }
 
-        }).finally(() => {
+            that.setData(setData)
             wx.hideLoading()
-            that.setData({
-                isRefresh: false,
-            })
         })
     },
     onSubmit: function(e) {
@@ -243,7 +227,6 @@ Page({
 
 
         let msg =  `${days}天，${hours}小时，${minutes}分钟，${seconds}秒`
-        console.log('diff', msg)
         that.setData({
             countdown: {
                 days: `${days}天`,

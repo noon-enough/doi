@@ -9,20 +9,14 @@ Page({
     },
     onLoad: function (options) {
         let that = this,
-            id = options.id ?? 0,
-            invite = options.invite ?? ''
+            id = options.id ?? 0
         if (id === 0) {
             historyBack()
         }
-        if (invite !== '') {
-            console.log('options', options)
-            return false
-        } else {
-            that.setData({
-                id: id,
-            })
-            that.onLoadData()
-        }
+        that.setData({
+            id: id,
+        })
+        that.onLoadData()
     },
     onLoadData() {
         let that = this,
@@ -57,7 +51,7 @@ Page({
             record = that.data.record
         return {
             title: `【你有一个${record['duration']}分钟的Doi记录急需查看】`,
-            path: `/pages/record/share/index?id=${id}&invite=${inviteCode}`
+            path: `/pages/mine/record/detail/index?id=${id}&invite=${inviteCode}`
         }
     }
 });

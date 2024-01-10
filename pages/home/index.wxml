@@ -13,75 +13,80 @@
         using-custom-navbar="{{true}}"
 >
     <view class="wrapper">
-        <view class="progress countdown-body">
-            <view class="countdown">
-                <view class="day">
-                    {{countdown.days}}
-                </view>
-                <view class="hours">
-                    {{countdown.hours}}
-                </view>
-                <view class="minutes">
-                    {{countdown.minutes}}
-                </view>
-                <view class="seconds">
-                    {{countdown.seconds}}
-                </view>
-            </view>
-            <view class="tips text-center mt-10">距你上次做爱已过去</view>
-        </view>
-        <view class="title">
-            本月实时数据
-        </view>
-        <view class="describe">
-            数据统计范围为本月01日00:00 ~ {{datetime}}
-        </view>
-        <view class="content">
-            <t-row gutter="16">
-                <t-col span="8" t-class="dark">
-                    <view class="name">做爱次数</view>
-                    <view class="info">
-                        <view class="strong">
-                            {{in_month.count}}
-                        </view>
-                        次
-                    </view>
-                </t-col>
-                <t-col span="8" t-class="light">
-                    <view class="name">做爱总时长</view>
-                    <view class="info"><view class="strong">{{in_month.sumDuration}}</view> 分钟</view>
-                </t-col>
-                <t-col span="8" t-class="light">
-                    <view class="name">平均时长</view>
-                    <view class="info"><view class="strong">{{in_month.durationPre}}</view> 分钟</view>
-                </t-col>
-            </t-row>
-        </view>
-        <t-divider />
-        <block wx:if="{{last_ten_records.length}}">
-            <view class="title">最近10次时长统计</view>
-            <view class="progress">
-                <view class="item"
-                      wx:key="id"
-                      wx:for-index="key"
-                      wx:for-item="item"
-                      wx:for="{{last_ten_records}}"
-                      bind:tap="onRecordDetail" data-id="{{item.id}}"
-                >
-                    <view class="description">
-                        <view class="comment">{{item.comment === "" ? '(无备注)' : item.comment}}</view>
-                        <view class="comment">
-                            <text class="mr20">时长：{{item.duration}}''</text>
-                            <text>体验：{{item.star}}星</text>
-                        </view>
-                    </view>
-                    <t-progress percentage="{{item.percentage}}"
-                                t-class-label="percentage"
-                                label="" />
-                </view>
-            </view>
+        <block wx:if="{{hasRecord === false}}">
+            <empty type="9" description="你还没有记录任何Doi行为"></empty>
         </block>
-        <t-divider />
+        <block wx:else>
+            <view class="progress countdown-body">
+                <view class="countdown">
+                    <view class="day">
+                        {{countdown.days}}
+                    </view>
+                    <view class="hours">
+                        {{countdown.hours}}
+                    </view>
+                    <view class="minutes">
+                        {{countdown.minutes}}
+                    </view>
+                    <view class="seconds">
+                        {{countdown.seconds}}
+                    </view>
+                </view>
+                <view class="tips text-center mt-10">距你上次做爱已过去</view>
+            </view>
+            <view class="title">
+                本月实时数据
+            </view>
+            <view class="describe">
+                数据统计范围为本月01日00:00 ~ {{datetime}}
+            </view>
+            <view class="content">
+                <t-row gutter="16">
+                    <t-col span="8" t-class="dark">
+                        <view class="name">做爱次数</view>
+                        <view class="info">
+                            <view class="strong">
+                                {{in_month.count}}
+                            </view>
+                            次
+                        </view>
+                    </t-col>
+                    <t-col span="8" t-class="light">
+                        <view class="name">做爱总时长</view>
+                        <view class="info"><view class="strong">{{in_month.sumDuration}}</view> 分钟</view>
+                    </t-col>
+                    <t-col span="8" t-class="light">
+                        <view class="name">平均时长</view>
+                        <view class="info"><view class="strong">{{in_month.durationPre}}</view> 分钟</view>
+                    </t-col>
+                </t-row>
+            </view>
+            <t-divider />
+            <block wx:if="{{last_ten_records.length}}">
+                <view class="title">最近10次时长统计</view>
+                <view class="progress">
+                    <view class="item"
+                          wx:key="id"
+                          wx:for-index="key"
+                          wx:for-item="item"
+                          wx:for="{{last_ten_records}}"
+                          bind:tap="onRecordDetail" data-id="{{item.id}}"
+                    >
+                        <view class="description">
+                            <view class="comment">{{item.comment === "" ? '(无备注)' : item.comment}}</view>
+                            <view class="comment">
+                                <text class="mr20">时长：{{item.duration}}''</text>
+                                <text>体验：{{item.star}}星</text>
+                            </view>
+                        </view>
+                        <t-progress percentage="{{item.percentage}}"
+                                    t-class-label="percentage"
+                                    label="" />
+                    </view>
+                </view>
+            </block>
+            <t-divider />
+        </block>
         <view class="title">添加做爱事件</view>
         <record
                 bind:submit="onSubmit"

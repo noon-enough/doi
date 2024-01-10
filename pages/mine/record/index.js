@@ -206,5 +206,10 @@ Page({
             id = e.currentTarget.dataset.id  ?? 0
 
         gotoRecordDetail(id)
-    }
+    },
+    onRecordShare(e) {
+        let that = this,
+            id = e.currentTarget.dataset.id ?? 0
+        goto(`/pages/record/share/index?id=${id}`)
+    },
 });

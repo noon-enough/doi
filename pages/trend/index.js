@@ -3,51 +3,27 @@ import {getDayDate, getTimeDate, showToast} from "../../utils/util";
 import {STATUS_COLORS} from "../../utils/config";
 
 
-const app = getApp()
-
+const app = getApp(),
+    defaultOpts = {
+        padding: [5,5,5,5],
+        enableScroll: false,
+        extra: {
+            pie: {
+                activeOpacity: 0.5,
+                activeRadius: 10,
+                offsetAngle: 0,
+                labelWidth: 15,
+                border: true,
+                borderWidth: 3,
+                borderColor: "#FFFFFF"
+            }
+        }
+    }
 Page({
     data: {
         isRefresh: false,
         loadingProps: {
             size: '50rpx',
-        },
-        postureOpts: {
-            padding: [5,5,5,5],
-            enableScroll: false,
-            extra: {
-                pie: {
-                    activeOpacity: 0.5,
-                    activeRadius: 10,
-                    offsetAngle: 0,
-                    labelWidth: 15,
-                    border: true,
-                    borderWidth: 3,
-                    borderColor: "#FFFFFF"
-                }
-            }
-        },
-        postureChartData: {},
-        durationChartData: {},
-        durationOpts: {
-            color: [],
-            padding: [5,5,5,5],
-            enableScroll: false,
-            legend: {
-                show: true,
-                position: "bottom",
-                lineHeight: 30,
-            },
-            extra: {
-                pie: {
-                    activeOpacity: 0.5,
-                    activeRadius: 10,
-                    offsetAngle: 0,
-                    labelWidth: 15,
-                    border: true,
-                    borderWidth: 3,
-                    borderColor: "#FFFFFF"
-                }
-            }
         },
         opts: {
             color: STATUS_COLORS,
@@ -72,6 +48,32 @@ Page({
                 }
             }
         },
+        durationOpts: {
+            color: [],
+            padding: [5,5,5,5],
+            enableScroll: false,
+            legend: {
+                show: true,
+                position: "bottom",
+                lineHeight: 30,
+            },
+            extra: {
+                pie: {
+                    activeOpacity: 0.5,
+                    activeRadius: 10,
+                    offsetAngle: 0,
+                    labelWidth: 15,
+                    border: true,
+                    borderWidth: 3,
+                    borderColor: "#FFFFFF"
+                }
+            }
+        },
+        placeOpts: defaultOpts,
+        postureOpts: defaultOpts,
+        postureChartData: {},
+        placeChartData: {},
+        durationChartData: {},
         chartData: {},
         status: [],
         datetime: getDayDate(),
@@ -88,6 +90,7 @@ Page({
             status_time: '3months',
             duration_time: '3months',
             posture_time: '3months',
+            place_time: '3months',
         },
     },
     onLoadStatus() {
@@ -114,17 +117,22 @@ Page({
             getStatistics('status', times.status_time),
             getStatistics('duration', times.duration_time),
             getStatistics('posture', times.posture_time),
+            getStatistics('place', times.place_time),
         ]
         ).then(([
             inMonthRes,
             periodsRes,
             statusRes,
             durationRes,
-            postureRes
+            postureRes,
+            placeRes,
         ]) => {
             console.log('inMonthRes', inMonthRes,
-                'periodsRes', periodsRes, 'statusRes', statusRes,
-                'durationRes', durationRes, 'postureRes', postureRes)
+                'periodsRes', periodsRes,
+                'statusRes', statusRes,
+                'durationRes', durationRes,
+                'postureRes', postureRes,
+                'placeRes', placeRes)
             let data = {
                 isRefresh: false,
                 in_month: {
@@ -135,6 +143,7 @@ Page({
                 chartData: {},
                 durationChartData: {},
                 postureChartData: {},
+                placeChartData: {},
             }
 
             if (inMonthRes.code === 200) {
@@ -143,10 +152,12 @@ Page({
                 data.in_month.sumDuration = Math.round(inMonthRes.data.sumDuration)
             }
 
+            // 时段
             if (periodsRes.code === 200) {
                 data.periods = periodsRes.data ?? {}
             }
 
+            // 状态
             if (statusRes.code === 200) {
                 let statusData = statusRes.data ?? []
                 let chartData= statusData.map((item) => {
@@ -166,6 +177,7 @@ Page({
                 }
             }
 
+            // 时长
             if (durationRes.code === 200) {
                 let durationData = durationRes.data ?? []
                 let durationChartData = durationData.map((item) => {
@@ -186,10 +198,10 @@ Page({
                 }
             }
 
-
+            // 姿势
             if (postureRes.code === 200) {
-                let postureData = postureRes.data ?? []
-                let postureChartData = postureData.map((item) => {
+                let postureData = postureRes.data ?? [],
+                    postureChartData = postureData.map((item) => {
                     return {
                         "name": item.data.name,
                         "value": item.percentage,
@@ -207,7 +219,28 @@ Page({
                 }
             }
 
-            console.log('data', data)
+            // 场所
+            if (placeRes.code === 200) {
+                let placeData = placeRes.data ?? [],
+                    placeChartData = placeData.map((item) => {
+                        return {
+                            "name": item.data.name,
+                            "value": item.percentage,
+                            "labelShow": true,
+                            "labelText": `${item.percentage}%`
+                        }
+                    })
+
+                data.placeChartData = {
+                    series: [
+                        {
+                            data: placeChartData,
+                        }
+                    ],
+                }
+            }
+
+            console.log('trend.js set UCharts data', data)
             that.setData(data)
             wx.hideLoading()
         }).finally(() => {})
