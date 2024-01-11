@@ -138,6 +138,7 @@ Page({
                 return false
             }
 
+            console.log('last_record', last_record, 'Object.prototype.isPrototypeOf(last_record)', Object.prototype.isPrototypeOf({}))
             let in_month = {},
                 setData = {
                 in_month: in_month,
@@ -147,7 +148,7 @@ Page({
                 hasRecord: false,
             }
 
-            if (Object.prototype.isPrototypeOf(last_record)) {
+            if (Object.keys(last_record).length <= 0) {
                 setData.hasRecord = false
             } else {
                 if (inMonthRes.code === 200) {
