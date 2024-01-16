@@ -1,0 +1,25 @@
+.tag {
+    display: inline-flex;
+    align-items: center;
+    border: 2rpx solid transparent;
+    box-sizing: border-box;
+    border-radius: 8rpx;
+    font-size: 24rpx;
+    user-select: none;
+    vertical-align: middle;
+}
+
+.tag_icon {
+    /*padding: 4rpx 4rpx 4rpx 0;*/
+    margin-right: 8rpx;
+}
+
+.tag_text {
+    word-wrap: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    /*min-width: 100rpx;*/
+    min-height: 20rpx;
+}

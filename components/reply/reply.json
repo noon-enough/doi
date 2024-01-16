@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "tag": "/components/tag/index",
+    "sex": "/components/sex/index"
+  }
+}

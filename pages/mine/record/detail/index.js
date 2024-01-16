@@ -1,10 +1,13 @@
-import {recordDetail} from "../../../../utils/api";
+import {recordComments, recordDetail} from "../../../../utils/api";
 import {goto, showToast} from "../../../../utils/util";
 import {RATE_ARRAY} from "../../../../utils/config";
 import moment from "moment";
 
+
+const app = getApp()
 Page({
     data: {
+        width: app.globalData.system.width ?? 0,
         id : 0,
         isRefresh: false,
         loadingProps: {
@@ -41,7 +44,17 @@ Page({
                 }
             }
         },
-        comments: [],
+        comments: {
+            content: "",
+            data: [],
+            count: 0,
+            page: 1,
+            totalCount: 0,
+        },
+        show_send_icon: false,
+        show_submit_event: false,
+        submitLoading: false,
+        disable: false,
     },
     onLoad: function (options) {
         let id = options.id ?? 0,
@@ -59,10 +72,23 @@ Page({
     },
     onLoadData() {
         let that = this,
-            id = that.data.id
+            id = that.data.id,
+            page = that.data.comments.page
+        if (page <= 1) {
+            page = 1
+        }
+        if (page >= 100) {
+            page = 100
+        }
         wx.showLoading()
-        recordDetail(id).then(res => {
-            console.log('recordDetail', res)
+        Promise.all([
+            recordDetail(id),
+            recordComments(id, page, 20),
+        ]).then(([
+            res,
+            commentsRes
+        ]) =>  {
+            console.log('recordDetail', res, 'recordComments', commentsRes)
             let code = res.code,
                 msg = res.message ?? '数据拉取失败',
                 data = res.data,
@@ -72,14 +98,24 @@ Page({
                     'delete': extra.allow_delete ?? false,
                     'edit': extra.allow_edit ?? false,
                     'share': extra.allow_share ?? false,
-                }
+                },
+                commentsCode = commentsRes.code
 
-            if (code !== 200) {
+            if (code !== 200 && commentsCode !== 200) {
                 showToast(msg, {icon: 'error'})
                 return false
             }
 
-            let datetime = new Date(data.create_time)
+            let datetime = new Date(data.create_time),
+                comments = commentsRes.data,
+                totalCount = commentsRes.extra.totalCount ?? 0,
+                count = commentsRes.extra.count ?? 0
+
+            comments = comments.map((item) => {
+                let d = new Date(item.create_time)
+                item.datetime = moment(d).fromNow()
+                return item
+            })
             data.datetime = moment(datetime).fromNow()
             wx.hideLoading()
             that.setData({
@@ -96,16 +132,71 @@ Page({
                 isRefresh: false,
                 data: data,
                 allow: allow,
+                ['comments.data']: comments,
+                ['comments.page']: 1,
+                ['comments.totalCount']: totalCount,
             })
-        })
 
+            console.log('comments', that.data.comments.data)
+        })
     },
     onPullDownRefresh() {
         let that = this
         that.setData({
+            ['comments.page']: 1,
             isRefresh: true,
         })
         that.onLoadData()
+    },
+    onScrollToBottom(e) {
+        let that = this
+        that.onReachBottom()
+    },
+    onReachBottom() {
+        let that = this,
+            page = that.data.comments.page,
+            totalCount = that.data.comments.totalCount,
+            nextPage = page + 1,
+            id = that.data.id
+        wx.showLoading()
+        if (nextPage >= totalCount) {
+            //done
+            wx.hideLoading()
+        } else {
+            recordComments(id, nextPage, 20).then(res => {
+                console.log('onReachBottom', 'recordComments', res)
+                let data = res.data ?? [],
+                    extra = res.extra ?? {},
+                    code = res.code
+                if (code !== 200) {
+                    showToast(res.message ?? '数据拉取失败', {icon: "error"})
+                    return false
+                }
+
+                data = data.map((item) => {
+                    let d = new Date(item.create_time)
+                    item.datetime = moment(d).fromNow()
+                    return item
+                })
+                that.setData({
+                    ['comments.data']: that.data.comments.data.concat(data),
+                    ['comments.page']: nextPage,
+                    ['comments.totalCount']: extra.totalCount,
+                    ['comments.count']: extra.count,
+                })
+                wx.hideLoading()
+            })
+        }
+    },
+    onScroll(e) {
+        let that = this,
+            { scrollTop } = e.detail,
+            windowHeight = app.globalData.system.height
+
+        if (scrollTop >= 400) {
+            that.setData({
+            })
+        }
     },
     onRecordShare(e) {
         let that = this,
@@ -116,5 +207,32 @@ Page({
         let that = this,
             id = e.currentTarget.dataset.id ?? 0
         goto(`/pages/mine/record/modify/index?id=${id}`)
+    },
+    onCommentSend(e) {},
+    onCommentContentBlur(e) {
+        let that = this
+
+        that.setData({
+            show_submit_event: false,
+        })
+    },
+    onCommentContentChange(e) {
+        let that = this,
+            content = e.detail.value ?? ""
+        content = content.trim()
+
+        that.setData({
+            ['comments.content']: content,
+            show_submit_event: true,
+            submitLoading: false,
+            disable: false,
+            show_send_icon: !!content,
+        })
+    },
+    onCommentContentFocus(e) {
+        let that = this
+        that.setData({
+            show_submit_event: true,
+        })
     },
 });

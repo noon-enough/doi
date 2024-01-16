@@ -1,0 +1,10 @@
+<view class="tag"
+      mut-bind:tap="tapTag"
+      style="background-color: {{backgroundColor}}; font-size: {{contentSize}}rpx; padding: {{padding}}rpx; border-radius: {{radius}}rpx;">
+    <block wx:if="{{leftIcon}}">
+        <view class="tag_icon">
+            <t-icon name="{{leftIcon}}" prefix="icon" size="{{leftIconSize}}" style="color: {{contentColor}}"/>
+        </view>
+    </block>
+    <view class="tag_text" style="color: {{contentColor}}; {{ isBolder ? 'font-weight: bold;' : ''}} {{textWidth ? 'width: ' + textWidth + 'rpx' : ''}}">{{content}}</view>
+</view>

@@ -1,0 +1,184 @@
+
+.card-container {
+    margin: 0 auto;
+    box-sizing: border-box;
+    background: #fff;
+    display: flex
+}
+
+.card-container-full {
+    width: 100%
+}
+
+.card-container-unfull {
+    width: 92%;
+    box-shadow: 0 4rpx 20rpx 0 rgba(212,217,223,.5);
+    border-radius: 4px
+}
+
+.card-container-primary-left {
+    flex-direction: row
+}
+
+.card-container-primary-right {
+    flex-direction: row-reverse
+}
+
+.card-container-avatar {
+    flex-direction: column
+}
+
+.card-container-cover {
+    flex-direction: column
+}
+
+.cover-img-full {
+    width: 100%;
+    height: 260rpx
+}
+
+.cover-img-unfull {
+    width: 100%;
+    height: 260rpx
+}
+
+.card-img-primary {
+    height: 240rpx;
+    width: 240rpx;
+    overflow: hidden
+}
+
+.card-img-primary-left {
+    margin-right: 40rpx
+}
+
+.card-img-primary-right {
+    margin-left: 40rpx
+}
+
+.card-img-avatar {
+    height: 70rpx;
+    width: 70rpx;
+    border-radius: 50%;
+    margin-right: 20rpx
+}
+
+.card-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1
+}
+
+.card-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333
+}
+
+.card-title-primary {
+    font-size: 32rpx;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2
+}
+
+.card-title-avatar {
+    font-size: 28rpx
+}
+
+.card-title-cover {
+    font-size: 30rpx;
+    margin-top: 10rpx
+}
+
+.card-title-avatar {
+    font-size: 28rpx
+}
+
+.card-avatar-top {
+    display: flex;
+    flex-direction: row;
+    height: 100rpx;
+    align-items: center;
+    justify-content: space-between
+}
+
+.card-avatar-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center
+}
+
+.card-avatar {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    align-content: start;
+}
+
+.card-avatar .card-avatar-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.describe {
+    margin-top: 10rpx;
+    display: flex;
+    color: #666;
+    font-size: 24rpx;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.describe .location, .describe .constellation {
+    margin-left: 20rpx;
+    position: relative;
+}
+
+.describe .location::before, .describe .constellation::before{
+    content:' ';
+    display: block;
+    position: absolute;
+    width: 6rpx;
+    height: 6rpx;
+    background: var(--gray);
+    border-radius: 50%;
+    top: 15rpx;
+    left: -10rpx;
+}
+
+
+.content {
+    margin-top: 20rpx;
+    margin-bottom: 20rpx;
+    margin-left: 80rpx;
+    font-size: 28rpx;
+    font-weight: unset;
+}
+
+.content .footer {
+    margin-top: 20rpx;
+    font-size: 26rpx;
+    color: #696969;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    margin-right: 40rpx;
+}
+
+.content .footer .like {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.content .footer .like .num {
+    margin-left: 8rpx;
+}

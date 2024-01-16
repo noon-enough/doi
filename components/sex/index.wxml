@@ -1,0 +1,3 @@
+<view class="sex-class">
+    <t-icon name="{{sex}}" size="{{size}}" prefix="icon" color="{{color}}"/>
+</view>

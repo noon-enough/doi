@@ -63,10 +63,50 @@
     <view class="comments mt-10">
         <view class="title">评论此次记录</view>
         <view class="tips mt-10">仅允许参与者和邀请（分享）者参与评论</view>
-        <empty wx:if="{{comments.length <=0 }}" type="0"></empty>
-        <view wx:else class="item">
-
+        <empty wx:if="{{comments.data.length <=0 }}" description="你和你参与者对此次做爱没有任何评论可言"></empty>
+        <block wx:else>
+            <block wx:for="{{comments.data}}" wx:for-item="reply" wx:for-index="index" wx:key="id">
+                <reply reply="{{reply}}"
+                       data-id="{{reply.id}}"
+                       data-is-mine="{{reply.is_mine}}"
+                       data-content="{{reply.content}}"
+                       bind:longlongpress="onLongPress"/>
+            </block>
+        </block>
+    </view>
+    <view class="tabbar" style="width: {{width}}px">
+        <view class="tabbar-item">
+            <t-textarea t-class="comment"
+                        style="{{show_submit_event ? 'width: 550rpx;': ''}}"
+                        bordered="{{false}}"
+                        adjust-position
+                        fixed
+                        autosize
+                        value="{{comments.content}}"
+                        bind:blur="onCommentContentBlur"
+                        bind:change="onCommentContentChange"
+                        bind:focus="onCommentContentFocus"
+                        disable-default-padding="{{true}}"
+                        confirm-type="send"
+                        placeholder-style="placeholder"
+                        placeholder="走心一下，为这次做爱说点什么"></t-textarea>
         </view>
+        <block wx:if="{{show_submit_event}}">
+            <view class="tabbar-item">
+                <button loading="{{submitLoading}}"  bind:tap="onCommentSend"
+                        class="button {{disable ? 'disable': ''}}">发布</button>
+            </view>
+        </block>
+        <block wx:else>
+            <view class="tabbar-item">
+                <t-icon name="share" size="18" color="#9297a2"/>
+                <text class="ml-10 count">分享</text>
+            </view>
+            <view class="tabbar-item">
+                <t-icon name="chat-message" size="18" color="#9297a2"/>
+                <view class="count ml-10">{{comments.count}}</view>
+            </view>
+        </block>
     </view>
 </view>
 </t-pull-down-refresh>

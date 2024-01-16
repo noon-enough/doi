@@ -1,0 +1,49 @@
+<view class="l-class card-container card-container-avatar card-container-avatar-left card-container-full"
+      data-id="{{reply.id}}"
+      data-is-mine="{{reply.is_mine}}"
+      mut-bind:longpress="onLongPress">
+    <view class="card-avatar-top">
+        <view class="card-avatar-left">
+            <image class="l-img-class card-img-avatar"
+                   data-uid="{{reply.user.uid}}"
+                   bind:tap="onDetail"
+                   src="{{reply.user.avatar}}"
+                   mode="scaleToFill" lazy-load></image>
+            <view class="card-avatar">
+                <view class="card-avatar-name">
+                    <text class="l-title-class card-title card-title-avatar mr-10">{{reply.user.username}}</text>
+                    <sex sex="female"/>
+                    <block wx:if="{{reply.is_local}}">
+                        <tag class="ml-10" radius="4" padding="2" type="4"/>
+                    </block>
+                </view>
+                <view class="card-avatar-description">
+                    <view class="describe">
+                        <block wx:if="{{reply.user.age}}">
+                            <view>{{reply.user.age}}岁</view>
+                        </block>
+                        <block wx:if="{{reply.ipip}}">
+                            <view class="location">{{reply.ipip}}</view>
+                        </block>
+                        <block wx:if="{{reply.user.astro}}">
+                            <view class="constellation">{{reply.user.astro}}</view>
+                        </block>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="content">
+        {{reply.content}}
+        <view class="footer">
+            <view class="time">
+                {{reply.datetime}}
+            </view>
+            <view class="like" wx:if="{{reply.like}}">
+                <t-icon name="heart" size="18"/>
+                <view class="num">{{reply.like}}</view>
+            </view>
+        </view>
+    </view>
+    <t-divider/>
+</view>
