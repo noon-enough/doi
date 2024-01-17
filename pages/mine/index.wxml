@@ -60,6 +60,7 @@
     </view>
     <view class="footer mt-20">
         <t-cell-group>
+            <t-cell title="伙伴管理" leftIcon="user-list" hover arrow url="/pages/mine/partner/index"/>
             <t-cell title="姿势管理" leftIcon="banana" hover arrow url="/pages/mine/posture/index"/>
             <t-cell title="地点/场所管理" leftIcon="bean" hover arrow url="/pages/mine/place/index"/>
             <t-cell title="账号注销" leftIcon="delete-time" hover arrow url="/pages/mine/cancel/index"/>

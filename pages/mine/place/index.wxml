@@ -10,7 +10,7 @@
     <view class="wrapper">
         <empty wx:if="{{places.length <=0 }}" type="0"></empty>
         <block wx:else>
-            <t-swipe-cell right="{{right}}" bind:click="onSwipeCellClick" data-posture="{{place}}"
+            <t-swipe-cell right="{{right}}" bind:click="onSwipeCellClick" data-place="{{place}}"
                           wx:for="{{places}}" wx:for-index="key" wx:key="key" wx:for-item="place">
                 <t-cell title="{{place.name}}" note="{{place.is_system ? '系统' : ''}}" hover />
             </t-swipe-cell>

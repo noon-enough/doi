@@ -62,22 +62,23 @@
     </view>
     <view class="comments mt-10">
         <view class="title">评论此次记录</view>
-        <view class="tips mt-10">仅允许参与者和邀请（分享）者参与评论</view>
-        <empty wx:if="{{comments.data.length <=0 }}" description="你和你参与者对此次做爱没有任何评论可言"></empty>
-        <block wx:else>
+        <view class="tips mt-10 mb-10">仅允许参与者和邀请（分享）者参与评论</view>
+        <block wx:if="{{comments.data.length}}">
             <block wx:for="{{comments.data}}" wx:for-item="reply" wx:for-index="index" wx:key="id">
                 <reply reply="{{reply}}"
                        data-id="{{reply.id}}"
-                       data-is-mine="{{reply.is_mine}}"
                        data-content="{{reply.content}}"
-                       bind:longlongpress="onLongPress"/>
+                       data-uid="{{reply.uid}}"
+                       bind:longlongpress="onLongPress"
+                       bind:tap="onCommentTap"/>
             </block>
         </block>
+        <empty wx:else description="你和你参与者对此次做爱没有任何评论可言"></empty>
     </view>
     <view class="tabbar" style="width: {{width}}px">
         <view class="tabbar-item">
             <t-textarea t-class="comment"
-                        style="{{show_submit_event ? 'width: 550rpx;': ''}}"
+                        style="{{show_submit_event ? 'width: 530rpx;': ''}}"
                         bordered="{{false}}"
                         adjust-position
                         fixed
@@ -93,7 +94,8 @@
         </view>
         <block wx:if="{{show_submit_event}}">
             <view class="tabbar-item">
-                <button loading="{{submitLoading}}"  bind:tap="onCommentSend"
+                <button loading="{{submitLoading}}"
+                        bind:tap="onCommentSend"
                         class="button {{disable ? 'disable': ''}}">发布</button>
             </view>
         </block>

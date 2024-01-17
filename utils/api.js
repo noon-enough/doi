@@ -52,6 +52,10 @@ function recordComments(id, page = 1, limit = 20) {
     return get(`/record/${id}/comments?page=${page}&limit=${limit}`)
 }
 
+function recordCommented(id, data = {}) {
+    return post(`/record/${id}/comments`, data)
+}
+
 function recordInvite(id) {
     return get(`/record/${id}/invite`)
 }
@@ -173,6 +177,10 @@ function putPlace(id, name) {
     })
 }
 
+function deletePlace(id) {
+    return d(`/place/${id}`)
+}
+
 function addPlace(name) {
     return post("/place",  {
         'content': name,
@@ -189,4 +197,4 @@ module.exports = {classify, classifyDetail, updateEmotion, hot, recommend, login
     record, recordList, getStatus, getPosture, getStatistics, getRecord, getRecordDetail,
     getProfiles, setProfiles, recordDelete, getRecordItem, putRecordItem,
     getCOSAuthorization, cancel, unCancel, getPlaces, addPosture, deletePosture, putPosture,
-    recordDetail, putPlace, addPlace, recordInvite, recordComments}
+    recordDetail, putPlace, addPlace, recordInvite, recordComments, recordCommented, deletePlace}

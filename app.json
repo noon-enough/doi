@@ -17,7 +17,8 @@
 		"pages/mine/status/index",
 		"pages/wifi/index",
 		"pages/mine/record/detail/index",
-      "pages/record/share/index"
+      "pages/record/share/index",
+      "pages/mine/partner/index"
     ],
 	"window": {
 		"backgroundTextStyle": "light",

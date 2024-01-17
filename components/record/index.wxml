@@ -74,8 +74,11 @@
     </view>
     <view class="labelBox">
         <text>对象：</text>
-        <t-input placeholder="输入对象名字" type="text" value="{{recode.partner}}"
-                 borderless="{{true}}" tips="你记录此次事件的对象" bind:change="onPartnerChange"/>
+        <view class="">
+            <t-input placeholder="输入对象名字" type="text" value="{{recode.partner}}"
+                     borderless="{{true}}" tips="你记录此次事件的对象" bind:change="onPartnerChange"/>
+            <view class="tips small" bind:tap="onPartner">管理对象</view>
+        </view>
     </view>
     <view class="labelBox">
         <text>备注：</text>

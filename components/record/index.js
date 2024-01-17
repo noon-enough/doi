@@ -1,4 +1,4 @@
-import {getTimeDate, showToast} from "../../utils/util";
+import {getTimeDate, goto, showToast} from "../../utils/util";
 import {RATE_ARRAY} from "../../utils/config";
 import moment from "moment";
 import {addPlace, addPosture, putPlace} from "../../utils/api";
@@ -134,6 +134,10 @@ Component({
                 ['recode.comment']: comment,
             })
         },
+        onPartner(e) {
+            let that = this
+            goto(`/pages/mine/partner/index`)
+        },
         onSubmit: function(e) {
             let that = this,
                 data = that.data.recode
@@ -160,6 +164,7 @@ Component({
             })
             that.triggerEvent('onPlace', e)
         },
+
         closeAddDialog(e) {
             let that = this
             that.setData({

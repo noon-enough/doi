@@ -5,6 +5,9 @@ Component({
         reply: Object,
     },
     data: {},
+    attached() {
+        let that = this
+    },
     methods: {
         onLongPress(e) {
             this.triggerEvent('longlongpress', e.detail);

@@ -1,0 +1,49 @@
+.btn-wrapper {
+    height: 100%;
+}
+
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 120rpx;
+    height: 100%;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #e34d59;
+}
+
+.edit-btn {
+    background-color: #ed7b2f;
+}
+
+.favor-btn {
+    background-color: #0052d9;
+}
+
+.note {
+    font-size: 26rpx;
+    color: var(--gray)
+}
+
+.wrapper .title {
+    padding: unset;
+    font-size: 28rpx;
+}
+
+.dialog-input {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    margin-top: 32rpx;
+    border-radius: 8rpx;
+    background-color: #f3f3f3;
+    box-sizing: border-box;
+}
+
+.placeholder {
+    color: rgba(0, 0, 0, 0.4);
+    line-height: 96rpx;
+}

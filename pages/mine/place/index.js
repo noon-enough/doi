@@ -1,4 +1,4 @@
-import {addPlace, addPosture, getPlaces, putPlace, putPosture} from "../../../utils/api";
+import {addPlace, addPosture, deletePlace, deletePosture, getPlaces, putPlace, putPosture} from "../../../utils/api";
 import {showToast} from "../../../utils/util";
 
 const app = getApp()
@@ -11,10 +11,12 @@ Page({
         show_add_dialog: false,
         right: [
             {
+                id: 'edit',
                 text: '编辑',
                 className: 'btn edit-btn',
             },
             {
+                id: 'delete',
                 text: '删除',
                 className: 'btn delete-btn',
             },
@@ -148,5 +150,46 @@ Page({
     },
     onSwipeCellClick(e) {
         console.log('onSwipeCellClick', e)
+        let that = this,
+            type = e.detail.id ?? 'edit',
+            data = e.currentTarget.dataset.place ?? {},
+            idx = e.currentTarget.dataset.idx ?? 0,
+            id = data.id ?? 0,
+            is_system = data.is_system ?? false
+        if (is_system) {
+            showToast('系统数据', {icon: 'error'})
+            return false
+        }
+
+        switch (type) {
+            case 'edit':
+                that.setData({
+                    type: 'edit',
+                    id: id,
+                    idx: idx,
+                    content: data.name,
+                    show_add_dialog: true,
+                })
+                break
+            case 'delete':
+                // 删除
+                wx.showLoading()
+                deletePlace(id).then(res => {
+                    if (res.code !== 200) {
+                        showToast(res.message ?? '非法操作', {icon: "error"})
+                        return false
+                    }
+                    wx.hideLoading()
+                    let newPlace = that.data.places.filter((item, index) => {
+                        return index !== idx
+                    })
+                    showToast('删除成功', {icon: "success"})
+                    that.setData({
+                        places: newPlace,
+                    })
+                    app.globalData.placeData = newPlace
+                })
+                break
+        }
     },
 });

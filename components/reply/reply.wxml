@@ -12,10 +12,11 @@
             <view class="card-avatar">
                 <view class="card-avatar-name">
                     <text class="l-title-class card-title card-title-avatar mr-10">{{reply.user.username}}</text>
-                    <sex sex="female"/>
-                    <block wx:if="{{reply.is_local}}">
-                        <tag class="ml-10" radius="4" padding="2" type="4"/>
-                    </block>
+                    <sex sex="{{reply.user.sex}}"/>
+                    <tag wx:if="{{reply.user.is_local}}" class="ml-10" radius="4" padding="2" type="4"/>
+                    <tag wx:if="{{reply.user.is_mine}}" class="ml-10" radius="4" padding="2" type="12"/>
+                    <tag wx:if="{{reply.user.is_partner}}" class="ml-10" radius="4" padding="2" type="11"/>
+                    <tag wx:if="{{reply.user.is_invitor}}" class="ml-10" radius="4" padding="2" type="10"/>
                 </view>
                 <view class="card-avatar-description">
                     <view class="describe">
@@ -25,8 +26,8 @@
                         <block wx:if="{{reply.ipip}}">
                             <view class="location">{{reply.ipip}}</view>
                         </block>
-                        <block wx:if="{{reply.user.astro}}">
-                            <view class="constellation">{{reply.user.astro}}</view>
+                        <block wx:if="{{reply.user.astro_string}}">
+                            <view class="constellation">{{reply.user.astro_string}}</view>
                         </block>
                     </view>
                 </view>

@@ -142,6 +142,30 @@ Component({
                 config.contentSize = 20
                 config.content = "关注"
                 break
+            case 10:
+                config.backgroundColor = "#6f42c1"
+                config.contentColor = "#fff"
+                config.leftIcon = ""
+                config.leftIconSize = 12
+                config.contentSize = 20
+                config.content = "邀请者"
+                break;
+            case 11:
+                config.backgroundColor = "#17a2b8"
+                config.contentColor = "#fff"
+                config.leftIcon = ""
+                config.leftIconSize = 12
+                config.contentSize = 20
+                config.content = "参与者"
+                break
+            case 12:
+                config.backgroundColor = "orange"
+                config.contentColor = "#fff"
+                config.leftIcon = ""
+                config.leftIconSize = 12
+                config.contentSize = 20
+                config.content = "自己"
+                break
             case 0:
             default:
                 config.backgroundColor = that.properties.bgColor
@@ -153,6 +177,5 @@ Component({
                 break;
         }
         that.setData(config)
-        console.log('set Config', config)
     }
 });
